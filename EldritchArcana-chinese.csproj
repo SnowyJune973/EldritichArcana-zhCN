@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net47</TargetFramework>
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Info.json" />
+    <Content Include="Feats\EldritchHeritage.cs" />
+    <Content Include="FavoredClassBonus.cs" />
+    <Content Include="Traits.cs" />
+    <Content Include="Helpers.cs" />
+    <Content Include="Main.cs" />
+    <Content Include="Oracle\Oracle.cs" />
+    <Content Include="Oracle\DragonMystery.cs" />
+    <Content Include="Oracle\OracleCurses.cs" />
+    <Content Include="Oracle\BattleMystery.cs" />
+    <Content Include="Oracle\OracleArchetypes.cs" />
+    <Content Include="Oracle\FlameMystery.cs" />
+    <Content Include="Oracle\LifeMystery.cs" />
+    <Content Include="Spells\ExperimentalSpells.cs" />
+    <Content Include="Oracle\HeavensMystery.cs" />
+    <Content Include="Oracle\TimeMystery.cs" />
+    <Content Include="Spells\Wish.cs" />
+    <Content Include="Feats\MagicFeats.cs" />
+    <Content Include="Feats\Metamagic.cs" />
+    <Content Include="Feats\PrestigiousSpellcaster.cs" />
+    <Content Include="Sorcerer\Crossblooded.cs" />
+    <Content Include="Sorcerer\Bloodlines.cs" />
+    <Content Include="Warpriest\Warpriest.cs" />
+    <Content Include="Testing\SaveCompatibility.cs" />
+    <Content Include="Testing\baseline_assets.txt" />
+    <Content Include="Spells\TimeStop.cs" />
+    <Content Include="Spells\Fly.cs" />
+    <Content Include="Spells\FireSpells.cs" />
+    <Content Include="Spells\Spells.cs" />
+    <Content Include="Spells\KnockAndDetectSecrets.cs" />
+    <Content Include="Spells\DismissSpell.cs" />
+    <Content Include="Spells\ReplaceSpell.cs" />
+    <Content Include="Prestige\ArcaneSavant.cs" />
+    <Content Include="CHANGELOG.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony12">
+      <HintPath>..\..\Managed\0Harmony12.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>..\Managed\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\..\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>..\..\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>..\..\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    xcopy /y "$(SolutionDir)\bin\$(Configuration)\$(TargetFramework)\EldritchArcana.dll" "G:\Steam\steamapps\common\Pathfinder Kingmaker\Mods\EldritchArcana\"
+    xcopy /y "$(SolutionDir)\Info.json" "G:\Steam\steamapps\common\Pathfinder Kingmaker\Mods\EldritchArcana\"
+    xcopy /y "$(SolutionDir)\Testing\baseline_assets.txt" "G:\Steam\steamapps\common\Pathfinder Kingmaker\Mods\EldritchArcana\"
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>
