@@ -56,20 +56,20 @@ namespace EldritchArcana
             library.AddFeats( /*SorcererBonusFeat*/ "d6dd06f454b34014ab0903cb1ed2ade3", metamagicFeats);
             library.AddFeats(Helpers.magusFeatSelection, metamagicFeats);
 
-            SafeAddToList(CreateOppositionResearch, feats, "Opposition Research");
+            SafeAddToList(CreateOppositionResearch, feats, "禁制学派研究");
 
             // Add metamagics and Opposition Research to Wizard bonus feat list.
             library.AddFeats( /*WizardFeatSelection*/ "8c3102c2ff3b69444b139a98521a4899", feats.ToArray());
 
-            SafeAddToList(CreateMagesTattoo, feats, "Mage's Tattoo");
-            SafeAddToList(() => CreateSpellPerfection(metamagicFeats), feats, "Spell Perfection");
+            SafeAddToList(CreateMagesTattoo, feats, "法师纹身");
+            SafeAddToList(() => CreateSpellPerfection(metamagicFeats), feats, "完美法术");
 
             // Magus Arcanas, Extra Magus Arcana
-            SafeAddToList(LoadMagusArcanas, feats, "Magus Arcanas");
+            SafeAddToList(LoadMagusArcanas, feats, "魔战士奥秘");
 
-            Main.SafeLoad(LoadDervishDance, "Dervish Dance");
+            Main.SafeLoad(LoadDervishDance, "优雅之舞");
 
-            SafeAddToList(CreateFeyFoundling, feats, "Fey Foundling");
+            SafeAddToList(CreateFeyFoundling, feats, "妖精遗孤");
 
             // Add all feats (including metamagic, wizard discoveries) to general feats.
             library.AddFeats(feats.ToArray());
@@ -90,8 +90,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateFeyFoundling()
         {
-            var feat = Helpers.CreateFeature("FeyFoundling", "Fey Foundling",
-                "You were found in the wilds as a child.\nWhenever you receive magical healing, you heal an additional 2 points per die rolled. You gain a +2 bonus on all saving throws against death effects. Unfortunately, you also suffer +1 point of damage from cold iron weapons (although you can wield cold iron weapons without significant discomfort).",
+            var feat = Helpers.CreateFeature("FeyFoundling", "妖精遗孤",
+                "当你在野外被找到时你还是个孩子.\n无论何时，当你受到魔法治疗时, 你受到的治愈效果在每次投骰时都额外+2， 你的所有豁免检定在对抗死亡效果时提升2点. 不幸的是, 当你受到寒铁武器的伤害时，每个伤害骰都额外+1 (尽管你可以使用寒铁武器并且不会有明显不适).",
                 "0659556638b04ecc85e069e050751bfa",
                 Helpers.GetIcon("e8445256abbdc45488c2d90373f7dae8"),
                 FeatureGroup.Feat,
@@ -126,11 +126,11 @@ namespace EldritchArcana
             var metamagic = metamagicFeat.GetComponent<AddMetamagicFeat>().Metamagic;
             var name = metamagic.ToString();
             name += name.EndsWith("e") ? "d" : "ed";
-            var feat = Helpers.CreateFeature($"Magus{name}Magic", $"{name} Magic",
-                $"The magus can cast one spell per day as if it were modified by the {metamagic} Spell feat. " +
+            var feat = Helpers.CreateFeature($"Magus{name}Magic", $"{name} 奥秘",
+                $"魔战士每天可以释放一个法术，就像它被 {metamagic} 超魔专长调整过一样. " +
                 (metamagic == Metamagic.Quicken
-                    ? "This does not increase the level of the spell."
-                    : "This does not increase the casting time or the level of the spell."),
+                    ? "这不会增加法术的环级."
+                    : "这不会增加法术的施法时间和环级."),
                 Helpers.MergeIds(metamagicFeat.AssetGuid, "65768d69b6b84954b3d6a1d1dc265cf8"),
                 metamagicFeat.Icon,
                 FeatureGroup.MagusArcana);
@@ -158,9 +158,9 @@ namespace EldritchArcana
 
         static BlueprintFeatureSelection CreateExtraArcana(BlueprintFeatureSelection magusArcanas)
         {
-            var feat = Helpers.CreateFeatureSelection("ExtraArcanaSelection", "Extra Arcana",
-                "You have unlocked the secret of a new magus arcana. You gain one additional magus arcana. You must meet all the prerequisites for this magus arcana.\n" +
-                "Special: You can gain this feat multiple times. Its effects stack, granting a new arcana each time you gain this feat.",
+            var feat = Helpers.CreateFeatureSelection("ExtraArcanaSelection", "额外奥秘",
+                "你已经研究出了一个新的魔战士奥秘。你获得一个额外的魔战士奥秘，你必须满足这个奥秘的所有先决条件。\n" +
+                "特殊: 你可以多次选择这个专长，它的效果叠加。你每次选择这个专长都要选择一个新奥秘。",
                 "bace31a97ed141d9b11cc5dabacb5b88",
                 Helpers.GetIcon("cd9f19775bd9d3343a31a065e93f0c47"), // extra channel
                 FeatureGroup.Feat,
@@ -174,8 +174,8 @@ namespace EldritchArcana
             var arcaneBondSelection = library.Get<BlueprintFeatureSelection>("03a1781486ba98043afddaabf6b7d8ff");
             var itemBondFeature = library.Get<BlueprintFeature>("2fb5e65bd57caa943b45ee32d825e9b9");
 
-            var feat = Helpers.CreateFeatureSelection("MagusFamiliarSelection", "Familiar",
-                "The magus gains a familiar, using their magus level as their effective wizard level. This familiar follows the rules for familiars presented in the arcane bond wizard class feature.",
+            var feat = Helpers.CreateFeatureSelection("MagusFamiliarSelection", "魔宠",
+                "魔战士获得一个魔宠, 使用他的魔战士等级作为有效法师等级。这个魔宠遵循法师的魔宠规则。",
                 "310ed9de256445cca2915c4c0bc16f0b", arcaneBondSelection.Icon, FeatureGroup.MagusArcana);
             feat.SetComponents(feat.PrerequisiteNoFeature());
             feat.SetFeatures(arcaneBondSelection.Features.Where(f => f != itemBondFeature));
@@ -185,15 +185,15 @@ namespace EldritchArcana
         static BlueprintFeature CreateSpellBlending()
         {
             var name = "SpellBlending";
-            var feat = Helpers.CreateFeatureSelection($"{name}Selection", "Spell Blending",
-                "When a magus selects this arcana, they must select one spell from the wizard spell list that is of a magus spell level they can cast. They adds this spell to their spellbook and list of magus spells known as a magus spell of its wizard spell level. They can instead select two spells to add in this way, but both must be at least one level lower than the highest-level magus spell they can cast.\nSpecial: A magus can select this magus arcana more than once.",
+            var feat = Helpers.CreateFeatureSelection($"{name}Selection", "法术混合",
+                "当魔战士选择这个奥秘时，他可以向法术书中添加一个他可以施展的位于法师列表中的法术。 使用他的魔战士等级作为法师等级来决定施法者等级。 他也可以选择以这种方式添加两个法术, 但这两个法术必须至少比他能施展的最高环法术低一环。\特殊: 魔战士可以多次选择这个奥秘。",
                 "0a273cce57ed44bdb2b9f36270c23cb8",
                 Helpers.GetIcon("55edf82380a1c8540af6c6037d34f322"), // elven magic
                 FeatureGroup.MagusArcana);
 
             var pickOneSpell = Helpers.CreateParamSelection<SelectAnySpellAtComputedLevel>(
                 $"{name}OneSpellSelection",
-                $"{feat.Name} (one spell)",
+                $"{feat.Name} (单个法术)",
                 feat.Description,
                 "0744c1eca7084c18aef2230828680cc9",
                 null,
@@ -203,7 +203,7 @@ namespace EldritchArcana
             pickOneSpell.SpellcasterClass = magus;
 
             var pickTwoSpells = Helpers.CreateFeature($"{name}TwoSpellProgression",
-                $"{feat.Name} (two spells)",
+                $"{feat.Name} (两个法术)",
                 feat.Description,
                 "1fa334799e9a4a169fa53d154af86363",
                 null,
@@ -243,8 +243,8 @@ namespace EldritchArcana
             var slashingGrace = library.Get<BlueprintParametrizedFeature>("697d64669eb2c0543abb9c9b07998a38");
             var weaponFinesse = library.Get<BlueprintFeature>("90e54424d682d104ab36436bd527af09");
 
-            var dervishDance = Helpers.CreateFeature("DervishDance", "Dervish Dance",
-                "When wielding a scimitar with one hand, you can use your Dexterity modifier instead of your Strength modifier on melee attack and damage rolls. You treat the scimitar as a one-handed piercing weapon for all feats and class abilities that require such a weapon (such as a duelist's precise strike ability). The scimitar must be for a creature of your size. You cannot use this feat if you are carrying a weapon or shield in your off hand.",
+            var dervishDance = Helpers.CreateFeature("DervishDance", "优雅之舞",
+                "当你单手持用弯刀时，你可以在你的近战攻击命中和伤害投骰中用你的敏捷调整值取代力量调整值。你可以将弯刀视作单手穿刺武器来使用所有需要这类武器的专长和职业能力 (例如决斗家的精确打击能力)。弯刀必须符合你的体型。如果你另一只手持用武器或盾牌，此专长无效。",
                 "7d0bb2ade9344cae833c5bbe66bf0460",
                 slashingGrace.Icon,
                 FeatureGroup.Feat,
@@ -272,8 +272,8 @@ namespace EldritchArcana
             spellFocusGreater = (library.Get<BlueprintParametrizedFeature>("5b04b45b228461c43bad768eb0f7c7bf"));
             var noFeature = Helpers.PrerequisiteNoFeature(null);
             magesTattoo = Helpers.CreateParametrizedFeature("MagesTattooSelection",
-                "Mage's Tattoo",
-                "Select a school of magic in which you have Spell Focus—you cast spells from this school at +1 caster level.",
+                "法师纹身",
+                "选择一个你有法术专攻的法术学派，你所施展的此学派法术获得+1施法者等级。",
                 "8004aabdc67145c5b0613b7580d77da1",
                 spellFocusGreater.Icon,
                 FeatureGroup.Feat,
@@ -310,8 +310,8 @@ namespace EldritchArcana
             var spellSpecialization1 = library.Get<BlueprintParametrizedFeature>("f327a765a4353d04f872482ef3e48c35");
             var noFeature = Helpers.PrerequisiteNoFeature(null);
             var spellPerfection = Helpers.CreateParamSelection<KnownSpellSelection>("SpellPerfection",
-                "Spell Perfection",
-                "Pick one spell which you have the ability to cast. Whenever you cast that spell you may apply any one metamagic feat you have to that spell without affecting its level or casting time, as long as the total modified level of the spell does not use a spell slot above 9th level. In addition, if you have other feats which allow you to apply a set numerical bonus to any aspect of this spell (such as Spell Focus, Spell Penetration, Weapon Focus [ray], and so on), double the bonus granted by that feat when applied to this spell.",
+                "完美法术",
+                "选择一个你能够释放的法术，每次你释放此法术时，你可以在不影响施法时间和法术环级的情况下对其施加任何一个你所知晓的超魔专长，只要此法术的合计等级不超过九级（添加多个超魔时，环数调整最低的适用此专长）。此外，如果你有其他专长允许你对这个法术的任何一个方面添加一个加值（例如法术专攻，法术穿透，武器专攻-射线等），那么这些专长在这个法术上的效果加倍。",
                 "82165fb15af34cbb9c0c2e6fb232b2fc",
                 spellSpecialization.Icon,
                 FeatureGroup.Feat,
@@ -330,8 +330,8 @@ namespace EldritchArcana
             var wizardClass = Helpers.GetClass("ba34257984f4c41408ce1dc2004e342e");
             var spellFocusGreater = (library.Get<BlueprintFeature>("5b04b45b228461c43bad768eb0f7c7bf"));
             var oppositionResearch = Helpers.CreateFeatureSelection("OppositionResearchSelection",
-                "Opposition Research",
-                "Select one Wizard opposition school; preparing spells of this school now only requires one spell slot of the appropriate level instead of two, and you no longer have the –4 Spellcraft penalty for crafting items from that school.",
+                "禁制学派研究",
+                "选择一个你的禁制学派，现在准备此学派的法术只需要一个合适等级的法术位而不是两个。并且你不再在制造此学派物品时承受-4惩e",
                 "48eb4a47b01e4d088f763ff20824189e",
                 spellFocusGreater.Icon,
                 FeatureGroup.WizardFeat,

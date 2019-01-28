@@ -49,8 +49,8 @@ namespace EldritchArcana
 
             // TODO: it would be nice to find the list of spellcasting prestige classes with skipped levels automatically.
             var spellSpecialization = library.Get<BlueprintFeatureSelection>("fe67bc3b04f1cd542b4df6e28b6e0ff5");
-            var prestigiousSpell = Helpers.CreateFeatureSelection("PrestigiousSpellcasterSelection", "Prestigious Spellcaster",
-                "The transition into a spellcasting prestige class is less difficult for you, and because of this, you gain 1 additional effective spellcaster level from your prestige class levels.",
+            var prestigiousSpell = Helpers.CreateFeatureSelection("PrestigiousSpellcasterSelection", "进阶施法者",
+                "提高进阶职业的施法能力对你而言并不困难, 介于此, 你在你的进阶职业中获得1额外的有效施法者等级。",
                 "30e9a3fcdb0446aa87f45d0f50b3b3fc",
                 spellSpecialization.Icon, FeatureGroup.Feat);
             prestigiousSpell.SetFeatures(
@@ -139,7 +139,7 @@ namespace EldritchArcana
 
             var favoredClassFeat = FavoredClassBonus.favoredPrestigeClass.Features[Helpers.prestigeClasses.IndexOf(prestigeClass)];
             var prestigiousCaster = Helpers.CreateFeature($"PrestigiousCaster{prestigeClass.name}",
-                $"Prestigious Spellcaster — {prestigeClass.Name}",
+                $"进阶施法者 — {prestigeClass.Name}",
                 prestigeClass.LocalizedDescription,
                 Helpers.MergeIds(prestigeClass.AssetGuid, "c526dfc221db493d9ec6291575086a99"),
                 prestigeClass.Icon,
