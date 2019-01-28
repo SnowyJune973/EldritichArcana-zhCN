@@ -80,6 +80,7 @@ namespace EldritchArcana
             spell.CanTargetPoint = true;
             spell.EffectOnAlly = AbilityEffectOnUnit.Harmful;
             spell.EffectOnEnemy = AbilityEffectOnUnit.Harmful;
+            spell.AvailableMetamagic = Metamagic.Empower | Metamagic.Extend | Metamagic.Maximize | Metamagic.Quicken | Metamagic.Heighten | Metamagic.Reach;
             incendiaryCloud = spell;
             spell.AddToSpellList(Helpers.wizardSpellList, 8);
             Helpers.AddSpellAndScroll(spell, "1cbb88fbf2a6bb74aa437fadf6946d22"); // scroll fire storm
@@ -101,7 +102,9 @@ namespace EldritchArcana
                 fireball.Icon, AbilityType.Spell, CommandType.Standard, fireball.Range,
                 "5 rounds or less; see text", fireball.LocalizedSavingThrow);
             spell.SpellResistance = true;
-
+            spell.EffectOnAlly = AbilityEffectOnUnit.Harmful;
+            spell.EffectOnEnemy = AbilityEffectOnUnit.Harmful;
+            spell.AvailableMetamagic = Metamagic.Empower | Metamagic.Heighten | Metamagic.Maximize | Metamagic.Quicken | Metamagic.Reach;
             var delayIds = new String[] {
                 "1e403a3188214a5c94ad63ede5928f81",
                 "2b6efa3759d842f7a549b85712784ee2",
@@ -233,7 +236,10 @@ namespace EldritchArcana
                 Helpers.GetIcon("9256a86aec14ad14e9497f6b60e26f3f")); // BlessingOfTheSalamander
             spell.Type = AbilityType.Spell;
             spell.SpellResistance = true;
+            spell.EffectOnAlly = AbilityEffectOnUnit.Harmful;
+            spell.EffectOnEnemy = AbilityEffectOnUnit.Harmful;
             spell.Parent = null;
+            spell.AvailableMetamagic = Metamagic.Empower | Metamagic.Extend | Metamagic.Maximize | Metamagic.Quicken | Metamagic.Heighten | Metamagic.Reach;
             var components = spell.ComponentsArray.Where(
                 c => !(c is AbilityResourceLogic) && !(c is ContextRankConfig) && !(c is AbilityEffectRunAction)).ToList();
             components.Add(Helpers.CreateRunActions(Helpers.Create<ContextActionSpawnAreaEffect>(c =>

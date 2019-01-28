@@ -89,8 +89,9 @@ namespace EldritchArcana
                     newMetamagic |= (Metamagic)ModMetamagic.Persistent;
 
                     var dealsDamage = (spell.AvailableMetamagic & Metamagic.Empower) == Metamagic.Empower;
-                    if (dealsDamage)
-                    {
+                    var descriptor = spell.SpellDescriptor;
+                    var hasElement = (descriptor & (SpellDescriptor.Fire | SpellDescriptor.Cold | SpellDescriptor.Electricity | SpellDescriptor.Acid)) != 0;
+                    if (dealsDamage || hasElement) {
 
                         // TODO: many spells did not have the cold descriptor set.
                         // We'll need to scan for elemental damage (any element can be cold if used with
@@ -99,9 +100,6 @@ namespace EldritchArcana
 
                         newMetamagic |= (Metamagic)ModMetamagic.Elemental;
 
-                        // Magic Missile does not correctly have the force descriptor set.
-                        // We should scan for damage actions.
-                        newMetamagic |= (Metamagic)ModMetamagic.Toppling;
 
                         // TODO: this won't work for spells that don't have variable damage components.
                         // We'll need to traverse the components to look for ContextActionDealDamage.
@@ -110,6 +108,12 @@ namespace EldritchArcana
                         // TODO: this has false positives (spells that can't actually benefit, because they
                         // already scale to 20th level).
                         newMetamagic |= (Metamagic)ModMetamagic.Intensified;
+                    }
+                    var hasForce = (descriptor & SpellDescriptor.Force) != 0;
+                    if (hasForce || spell.AssetGuid == "4ac47ddb9fa1eaf43a1b6809980cfbd2") {
+                        // Magic Missile does not correctly have the force descriptor set.
+                        // Scan for damage actions?
+                        newMetamagic |= (Metamagic)ModMetamagic.Toppling;
                     }
                 }
 
@@ -341,8 +345,7 @@ namespace EldritchArcana
     }
 
     // This is similar to ChangeSpellElementalDamage, but it checks for metamagic first.
-    public class ElementalMetamagic : RuleInitiatorLogicComponent<RuleCalculateDamage>, IInitiatorRulebookHandler<RuleCastSpell>
-    {
+    public class ElementalMetamagic : RuleInitiatorLogicComponent<RulePrepareDamage>, IInitiatorRulebookHandler<RuleCastSpell> {
         public DamageEnergyType EnergyType;
 
         public void OnEventAboutToTrigger(RuleCastSpell evt) { }
@@ -368,8 +371,7 @@ namespace EldritchArcana
                 Log.Error(e);
             }
         }
-        public override void OnEventAboutToTrigger(RuleCalculateDamage evt)
-        {
+        public override void OnEventAboutToTrigger(RulePrepareDamage evt) {
             try
             {
                 var context = Helpers.GetMechanicsContext()?.SourceAbilityContext;
@@ -390,7 +392,7 @@ namespace EldritchArcana
             }
         }
 
-        public override void OnEventDidTrigger(RuleCalculateDamage evt) { }
+        public override void OnEventDidTrigger(RulePrepareDamage evt) { }
 
         private static SpellDescriptor ElementToSpellDescriptor(DamageEnergyType element)
         {
@@ -722,10 +724,15 @@ namespace EldritchArcana
     {
         static void Postfix(AreaEffectEntityData __instance, UnitEntityData unit, ref bool __result)
         {
-            if (!__result) return;
-            var self = __instance;
-            var context = self.Context;
-            __result = context.TriggerRule(new RuleSpellTargetCheck(context, unit, self)).CanTargetUnit;
+            try {
+                if (!__result) return;
+                var self = __instance;
+                var context = self.Context;
+                __result = context.TriggerRule(new RuleSpellTargetCheck(context, unit, self)).CanTargetUnit;
+            }
+            catch (Exception e) {
+                Log.Error(e);
+            }
         }
     }
 

@@ -29,6 +29,7 @@ using Kingmaker.Designers.Mechanics.Facts;
 using Kingmaker.Designers.Mechanics.Recommendations;
 using Kingmaker.ElementsSystem;
 using Kingmaker.EntitySystem.Stats;
+using Kingmaker.UnitLogic.Class.LevelUp;
 using Kingmaker.Enums;
 using Kingmaker.Enums.Damage;
 using Kingmaker.Localization;
@@ -1236,9 +1237,9 @@ namespace EldritchArcana
             return castSpell;
         }
 
-        public static BindAbilitiesToClass CreateBindToClass(this BlueprintAbility ability, BlueprintProgression bloodline)
-        {
+        public static BindAbilitiesToClass CreateBindToClass(this BlueprintAbility ability, BlueprintProgression bloodline, StatType stat) {
             var b = Helpers.Create<BindAbilitiesToClass>();
+            b.Stat = stat;
             b.Abilites = new BlueprintAbility[] { ability };
             b.CharacterClass = bloodline.Classes[0];
             b.Archetypes = bloodline.Archetypes;
@@ -1246,10 +1247,20 @@ namespace EldritchArcana
             return b;
         }
 
-        public static BindAbilitiesToClass CreateBindToClass(this BlueprintAbility ability, BlueprintCharacterClass @class)
-        {
+        public static BindAbilitiesToClass CreateBindToClass(this BlueprintAbility ability, BlueprintCharacterClass @class, StatType stat) {
             var b = Helpers.Create<BindAbilitiesToClass>();
             b.Abilites = new BlueprintAbility[] { ability };
+            b.Stat = stat;
+            b.CharacterClass = @class;
+            b.Archetypes = Array.Empty<BlueprintArchetype>();
+            b.AdditionalClasses = Array.Empty<BlueprintCharacterClass>();
+            return b;
+        }
+
+        public static BindAbilitiesToClass CreateBindToClass(BlueprintCharacterClass @class, StatType stat, params BlueprintAbility[] abilities) {
+            var b = Helpers.Create<BindAbilitiesToClass>();
+            b.Abilites = abilities;
+            b.Stat = stat;
             b.CharacterClass = @class;
             b.Archetypes = Array.Empty<BlueprintArchetype>();
             b.AdditionalClasses = Array.Empty<BlueprintCharacterClass>();
@@ -1608,6 +1619,8 @@ namespace EldritchArcana
             s.Buffs = buffs;
             return s;
         }
+        public static SuppressBuffs CreateSuppressBuffs(IEnumerable<BlueprintBuff> buffs) => CreateSuppressBuffs(buffs.ToArray());
+
 
         public static AbilityAreaEffectRunAction CreateAreaEffectRunAction(GameAction unitEnter = null, GameAction unitExit = null, GameAction unitMove = null, GameAction round = null)
         {
@@ -1884,6 +1897,9 @@ namespace EldritchArcana
         {
             allSpells.Add(spell);
             modSpells.Add(spell);
+            if (spell.Type == AbilityType.Spell && spell.AvailableMetamagic == default(Metamagic)) {
+                Log.Write($"Error: spell {spell.name} is missing metamagic (should have heighten, quicken at least)");
+            }
         }
 
         public static void AddSpellAndScroll(this BlueprintAbility spell, String scrollIconId, int variant = 0)

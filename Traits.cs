@@ -34,6 +34,7 @@ using Kingmaker.UnitLogic.Class.LevelUp.Actions;
 using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Parts;
+using Kingmaker.UnitLogic.Abilities.Components;
 
 namespace EldritchArcana
 {
@@ -409,7 +410,7 @@ namespace EldritchArcana
             // - World Traveler (choose: persuasion, perception, or world)
 
             var components = new List<BlueprintComponent> { humanReq };
-            components.Add(Helpers.CreateAddStatBonus(StatType.SaveReflex, 1, ModifierDescriptor.Trait));
+            components.Add(Helpers.CreateAddStatBonus(StatType.SaveWill, 1, ModifierDescriptor.Trait));
             components.Add(Helpers.Create<SavingThrowBonusAgainstSchool>(a =>
             {
                 a.School = SpellSchool.Divination;
@@ -1011,6 +1012,7 @@ namespace EldritchArcana
             // For traits: it's valid to take any spell, even one not from your current
             // class that you may be able to cast later.
             var spells = new List<BlueprintAbility>();
+            var touchSpells = new HashSet<BlueprintAbility>();
             foreach (var spell in Helpers.allSpells)
             {
                 if (spell.Parent != null) continue;
@@ -1018,10 +1020,13 @@ namespace EldritchArcana
                 var spellLists = spell.GetComponents<SpellListComponent>();
                 if (spellLists.FirstOrDefault() == null) continue;
 
+                var stickyTouch = spell.StickyTouch;
+                if (stickyTouch != null) touchSpells.Add(stickyTouch.TouchDeliveryAbility);
+
                 var level = spellLists.Min(l => l.SpellLevel);
                 if (level == SpellLevel) spells.Add(spell);
             }
-            return spells;
+            return spells.Where(s => !touchSpells.Contains(s));
         }
 
         protected override IEnumerable<BlueprintScriptableObject> GetAllItems() => Helpers.allSpells;

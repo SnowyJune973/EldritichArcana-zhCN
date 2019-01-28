@@ -31,6 +31,7 @@ using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Parts;
+using Kingmaker.UnitLogic.Mechanics.Components;
 using Kingmaker.Utility;
 using Newtonsoft.Json;
 using static Kingmaker.UnitLogic.Commands.Base.UnitCommand;
@@ -186,7 +187,7 @@ namespace EldritchArcana
         {
             var name = "SpellBlending";
             var feat = Helpers.CreateFeatureSelection($"{name}Selection", "法术混合",
-                "当魔战士选择这个奥秘时，他可以向法术书中添加一个他可以施展的位于法师列表中的法术。 使用他的魔战士等级作为法师等级来决定施法者等级。 他也可以选择以这种方式添加两个法术, 但这两个法术必须至少比他能施展的最高环法术低一环。\特殊: 魔战士可以多次选择这个奥秘。",
+                "当魔战士选择这个奥秘时，他可以向法术书中添加一个他可以施展的位于法师列表中的法术。 使用他的魔战士等级作为法师等级来决定施法者等级。 他也可以选择以这种方式添加两个法术, 但这两个法术必须至少比他能施展的最高环法术低一环。\n特殊: 魔战士可以多次选择这个奥秘。",
                 "0a273cce57ed44bdb2b9f36270c23cb8",
                 Helpers.GetIcon("55edf82380a1c8540af6c6037d34f322"), // elven magic
                 FeatureGroup.MagusArcana);
@@ -435,14 +436,14 @@ namespace EldritchArcana
 
         public void OnEventAboutToTrigger(RuleApplyMetamagic evt)
         {
-            var spell = Param.GetValueOrDefault().Blueprint;
+            var spell = (BlueprintAbility)Param.GetValueOrDefault().Blueprint;
             if (evt.Spell != spell && evt.Spell?.Parent != spell) return;
             var spellbook = evt.Spellbook;
-            if (spellbook == null || spellbook.GetSpellLevel((BlueprintAbility)spell) > MaxSpellLevel)
-            {
+            if (spellbook == null || spellbook.GetSpellLevel(spell) > MaxSpellLevel) {
                 return;
             }
-
+            Log.Write($"Try to apply metamagic: {evt.AppliedMetamagics.StringJoin(m => m.ToString())}, spell {spell.name} allows {spell.AvailableMetamagic}");
+            if (evt.AppliedMetamagics.Count == 0) return;
             int reduction = Reduction;
             if (OneMetamagicIsFree)
             {
@@ -828,11 +829,24 @@ namespace EldritchArcana
                 // For some reason, dice are not passed in to the RuleHealDamage,
                 // so we need to capure them in places like ContextActionHealTarget,
                 // and then compute the number of rolls here.
-                rolls = currentHealDice.DiceCountValue.Calculate(context);
+                var healDice = currentHealDice;
+                var sharedValueCount = Enum.GetValues(typeof(AbilitySharedValue)).Length;
+                for (int i = 0; i <= sharedValueCount; i++) // guard against a loop.
+                {
+                    rolls += healDice.DiceCountValue.Calculate(context);
+                    Log.Write($"{GetType().Name}: rolls {rolls} ({healDice.DiceCountValue})");
+                    // See if the shared value came from a dice roll
+                    if (!healDice.BonusValue.IsValueShared) break;
+                    var calcShared = context.AssociatedBlueprint.GetComponents<ContextCalculateSharedValue>()
+                        .FirstOrDefault(c => c.ValueType == healDice.BonusValue.ValueShared);
+                    if (calcShared == null) break;
+                    healDice = calcShared.Value;
+                }
             }
 
             var bonus = rolls * 2; // +2 per dice
-            Log.Write($"{GetType().Name}: heal bonus {bonus}, dice {evt.HealFormula}, total bonus {evt.Bonus + bonus}");
+            Log.Append($"{GetType().Name}: heal bonus {bonus}, dice {evt.HealFormula}, total bonus {evt.Bonus + bonus}");
+            Log.Write($"  context: {context}, currentHealDice: {currentHealDice}");
             Rulebook.CurrentContext.Trigger(new RuleHealDamage(evt.Initiator, evt.Target, evt.HealFormula, evt.Bonus + bonus));
 
             // Disable the original heal roll, so we don't get double healing
