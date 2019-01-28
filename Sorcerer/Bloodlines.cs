@@ -52,22 +52,21 @@ namespace EldritchArcana
         internal static void Load()
         {
             // TODO: the Djinni bloodlines might be interesting. Limited Wish without material component is a neat capstone.
-            Main.SafeLoad(LoadOrcBloodline, "Orc Bloodline");
+            Main.SafeLoad(LoadOrcBloodline, Main.lc.GetTranslate("Bloodline.blOrcName"));
         }
 
         internal static void LoadOrcBloodline()
         {
             var orcBloodline = Helpers.CreateProgression("BloodlineOrcProgression",
-                "Orc Bloodline",
-                "The rage of your ancestors burns within you, and the taint of savage orc blood flows through your veins. Your anger is never far from the surface, giving you strength and driving you to seek greater power.\n" +
-                "Bonus Feats of the Orc Bloodline: Diehard, Endurance, Great Fortitude, Intimidating Prowess, Improved Bull Rush, Power Attack, Toughness, Reach Spell.",
+                Main.lc.GetTranslate("Bloodline.blOrcName"),
+                Main.lc.GetTranslate("Bloodline.blOrcDesc"),
                 "25bef329930b4830882b2cb51a46a535",
                 Helpers.GetIcon("c99f3405d1ef79049bd90678a666e1d7"), // Half-Orc Ferocity
                 FeatureGroup.BloodLine);
 
             var orcBonusFeatSelection = Helpers.CreateFeatureSelection("BloodlineOrcFeatSelection",
-                "Bloodline Feat Selection",
-                "At 7th level, and every six levels thereafter, a sorcerer receives one bonus feat, chosen from a list specific to each bloodline. The sorcerer must meet the prerequisites for these bonus feats.",
+                Main.lc.GetTranslate("Bloodline.stBloodlineFeatSelectionName"),
+                Main.lc.GetTranslate("Bloodline.stBloodlineFeatSelectionDesc"),
                 "ddf4cc44b3554b17a8d9da4bf3682d1d",
                 null,
                 FeatureGroup.Feat,
@@ -92,8 +91,8 @@ namespace EldritchArcana
             orcBloodline.Archetypes = new BlueprintArchetype[] { Helpers.eldritchScionArchetype };
 
             // Light sensitivitiy is added to this when we create the "Fearless" trait below.
-            orcArcana = Helpers.CreateFeature("BloodlineOrcArcana", "Orc Bloodline Arcana",
-                "You gain the orc subtype, including light sensitivity. Whenever you cast a spell that deals damage, that spell deals +1 point of damage per die rolled.",
+            orcArcana = Helpers.CreateFeature("BloodlineOrcArcana", Main.lc.GetTranslate("Bloodline.blOrcArcanaName"),
+                Main.lc.GetTranslate("Bloodline.blOrcArcanaDesc"),
                 "a4cf06211879416ea82e10ca3062bb81",
                 Helpers.GetIcon("ac04aa27a6fd8b4409b024a6544c4928"), // Gold dragon arcana, aka Fireball
                 FeatureGroup.None,
@@ -150,8 +149,8 @@ namespace EldritchArcana
                 "LightSensitivityDazzled", "949ae82dd5a441b08da1390c1c3c8d84");
 
             // Add Light Sensitivity until we get fearless rank 2.
-            var lightSensitive = Helpers.CreateFeature("BloodlineOrcLightSensitivity", "Light Sensitivity",
-                "Creatures with light sensitivity are dazzled in areas of bright sunlight or within the radius of a daylight spell.",
+            var lightSensitive = Helpers.CreateFeature("BloodlineOrcLightSensitivity", Main.lc.GetTranslate("Bloodline.abLightSensitivityName"),
+                Main.lc.GetTranslate("Bloodline.abLightSensitivityDesc"),
                 "6a25396d38094003b6492648891abbf4",
                 Helpers.GetIcon("bf0accce250381a44b857d4af6c8e10d"), // searing light
                 FeatureGroup.None,
@@ -161,8 +160,8 @@ namespace EldritchArcana
             dazzled.SetDescription($"{dazzled.Description}\n{lightSensitive.Name}: {lightSensitive.Description}");
 
             var fearless1 = Helpers.CreateFeature("BloodlineOrcFearlessLevel1",
-                "Fearless",
-                "At 3rd level, you gain a +4 bonus on saving throws made against fear and a +1 natural armor bonus. At 9th level, you lose your light sensitivity, gain immunity to fear, and your natural armor bonus increases to +2.",
+                Main.lc.GetTranslate("Bloodline.abOrcAbFearlessName"),
+                Main.lc.GetTranslate("Bloodline.abOrcAbFearlessDesc"),
                 "6c28b22514804978adcc4223c4c37791",
                 Helpers.GetIcon("e45ab30f49215054e83b4ea12165409f"), // Aura of Courage
                 FeatureGroup.None,
@@ -205,8 +204,8 @@ namespace EldritchArcana
         {
             var icon = Helpers.GetIcon("da1b292d91ba37948893cdbe9ea89e28"); // legendary proportions
             var baseName = "BloodlineOrcPowerOfGiants";
-            var displayName = "Power of Giants";
-            var description = "At 15th level, you may grow to Large size as a standard action. At this size you gain a +6 size bonus to Strength, a –2 penalty to Dexterity, a +4 size bonus to Constitution, and a +4 natural armor bonus. You may return to your normal size as a standard action. You may remain in this size for up to 1 minute per character level per day; this duration does not need to be consecutive, but it must be used in 1 minute increments.";
+            var displayName = Main.lc.GetTranslate("Bloodline.abOrcAbPowerOfGiantsName");
+            var description = Main.lc.GetTranslate("Bloodline.abOrcAbPowerOfGiantsDesc");
 
             var resource = Helpers.CreateAbilityResource($"{baseName}Resource", "", "", "887f8bb5ca65428684d42623d1ed2d09", icon);
             resource.SetIncreasedByLevel(0, 1, bloodline.Classes, bloodline.Archetypes);
@@ -274,8 +273,8 @@ namespace EldritchArcana
             ability.Type = AbilityType.SpellLike;
             ability.AddComponent(Helpers.CreateResourceLogic(resource));
 
-            return Helpers.CreateFeature("BloodlineOrcWarlordReborn", "Warlord Reborn",
-                "At 20th level, you become a true orc warlord of legend. You gain immunity to fire and DR 5/—. Once per day, you can cast transformation as a spell-like ability using your sorcerer level as your caster level.",
+            return Helpers.CreateFeature("BloodlineOrcWarlordReborn", Main.lc.GetTranslate("Bloodline.abOrcWarlordRebornName"),
+                Main.lc.GetTranslate("Bloodline.abOrcWarlordRebornDesc"),
                 "65e67606c3c94f75b924c13906a0b4b0",
                 ability.Icon, // transformation
                 FeatureGroup.None,
@@ -307,8 +306,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateStrengthOfTheBeastBonus(int rank)
         {
             return Helpers.CreateFeature($"BloodlineOrcStrengthOfTheBeastLevel{rank}",
-                "Strength of the Beast",
-                "At 9th level, you gain a +2 inherent bonus to your Strength. This bonus increases to +4 at 13th level, and to +6 at 17th level.",
+                Main.lc.GetTranslate("Bloodline.abOrcAbStrengthBeastName"),
+                Main.lc.GetTranslate("Bloodline.abOrcAbStrengthBeastDesc"),
                 strengthOfTheBeastIds[rank - 1],
                 Helpers.GetIcon("489c8c4a53a111d4094d239054b26e32"), // Abyssal Bloodline Strength
                 FeatureGroup.None,
@@ -327,8 +326,8 @@ namespace EldritchArcana
         {
             var fullCaster = bloodline.Classes[0];
             var isOracle = fullCaster == OracleClass.oracle;
-            var description = isOracle ? "At 2nd level, and every two levels thereafter, an oracle learns an additional spell derived from their mystery." :
-                "At 3rd level, and every two levels thereafter, a sorcerer learns an additional spell derived from their bloodline.";
+            var description = isOracle ? Main.lc.GetTranslate("Bloodline.stOrcBloodlineOracleSpellDesc") :
+                Main.lc.GetTranslate("Bloodline.stOrcBloodlineSorcSpellDesc");
             var result = new List<BlueprintFeatureBase>();
             for (int spellLevel = 1; spellLevel <= 9; spellLevel++)
             {
@@ -341,7 +340,7 @@ namespace EldritchArcana
                 var bloodlineName = bloodline.name.Replace("Progression", "");
                 var addSpell = Helpers.CreateFeature($"{bloodlineName}SpellLevel{spellLevel}",
                     spell.Name,
-                    $"{description} These spells cannot be exchanged for different spells at higher levels.\n{spell.Description}",
+                    string.Format(Main.lc.GetTranslate("Bloodline.stBloodlineSpellDescContinue"), description, spell.Description),
                     Helpers.MergeIds(bloodline.AssetGuid, spell.AssetGuid),
                     spell.Icon,
                     FeatureGroup.None,
@@ -365,9 +364,9 @@ namespace EldritchArcana
                             "32190a29f4c84beb9efa0a61a514a22c", strengthDomainBuff.Icon);
             resource.SetIncreasedByStat(3, StatType.Charisma);
 
-            var description = "At 1st level, you can touch a creature as a standard action, giving it a morale bonus on attack rolls, damage rolls, and Will saving throws equal to 1/2 your sorcerer level (minimum 1) for 1 round. You can use this ability a number of times per day equal to 3 + your Charisma modifier.";
+            var description = Main.lc.GetTranslate("Bloodline.abOrcTouchOfRageDesc");
 
-            var buff = Helpers.CreateBuff("BloodlineOrcTouchOfRageBuff", "Touch of Rage", description,
+            var buff = Helpers.CreateBuff("BloodlineOrcTouchOfRageBuff", Main.lc.GetTranslate("Bloodline.abOrcTouchOfRageName"), description,
                 "fa7e64f4667d4d6a886cb9cf3bc243ad", strengthDomainBuff.Icon,
                 strengthDomainBuff.FxOnStart,
                 Helpers.CreateContextRankConfig(progression: ContextRankProgression.Div2),
@@ -392,7 +391,7 @@ namespace EldritchArcana
                 }));
 
             var ability = Helpers.CreateAbility("BloodlineOrcTouchOfRageAbility",
-                "Touch of Rage", description, "b88aabade3ec4c8ab62f8e77d731c408",
+                Main.lc.GetTranslate("Bloodline.abOrcTouchOfRageName"), description, "b88aabade3ec4c8ab62f8e77d731c408",
                 strengthDomainAbility.Icon,
                 AbilityType.SpellLike, CommandType.Standard, AbilityRange.Touch,
                 strengthDomainAbility.LocalizedDuration,
@@ -405,7 +404,8 @@ namespace EldritchArcana
             ability.EffectOnAlly = AbilityEffectOnUnit.Helpful;
             var touchAbility = ability.CreateTouchSpellCast(resource);
 
-            var feat = Helpers.CreateFeature("BloodlineOrcTouchOfRage", "Touch of Rage", description,
+            var feat = Helpers.CreateFeature("BloodlineOrcTouchOfRage", Main.lc.GetTranslate("Bloodline.abOrcTouchOfRageName"),
+                description,
                 "36c83cf43622429f8b2021660911d090",
                 strengthDomainAbility.Icon, // strength domain ability
                 FeatureGroup.None,
