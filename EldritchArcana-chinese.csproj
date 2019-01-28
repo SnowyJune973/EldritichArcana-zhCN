@@ -84,5 +84,6 @@
     xcopy /y "$(SolutionDir)\Info.json" "G:\Steam\steamapps\common\Pathfinder Kingmaker\Mods\EldritchArcana\"
     xcopy /y "$(SolutionDir)\Testing\baseline_assets.txt" "G:\Steam\steamapps\common\Pathfinder Kingmaker\Mods\EldritchArcana\"
 </PostBuildEvent>
+    <AssemblyName>EldritchArcana</AssemblyName>
   </PropertyGroup>
 </Project>

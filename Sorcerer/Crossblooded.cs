@@ -47,9 +47,9 @@ namespace EldritchArcana
             var crossblooded = Helpers.Create<BlueprintArchetype>(a =>
             {
                 a.name = "CrossbloodedSorcererArchetype";
-                a.LocalizedName = Helpers.CreateString("Crossblooded.Name", "Crossblooded Sorcerer");
+                a.LocalizedName = Helpers.CreateString("Crossblooded.Name", Main.lc.GetTranslate("Crossblooded.clsCrossName"));
                 a.LocalizedDescription = Helpers.CreateString("Crossblooded.Description",
-                    "A crossblooded sorcerer selects two different bloodlines. The sorcerer may gain access to the skills, feats, and some of the powers of both bloodlines they are descended from, but at the cost of reduced mental clarity and choice.");
+                    Main.lc.GetTranslate("Crossblooded.clsCrossDesc"));
             });
             library.AddAsset(crossblooded, crossbloodedId);
             crossblooded.SetIcon(sorcererClass.Icon);
@@ -80,7 +80,7 @@ namespace EldritchArcana
                 var levelLogic = CrossBloodlineLogic.TryCreate(bloodline);
                 if (levelLogic == null) continue;
                 var crossbloodline = library.CopyAndAdd(bloodline, $"{bloodline.name}Cross", bloodline.AssetGuid, "933224357f8d48be837a3083e33a18a8");
-                crossbloodline.SetName($"{bloodline.Name} (Crossblood)");
+                crossbloodline.SetName(string.Format(Main.lc.GetTranslate("Crossblooded.stCrossBloodlineName"), bloodline.Name));
                 crossbloodline.LevelEntries = new LevelEntry[] {
                     Helpers.LevelEntry(1, bloodline.GetLevelEntry(1).Features.Where(EldritchHeritage.IsArcanaOrClassSkill))
                 };
@@ -126,9 +126,9 @@ namespace EldritchArcana
                 SortedSet<BlueprintFeature> powerChoices;
                 if (powers.TryGetValue(level, out powerChoices))
                 {
-                    var description = "At 1st, 3rd, 9th, 15th, and 20th levels, a crossblooded sorcerer gains one of the two new bloodline powers available to their at that level. They may instead select a lower-level bloodline power they did not choose in place of one of these higher-level powers.";
+                    var description = Main.lc.GetTranslate("Crossblooded.abBloodlineAbDesc");
                     var powerSelection = Helpers.CreateFeatureSelection($"BloodlinePowerSelection{level}",
-                        "Bloodline Power",
+                        Main.lc.GetTranslate("Crossblooded.stBloodlinePower"),
                         DescribeChoices(description, powerChoices),
                         Helpers.MergeIds(guidsByLevel[level], "15029e64baee4db6b09ca6a6ed2d70c0"),
                         null,
@@ -143,9 +143,9 @@ namespace EldritchArcana
                 SortedSet<BlueprintFeature> spellChoices;
                 if (spells.TryGetValue(level, out spellChoices))
                 {
-                    var description = "A crossblooded sorcerer may select their bonus spells from either of their bloodlines. The sorcerer also has the choice to learn a lower-level bonus spell they did not choose in place of the higher-level bonus spell they would normally gain. Lower-level bonus spells learned this way always use the spell level that they would be if the sorcerer had learned them with the appropriate bonus spell.";
+                    var description = Main.lc.GetTranslate("Crossblooded.abBloodlineSpellDesc");
                     var spellSelection = Helpers.CreateFeatureSelection($"BloodlineSpellSelection{level}",
-                        "Bloodline Spell",
+                        Main.lc.GetTranslate("Crossblooded.stBloodlineSpell"),
                         DescribeChoices(description, spellChoices),
                         Helpers.MergeIds(guidsByLevel[level], "d333e2fb82ab4ab4af7d03d84aa5895c"),
                         null,
@@ -178,8 +178,8 @@ namespace EldritchArcana
 
             var level1 = Helpers.LevelEntry(1,
                 crossbloodProgression,
-                Helpers.CreateFeature("CrossbloodedConflictingUrges", "Crossblooded (conflicting urges)",
-                    "The conflicting urges created by the divergent nature of the crossblooded sorcerer’s dual heritage forces them to constantly take some mental effort just to remain focused on their current situation and needs. This leaves them with less mental resolve to deal with external threats. A crossblooded sorcerer always takes a –2 penalty on Will saves.",
+                Helpers.CreateFeature("CrossbloodedConflictingUrges", Main.lc.GetTranslate("Crossblooded.abConflictingUrgeName"),
+                    Main.lc.GetTranslate("Crossblooded.abConflictingUrgeDesc"),
                     "ebefc29906f74c0d9a8b914095cc05d6",
                     Helpers.GetIcon("983e8ad193160b44da80b38af4927e75"), // Diverse Training
                     FeatureGroup.None,
@@ -301,7 +301,7 @@ namespace EldritchArcana
         static String DescribeChoices(String description, IEnumerable<BlueprintFeature> features)
         {
             var str = new StringBuilder(description);
-            str.Append("\nChoices for each bloodline:");
+            str.Append(Main.lc.GetTranslate("Crossblooded.stDescribeChoices"));
             var seenDraconic = false;
             var seenElemental = false;
             foreach (var f in features)

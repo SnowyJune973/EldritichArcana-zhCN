@@ -211,7 +211,8 @@ namespace EldritchArcana
             feat.Groups = new FeatureGroup[] { FeatureGroup.WizardFeat, FeatureGroup.Feat };
             feat.SetComponents(components);
             friendlyName = friendlyName ?? (metamagic.ToString() + " Spell");
-            feat.SetNameDescriptionIcon($"Metamagic ({friendlyName})", description, Helpers.GetIcon(iconAssetId));
+            feat.SetNameDescriptionIcon(string.Format(Main.lc.GetTranslate("Metamagic.stFeatGeneralDesc"), friendlyName),
+                description, Helpers.GetIcon(iconAssetId));
             Main.library.AddAsset(feat, assetId);
             CreateMetamagicRods(feat, metamagic, friendlyName, logic);
             return feat;
