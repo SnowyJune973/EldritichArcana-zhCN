@@ -21,7 +21,7 @@ Eldritich Arcana这个mod的中文翻译。
 
 ~~**术士的新职业变体 *混血术士*：** SnowyJune 100%~~
 
-**背景特性：** SnowyJune 10%
+**背景特性：** SnowyJune 17%
 
 偏好职业升级奖励：-
 
