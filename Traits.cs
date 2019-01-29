@@ -47,8 +47,8 @@ namespace EldritchArcana
             // Create the trait selection (https://www.d20pfsrd.com/traits/).
             // TODO: ideally we'd use FeatureGroup.Trait, but it's not recognized by the game code.
             var featureGroup = FeatureGroup.Feat;
-            var traitSelection = Helpers.CreateFeatureSelection("TraitSelection1", "Traits",
-                "Character traits are abilities that are not tied to your character’s race or class. They can enhance your character’s skills, racial abilities, class abilities, or other statistics, enabling you to further customize them. At its core, a character trait is approximately equal in power to half a feat, so two character traits are roughly equivalent to a bonus feat. Yet a character trait isn’t just another kind of power you can add on to your character—it’s a way to quantify (and encourage) building a character background that fits into your campaign world. Think of character traits as “story seeds” for your background; after you pick your two traits, you’ll have a point of inspiration from which to build your character’s personality and history. Alternatively, if you’ve already got a background in your head or written down for your character, you can view picking their traits as a way to quantify that background, just as picking race and class and ability scores quantifies their other strengths and weaknesses.",
+            var traitSelection = Helpers.CreateFeatureSelection("TraitSelection1", Main.lc.GetTranslate("Traits.st.TraitsName"),
+                Main.lc.GetTranslate("Traits.st.TraitsDesc"),
                 "f243a1b828714591b5fa0635b0cefb5b", null, featureGroup);
             var traitSelection2 = Helpers.CreateFeatureSelection("TraitSelection2", "Traits",
                 traitSelection.Description, "d3a6541d2d384b1390d8ea26bb02b8cd", null, featureGroup);
@@ -73,8 +73,8 @@ namespace EldritchArcana
 
             // Create the "Additional Traits" feat.
             var additionalTraits = Helpers.CreateFeature("AdditionalTraitsProgression",
-                "Additional Traits",
-                "You have more traits than normal.\nBenefit: You gain two character traits of your choice. These traits must be chosen from different lists, and cannot be chosen from lists from which you have already selected a character trait. You must meet any additional qualifications for the character traits you choose — this feat cannot enable you to select a dwarf character trait if you are an elf, for example.",
+                Main.lc.GetTranslate("Traits.ft.AdditionalTraitsName"),
+                Main.lc.GetTranslate("Traits.ft.AdditionalTraitsDesc"),
                 "02dbb324cc334412a55e6d8f9fe87009",
                 Helpers.GetIcon("0d3651b2cb0d89448b112e23214e744e"), // Extra Performance
                 FeatureGroup.Feat);
@@ -100,67 +100,70 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateCombatTraits()
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var combatTraits = Helpers.CreateFeatureSelection("CombatTrait", "Combat Trait",
-                "Combat traits focus on martial and physical aspects of your character’s background.",
+            var combatTraits = Helpers.CreateFeatureSelection("CombatTrait", Main.lc.GetTranslate("Traits.st.CombatTraitName"),
+                Main.lc.GetTranslate("Traits.st.CombatTraitDesc"),
                 "fab4225be98a4b3e9717883f22086c82", null, FeatureGroup.None, noFeature);
             noFeature.Feature = combatTraits;
 
             var choices = new List<BlueprintFeature>();
-            choices.Add(Helpers.CreateFeature("AnatomistTrait", "Anatomist",
-                "You have studied the workings of anatomy, either as a student at university or as an apprentice mortician or necromancer. You know where to aim your blows to strike vital organs.\nBenefit: You gain a +1 trait bonus on all rolls made to confirm critical hits.",
+            choices.Add(Helpers.CreateFeature("AnatomistTrait", Main.lc.GetTranslate("Traits.trCb.AnatomistName"),
+                Main.lc.GetTranslate("Traits.trCb.AnatomistDesc"),
                 "69245ef4b4ba44ddac917fc2aa10fbad",
                 Helpers.GetIcon("f4201c85a991369408740c6888362e20"), // Improved Critical
                 FeatureGroup.None,
                 Helpers.Create<CriticalConfirmationBonus>(a => { a.Bonus = 1; a.Value = 0; })));
 
-            choices.Add(Helpers.CreateFeature("ArmorExpertTrait", "Armor Expert",
-                "You have worn armor as long as you can remember, either as part of your training to become a knight’s squire or simply because you were seeking to emulate a hero. Your childhood armor wasn’t the real thing as far as protection, but it did encumber you as much as real armor would have, and you’ve grown used to moving in such suits with relative grace.\nBenefit: When you wear armor of any sort, reduce that suit’s armor check penalty by 1, to a minimum check penalty of 0.",
+            choices.Add(Helpers.CreateFeature("ArmorExpertTrait", Main.lc.GetTranslate("Traits.trCb.ArmorExpertName"),
+                Main.lc.GetTranslate("Traits.trCb.ArmorExpertDesc"),
                 "94d526372a964b6db97c64291a3cb846",
                 Helpers.GetIcon("3bc6e1d2b44b5bb4d92e6ba59577cf62"), // Armor Focus (light)
                 FeatureGroup.None,
                 Helpers.Create<ArmorCheckPenaltyIncrease>(a => a.Bonus = -1)));
 
             var rageResource = library.Get<BlueprintAbilityResource>("24353fcf8096ea54684a72bf58dedbc9");
-            choices.Add(Helpers.CreateFeature("BerserkerOfTheSocietyTrait", "Berserker of the Society",
-                "Your time spent as a society member has taught you new truths about the origins of the your rage ability.\nBenefit: You may use your rage ability for 3 additional rounds per day.",
+            choices.Add(Helpers.CreateFeature("BerserkerOfTheSocietyTrait", Main.lc.GetTranslate("Traits.trCb.BerserkerOfSocietyName"),
+                Main.lc.GetTranslate("Traits.trCb.BerserkerOfSocietyDesc"),
                 "8acfcecfed05442594eed93fe448ab3d",
                 Helpers.GetIcon("1a54bbbafab728348a015cf9ffcf50a7"), // Extra Rage
                 FeatureGroup.None,
                 rageResource.CreateIncreaseResourceAmount(3)));
 
-            choices.Add(Helpers.CreateFeature("BladeOfTheSocietyTrait", "Blade of the Society",
-                "You have studied and learned the weak spots of many humanoids and monsters.\nBenefit: You gain a +1 trait bonus to damage rolls from sneak attacks.",
+            choices.Add(Helpers.CreateFeature("BladeOfTheSocietyTrait", Main.lc.GetTranslate("Traits.trCb.BladeOfSocietyName"),
+                Main.lc.GetTranslate("Traits.trCb.BladeOfSocietyDesc"),
                 "ff8c90626a58436997cc41e4b121be9a",
                 Helpers.GetIcon("9f0187869dc23744292c0e5bb364464e"), // Accomplished Sneak Attacker
                 FeatureGroup.None,
                 Helpers.Create<AdditionalDamageOnSneakAttack>(a => a.Value = 1)));
 
-            choices.Add(Helpers.CreateFeature("DefenderOfTheSocietyTrait", "Defender of the Society",
-                "Your time spent fighting and studying the greatest warriors of the society has taught you new defensive skills while wearing armor.\nBenefit: You gain a +1 trait bonus to Armor Class when wearing medium or heavy armor.",
+            choices.Add(Helpers.CreateFeature("DefenderOfTheSocietyTrait", Main.lc.GetTranslate("Traits.trCb.DefenderOfSocietyName"),
+                Main.lc.GetTranslate("Traits.trCb.DefenderOfSocietyDesc"),
                 "545bf7e13346473caf48f179083df894",
                 Helpers.GetIcon("7dc004879037638489b64d5016997d12"), // Armor Focus Medium
                 FeatureGroup.None,
                 Helpers.Create<ArmorFocus>(a => a.ArmorCategory = ArmorProficiencyGroup.Medium),
                 Helpers.Create<ArmorFocus>(a => a.ArmorCategory = ArmorProficiencyGroup.Heavy)));
 
-            choices.Add(Helpers.CreateFeature("DeftDodgerTrait", "Deft Dodger",
-                "Growing up in a rough neighborhood or a dangerous environment has honed your senses.\nBenefit: You gain a +1 trait bonus on Reflex saves.",
+            choices.Add(Helpers.CreateFeature("DeftDodgerTrait", Main.lc.GetTranslate("Traits.trCb.DeftDodgerName"),
+                Main.lc.GetTranslate("Traits.trCb.DeftDodgerDesc"),
+                //"Growing up in a rough neighborhood or a dangerous environment has honed your senses.\nBenefit: You gain a +1 trait bonus on Reflex saves.",
                 "7b57d86503314d32b753f77909c909bc",
                 Helpers.GetIcon("15e7da6645a7f3d41bdad7c8c4b9de1e"), // Lightning Reflexes
                 FeatureGroup.None,
                 Helpers.CreateAddStatBonus(StatType.SaveReflex, 1, ModifierDescriptor.Trait)));
 
-            choices.Add(Helpers.CreateFeature("DirtyFighterTrait", "Dirty Fighter",
-                "You wouldn’t have lived to make it out of childhood without the aid of a sibling, friend, or companion you could always count on to distract your enemies long enough for you to do a little bit more damage than normal. That companion may be another PC or an NPC (who may even be recently departed from your side).\n" +
-                "Benefit: When you hit a foe you are flanking, you deal 1 additional point of damage (this damage is added to your base damage, and is multiplied on a critical hit). This additional damage is a trait bonus.",
+            choices.Add(Helpers.CreateFeature("DirtyFighterTrait", Main.lc.GetTranslate("Traits.trCb.DirtyFighterName"),
+                Main.lc.GetTranslate("Traits.trCb.DirtyFighterDesc"),
+                //"You wouldn’t have lived to make it out of childhood without the aid of a sibling, friend, or companion you could always count on to distract your enemies long enough for you to do a little bit more damage than normal. That companion may be another PC or an NPC (who may even be recently departed from your side).\n" +
+                //"Benefit: When you hit a foe you are flanking, you deal 1 additional point of damage (this damage is added to your base damage, and is multiplied on a critical hit). This additional damage is a trait bonus.",
                 "ac47c14063574a0a9ea6927bf637a02a",
                 Helpers.GetIcon("5662d1b793db90c4b9ba68037fd2a768"), // precise strike
                 FeatureGroup.None,
                 DamageBonusAgainstFlankedTarget.Create(1)));
 
             var kiPowerResource = library.Get<BlueprintAbilityResource>("9d9c90a9a1f52d04799294bf91c80a82");
-            choices.Add(Helpers.CreateFeature("HonoredFistOfTheSocietyTrait", "Honored First of the Society",
-                "You have studied dozens of ancient texts on martial arts that only the Society possesses, and are more learned in these arts than most.\nBenefit: You increase your ki pool by 1 point.",
+            choices.Add(Helpers.CreateFeature("HonoredFistOfTheSocietyTrait", Main.lc.GetTranslate("Traits.trCb.HonoredFirstOfSocietyName"),
+                Main.lc.GetTranslate("Traits.trCb.HonoredFirstOfSocietyDesc"),
+                //"You have studied dozens of ancient texts on martial arts that only the Society possesses, and are more learned in these arts than most.\nBenefit: You increase your ki pool by 1 point.",
                 "ee9c230cbbc2484084af61ac97e47e72",
                 Helpers.GetIcon("7dc004879037638489b64d5016997d12"), // Armor Focus Medium
                 FeatureGroup.None,
@@ -168,27 +171,31 @@ namespace EldritchArcana
 
             // TODO: Killer
 
-            choices.Add(Helpers.CreateFeature("ReactionaryTrait", "Reactionary",
-                "You were bullied often as a child, but never quite developed an offensive response. Instead, you became adept at anticipating sudden attacks and reacting to danger quickly.\nBenefit: You gain a +2 trait bonus on initiative checks.",
+            choices.Add(Helpers.CreateFeature("ReactionaryTrait", Main.lc.GetTranslate("Traits.trCb.ReactionaryName"),
+                Main.lc.GetTranslate("Traits.trCb.ReactionaryDesc"),
+                //"You were bullied often as a child, but never quite developed an offensive response. Instead, you became adept at anticipating sudden attacks and reacting to danger quickly.\nBenefit: You gain a +2 trait bonus on initiative checks.",
                 "fa2c636580ee431297de8806a046044a",
                 Helpers.GetIcon("797f25d709f559546b29e7bcb181cc74"), // Improved Initiative
                 FeatureGroup.None,
                 Helpers.CreateAddStatBonus(StatType.Initiative, 2, ModifierDescriptor.Trait)));
 
-            choices.Add(CreateSkillFeat("RecklessTrait", "Reckless",
-                "You have a tendency for rash behavior, often disregarding your own safety as you move across the battlefield.",
+            choices.Add(CreateSkillFeat("RecklessTrait", Main.lc.GetTranslate("Traits.trCb.RecklessName"),
+                Main.lc.GetTranslate("Traits.trCb.RecklessDesc"),
+                //"You have a tendency for rash behavior, often disregarding your own safety as you move across the battlefield.",
                 "edb2f4d0c2c34c7baccad11f2b5bfbd4",
                 StatType.SkillMobility));
 
-            choices.Add(Helpers.CreateFeature("ResilientTrait", "Resilient",
-                "Growing up in a poor neighborhood or in the unforgiving wilds often forced you to subsist on food and water from doubtful sources. You’ve built up your constitution as a result.\nBenefit: You gain a +1 trait bonus on Fortitude saves.",
+            choices.Add(Helpers.CreateFeature("ResilientTrait", Main.lc.GetTranslate("Traits.trCb.ResilientName"),
+                Main.lc.GetTranslate("Traits.trCb.ResilientDesc"),
+                //"Growing up in a poor neighborhood or in the unforgiving wilds often forced you to subsist on food and water from doubtful sources. You’ve built up your constitution as a result.\nBenefit: You gain a +1 trait bonus on Fortitude saves.",
                 "789d02217b6542ce8b0302249c86d49d",
                 Helpers.GetIcon("79042cb55f030614ea29956177977c52"), // Great Fortitude
                 FeatureGroup.None,
                 Helpers.CreateAddStatBonus(StatType.SaveFortitude, 1, ModifierDescriptor.Trait)));
 
-            choices.Add(CreateSkillFeat("WittyReparteeTrait", "Witty Repartee",
-                "You are quick with your tongue and have always possessed the talent to quickly admonish your enemies.",
+            choices.Add(CreateSkillFeat("WittyReparteeTrait", Main.lc.GetTranslate("Traits.trCb.WittyReparteeName"),
+                Main.lc.GetTranslate("Traits.trCb.WittyReparteeDesc"),
+                //"You are quick with your tongue and have always possessed the talent to quickly admonish your enemies.",
                 "c6dbc457c5de40dbb4cb9fe4d7706cd9",
                 StatType.SkillPersuasion));
 
@@ -199,14 +206,16 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateFaithTraits()
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var faithTraits = Helpers.CreateFeatureSelection("FaithTrait", "Faith Trait",
-                "Faith traits focus on the character's religious and philosophical leanings.",
+            var faithTraits = Helpers.CreateFeatureSelection("FaithTrait", Main.lc.GetTranslate("Traits.st.FaithTraitName"),
+                Main.lc.GetTranslate("Traits.st.FaithTraitDesc"),
+                //"Faith traits focus on the character's religious and philosophical leanings.",
                 "21d0fe2d88e44e5cbfb28becadf86110", null, FeatureGroup.None, noFeature);
             noFeature.Feature = faithTraits;
 
             var choices = new List<BlueprintFeature>();
-            choices.Add(Helpers.CreateFeature("BirthmarkTrait", "Birthmark",
-                "You were born with a strange birthmark that looks very similar to the holy symbol of the god you chose to worship later in life.\nBenefits: This birthmark increases your devotion to your god. You gain a +2 trait bonus on all saving throws against charm and compulsion effects.",
+            choices.Add(Helpers.CreateFeature("BirthmarkTrait", Main.lc.GetTranslate("Traits.trFa.BirthmarkName"),
+                Main.lc.GetTranslate("Traits.trFa.BirthmarkDesc"),
+                //"You were born with a strange birthmark that looks very similar to the holy symbol of the god you chose to worship later in life.\nBenefits: This birthmark increases your devotion to your god. You gain a +2 trait bonus on all saving throws against charm and compulsion effects.",
                 "ebf720b1589d43a2b6cfad26aeda34f9",
                 Helpers.GetIcon("2483a523984f44944a7cf157b21bf79c"), // Elven Immunities
                 FeatureGroup.None,
@@ -217,26 +226,30 @@ namespace EldritchArcana
                     a.ModifierDescriptor = ModifierDescriptor.Trait;
                 })));
 
-            choices.Add(CreateSkillFeat("ChildOfTheTempleTrait", "Child of the Temple",
-                "You have long served at a temple in a city, where you picked up on many of the nobility’s customs in addition to spending much time in the temple libraries studying your faith.",
+            choices.Add(CreateSkillFeat("ChildOfTheTempleTrait", Main.lc.GetTranslate("Traits.trFa.ChildOfTempleName"),
+                Main.lc.GetTranslate("Traits.trFa.ChildOfTempleDesc"),
+                //"You have long served at a temple in a city, where you picked up on many of the nobility’s customs in addition to spending much time in the temple libraries studying your faith.",
                 "cb79816f17d84a51b173ef74aa325561",
                 StatType.SkillLoreReligion));
 
-            choices.Add(CreateSkillFeat("DevoteeOfTheGreenTrait", "Devotee of the Green",
-                "Your faith in the natural world or one of the gods of nature makes it easy for you to pick up on related concepts.",
+            choices.Add(CreateSkillFeat("DevoteeOfTheGreenTrait", Main.lc.GetTranslate("Traits.trFa.DevoteeOfGreenName"),
+                Main.lc.GetTranslate("Traits.trFa.DevoteeOfGreenDesc"),
+                //"Your faith in the natural world or one of the gods of nature makes it easy for you to pick up on related concepts.",
                 "6b8e68de9fc04139af0f1127d2a33984",
                 StatType.SkillLoreNature));
 
-            choices.Add(CreateSkillFeat("EaseOfFaithTrait", "Ease of Faith",
-                "Your mentor, the person who invested your faith in you from an early age, took steps to ensure you understood that what powers your divine magic is no different from that which powers the magic of other religions. This philosophy makes it easier for you to interact with others who may not share your views.",
+            choices.Add(CreateSkillFeat("EaseOfFaithTrait", Main.lc.GetTranslate("Traits.trFa.EaseOfFaithName"),
+                Main.lc.GetTranslate("Traits.trFa.EaseOfFaithDesc"),
+                //"Your mentor, the person who invested your faith in you from an early age, took steps to ensure you understood that what powers your divine magic is no different from that which powers the magic of other religions. This philosophy makes it easier for you to interact with others who may not share your views.",
                 "300d727a858d4992a3e01c8165a4c25f",
                 StatType.SkillPersuasion));
 
             var channelEnergyResource = library.Get<BlueprintAbilityResource>("5e2bba3e07c37be42909a12945c27de7");
             var channelEnergyEmpyrealResource = library.Get<BlueprintAbilityResource>("f9af9354fb8a79649a6e512569387dc5");
             var channelEnergyHospitalerResource = library.Get<BlueprintAbilityResource>("b0e0c7716ab27c64fb4b131c9845c596");
-            choices.Add(Helpers.CreateFeature("ExaltedOfTheSocietyTrait", "Exalted of the Society",
-                "The vaults of the great city contain many secrets of the divine powers of the gods, and you have studied your god extensively.\nBenefit: You may channel energy 1 additional time per day.",
+            choices.Add(Helpers.CreateFeature("ExaltedOfTheSocietyTrait", Main.lc.GetTranslate("Traits.trFa.ExaltedOfSocietyName"),
+                Main.lc.GetTranslate("Traits.trFa.ExaltedOfSocietyDesc"),
+                //"The vaults of the great city contain many secrets of the divine powers of the gods, and you have studied your god extensively.\nBenefit: You may channel energy 1 additional time per day.",
                 "3bb1b077ad0845b59663c0e1b343011a",
                 Helpers.GetIcon("cd9f19775bd9d3343a31a065e93f0c47"), // Extra Channel
                 FeatureGroup.None,
@@ -245,22 +258,25 @@ namespace EldritchArcana
                 channelEnergyHospitalerResource.CreateIncreaseResourceAmount(1),
                 LifeMystery.channelResource.CreateIncreaseResourceAmount(1)));
 
-            choices.Add(Helpers.CreateFeature("FatesFavoredTrait", "Fate's Favored",
-                "Whenever you are under the effect of a luck bonus of any kind, that bonus increases by 1.",
+            choices.Add(Helpers.CreateFeature("FatesFavoredTrait", Main.lc.GetTranslate("Traits.trFa.FatesFavoredName"),
+                Main.lc.GetTranslate("Traits.trFa.FatesFavoredDesc"),
+                //"Whenever you are under the effect of a luck bonus of any kind, that bonus increases by 1.",
                 "0c5dcccc21e148cdaf0fb3c643249bfb",
                 Helpers.GetIcon("9a7e3cd1323dfe347a6dcce357844769"), // blessing luck & resolve
                 FeatureGroup.None,
                 Helpers.Create<ExtraLuckBonus>()));
 
-            choices.Add(Helpers.CreateFeature("IndomitableFaithTrait", "Indomitable Faith",
-                "You were born in a region where your faith was not popular, but you still have never abandoned it. Your constant struggle to maintain your own faith has bolstered your drive.\nBenefit: You gain a +1 trait bonus on Will saves.",
+            choices.Add(Helpers.CreateFeature("IndomitableFaithTrait", Main.lc.GetTranslate("Traits.trFa.IndomitableFaithName"),
+                Main.lc.GetTranslate("Traits.trFa.IndomitableFaithDesc"),
+                //"You were born in a region where your faith was not popular, but you still have never abandoned it. Your constant struggle to maintain your own faith has bolstered your drive.\nBenefit: You gain a +1 trait bonus on Will saves.",
                 "e50acadad65b4028884dd4a74f14e727",
                 Helpers.GetIcon("175d1577bb6c9a04baf88eec99c66334"), // Iron Will
                 FeatureGroup.None,
                 Helpers.CreateAddStatBonus(StatType.SaveWill, 1, ModifierDescriptor.Trait)));
 
-            choices.Add(CreateSkillFeat("ScholarOfTheGreatBeyondTrait", "Scholar of the Great Beyond",
-                "Your greatest interests as a child did not lie with current events or the mundane—you have always felt out of place, as if you were born in the wrong era. You take to philosophical discussions of the Great Beyond and of historical events with ease.",
+            choices.Add(CreateSkillFeat("ScholarOfTheGreatBeyondTrait", Main.lc.GetTranslate("Traits.trFa.ScholarOfGreatBeyondName"),
+                Main.lc.GetTranslate("Traits.trFa.ScholarOfGreatBeyondDesc"),
+                //"Your greatest interests as a child did not lie with current events or the mundane—you have always felt out of place, as if you were born in the wrong era. You take to philosophical discussions of the Great Beyond and of historical events with ease.",
                 "0896fea4f7ca4635aa4e5338a673610d",
                 StatType.SkillKnowledgeWorld));
 
@@ -273,46 +289,53 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateMagicTraits()
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var magicTraits = Helpers.CreateFeatureSelection("MagicTrait", "Magic Trait",
-                "Magic traits focus on any magical events or training your character may have had in their past.",
+            var magicTraits = Helpers.CreateFeatureSelection("MagicTrait", Main.lc.GetTranslate("Traits.st.MagicTraitName"),
+                Main.lc.GetTranslate("Traits.st.MagicTraitDesc"),
+                //"Magic traits focus on any magical events or training your character may have had in their past.",
                 "d89181c607e4431084f9d97532c5c554", null, FeatureGroup.None, noFeature);
             noFeature.Feature = magicTraits;
 
             var choices = new List<BlueprintFeature>();
-            choices.Add(CreateSkillFeat("ClassicallySchooledTrait", "Classically Schooled",
-                "Your greatest interests as a child did not lie with current events or the mundane—you have always felt out of place, as if you were born in the wrong era. You take to philosophical discussions of the Great Beyond and of historical events with ease.",
+            choices.Add(CreateSkillFeat("ClassicallySchooledTrait", Main.lc.GetTranslate("Traits.trMg.ClassicallySchooledName"),
+                Main.lc.GetTranslate("Traits.trMg.ClassicallySchooledDesc"),
+                //"Your greatest interests as a child did not lie with current events or the mundane—you have always felt out of place, as if you were born in the wrong era. You take to philosophical discussions of the Great Beyond and of historical events with ease.",
                 "788098518aa9436782397fa318c64c69",
                 StatType.SkillKnowledgeArcana));
 
-            choices.Add(CreateSkillFeat("DangerouslyCuriousTrait", "Dangerously Curious",
-                "You have always been intrigued by magic, possibly because you were the child of a magician or priest. You often snuck into your parent’s laboratory or shrine to tinker with spell components and magic devices, and frequently caused quite a bit of damage and headaches for your parent as a result.",
+            choices.Add(CreateSkillFeat("DangerouslyCuriousTrait", Main.lc.GetTranslate("Traits.trMg.DangerouslyCuriousName"),
+                Main.lc.GetTranslate("Traits.trMg.DangerouslyCuriousDesc"),
+                //"You have always been intrigued by magic, possibly because you were the child of a magician or priest. You often snuck into your parent’s laboratory or shrine to tinker with spell components and magic devices, and frequently caused quite a bit of damage and headaches for your parent as a result.",
                 "0c72c573cc404b42916dc7265ea6f59a",
                 StatType.SkillUseMagicDevice));
 
-            choices.Add(Helpers.CreateFeature("FocusedMindTrait", "Focused Mind",
-                "Your childhood was dominated either by lessons of some sort (whether musical, academic, or other) or by a horrible home life that encouraged your ability to block out distractions and focus on the immediate task at hand.\nBenefit: You gain a +2 trait bonus on concentration checks.",
+            choices.Add(Helpers.CreateFeature("FocusedMindTrait", Main.lc.GetTranslate("Traits.trMg.FocusedMindName"),
+                Main.lc.GetTranslate("Traits.trMg.FocusedMindDesc"),
+                //"Your childhood was dominated either by lessons of some sort (whether musical, academic, or other) or by a horrible home life that encouraged your ability to block out distractions and focus on the immediate task at hand.\nBenefit: You gain a +2 trait bonus on concentration checks.",
                 "e34889a2dd7e4e9ebfdfa76bfb8f5556",
                 Helpers.GetIcon("06964d468fde1dc4aa71a92ea04d930d"), // Combat Casting
                 FeatureGroup.None,
                 Helpers.Create<ConcentrationBonus>(a => a.Value = 2)));
 
-            var giftedAdept = Helpers.CreateFeatureSelection("GiftedAdeptTrait", "Gifted Adept",
-                "Your interest in magic was inspired by witnessing a spell being cast in a particularly dramatic method, perhaps even one that affected you physically or spiritually. This early exposure to magic has made it easier for you to work similar magic on your own.\nBenefit: Pick one spell when you choose this trait—from this point on, whenever you cast that spell, its effects manifest at +1 caster level.",
+            var giftedAdept = Helpers.CreateFeatureSelection("GiftedAdeptTrait", Main.lc.GetTranslate("Traits.trMg.GiftedAdeptName"),
+                Main.lc.GetTranslate("Traits.trMg.GiftedAdeptDesc"),
+                //"Your interest in magic was inspired by witnessing a spell being cast in a particularly dramatic method, perhaps even one that affected you physically or spiritually. This early exposure to magic has made it easier for you to work similar magic on your own.\nBenefit: Pick one spell when you choose this trait—from this point on, whenever you cast that spell, its effects manifest at +1 caster level.",
                 "5eb0b8050ed5466986846cffca0b35b6",
                 Helpers.GetIcon("fe9220cdc16e5f444a84d85d5fa8e3d5"), // Spell Specialization Progression
                 FeatureGroup.None);
             FillSpellSelection(giftedAdept, 1, 9, Helpers.Create<IncreaseCasterLevelForSpell>());
             choices.Add(giftedAdept);
 
-            choices.Add(Helpers.CreateFeature("MagicalKnackTrait", "Magical Knack",
-                "You were raised, either wholly or in part, by a magical creature, either after it found you abandoned in the woods or because your parents often left you in the care of a magical minion. This constant exposure to magic has made its mysteries easy for you to understand, even when you turn your mind to other devotions and tasks.\nBenefit: Pick a class when you gain this trait—your caster level in that class gains a +2 trait bonus as long as this bonus doesn’t raise your caster level above your current Hit Dice.",
+            choices.Add(Helpers.CreateFeature("MagicalKnackTrait", Main.lc.GetTranslate("Traits.trMg.MagicalKnackName"),
+                Main.lc.GetTranslate("Traits.trMg.MagicalKnackDesc"),
+                //"You were raised, either wholly or in part, by a magical creature, either after it found you abandoned in the woods or because your parents often left you in the care of a magical minion. This constant exposure to magic has made its mysteries easy for you to understand, even when you turn your mind to other devotions and tasks.\nBenefit: Pick a class when you gain this trait—your caster level in that class gains a +2 trait bonus as long as this bonus doesn’t raise your caster level above your current Hit Dice.",
                 "8fd15d5aa003497aa7f976530d21e430",
                 Helpers.GetIcon("16fa59cc9a72a6043b566b49184f53fe"), // Spell Focus
                 FeatureGroup.None,
                 Helpers.Create<IncreaseCasterLevelUpToCharacterLevel>()));
 
-            var magicalLineage = Helpers.CreateFeatureSelection("MagicalLineageTrait", "Magical Lineage",
-                "One of your parents was a gifted spellcaster who not only used metamagic often, but also developed many magical items and perhaps even a new spell or two—and you have inherited a fragment of this greatness.\nBenefit: Pick one spell when you choose this trait. When you apply metamagic feats to this spell that add at least 1 level to the spell, treat its actual level as 1 lower for determining the spell’s final adjusted level.",
+            var magicalLineage = Helpers.CreateFeatureSelection("MagicalLineageTrait", Main.lc.GetTranslate("Traits.trMg.MagicalLineageName"),
+                Main.lc.GetTranslate("Traits.trMg.MagicalLineageDesc"),
+                //"One of your parents was a gifted spellcaster who not only used metamagic often, but also developed many magical items and perhaps even a new spell or two—and you have inherited a fragment of this greatness.\nBenefit: Pick one spell when you choose this trait. When you apply metamagic feats to this spell that add at least 1 level to the spell, treat its actual level as 1 lower for determining the spell’s final adjusted level.",
                 "1785787fb62a4c529104ba53d0de99ae",
                 Helpers.GetIcon("ee7dc126939e4d9438357fbd5980d459"), // Spell Penetration
                 FeatureGroup.None);
