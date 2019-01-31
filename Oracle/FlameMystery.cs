@@ -100,14 +100,14 @@ namespace EldritchArcana
             var skill2 = StatType.SkillMobility;
             var description = new StringBuilder(mysteryDescription).AppendLine();
             description.AppendLine(
-                $"Class skills: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}\n" +
-                "An oracle with the flame mystery can choose from any of the following revelations:");
+                $"本职技能: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}\n" +
+                "选择了火焰秘视域的先知可以选择以下启示:");
             foreach (var r in revelations)
             {
                 description.AppendLine($"• {r.Name}");
             }
 
-            var mystery = Helpers.CreateProgression("MysteryFlameProgression", "Flame Mystery", description.ToString(),
+            var mystery = Helpers.CreateProgression("MysteryFlameProgression", "火焰秘视域", description.ToString(),
                 "11205333c1be4c6f868e413633fc7557",
                 Helpers.GetIcon("17cc794d47408bc4986c55265475c06f"), // Fire elemental bloodline
                 UpdateLevelUpDeterminatorText.Group,
@@ -148,8 +148,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateBurningMagic()
         {
-            var feat = Helpers.CreateFeature("MysteryFlameBurningMagic", "Burning Magic",
-                "Whenever a creature fails a saving throw and takes fire damage from one of your spells, it catches on fire. This fire deals 1 point of fire damage per spell level at the beginning of the burning creature’s turn. The fire lasts for 1d4 rounds, but it can be extinguished as a move action if the creature succeeds at a Reflex save (using the spell’s DC). Dousing the creature with water as a standard action grants a +2 bonus on this save, while immersing the creature in water automatically extinguishes the fire. Spells that do not grant a save do not cause a creature to catch on fire.",
+            var feat = Helpers.CreateFeature("MysteryFlameBurningMagic", "燃尽魔法",
+                "如果某个目标没有通过你释放的火系魔法的豁免检定并受到火焰伤害，他将着火。在轮到着火的目标开始行动的时候他受到每法术等级1点的火焰伤害。着火状态将持续1d4轮，但可以用一个移动动作结束这一状态，只要该目标通过一个反射检定（使用那个法术的DC）。将目标浸湿水可以使他在豁免检定上获得+2加值，而把他浸入水中则可以直接将火熄灭。不需要通过豁免的法术不会使目标着火。",
                 "ae7b2ef7026d4de494779f6112f8dfba",
                 Helpers.GetIcon("42a65895ba0cb3a42b6019039dd2bff1"), // molten orb
                 FeatureGroup.None);
@@ -202,8 +202,8 @@ namespace EldritchArcana
             var resource = Helpers.CreateAbilityResource($"{name}Resource", "", "", "49ab0eaffc72414a872f8bf1b9372e0d", null);
             resource.SetFixedResource(1);
 
-            var ability = Helpers.CreateAbility($"{name}Ability", "Firestorm",
-                "As a standard action, you can cause fire to erupt around you. You can create one 10-foot cube of fire per oracle level. These cubes can be arranged in any pattern you desire, but each cube must be adjacent to another and one must be adjacent to you. Any creature caught in these flames takes 1d6 points of fire damage per oracle level, with a Reflex save resulting in half damage. This fire lasts for a number of rounds equal to your Charisma modifier. You can use this ability once per day. You must be at least 11th level to select this revelation.",
+            var ability = Helpers.CreateAbility($"{name}Ability", "烈焰风暴",
+                "以一个标准动作，你可以放出一股环绕着你的火焰。你可以制造每先知等级10尺见方的火焰。这些立方可以组合成你希望的任何形状，但每一块都必须与另一块相连，并且至少有一块与你相连。在这个火焰中的生物会受到1d6每等级的火焰伤害。通过反射检定可使伤害减半。火焰持续的时间等于你的魅力修正。你每天可以使用此能力1次。要选择此启示你至少要达到11级。",
                 "4bddc1868e8b49ed8d27a67ee2085da3",
                 Helpers.GetIcon("e3d0dfe1c8527934294f241e0ae96a8d"), // fire storm
                 AbilityType.Supernatural, CommandType.Standard, AbilityRange.Close,
@@ -235,13 +235,13 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateCinderDance()
         {
-            var feat = Helpers.CreateFeature("MysteryFlameCinderDance", "Cinder Dance",
-                "Your base speed increases by 10 feet. At 10th level, you can ignore difficult terrain when moving. Oracles with the lame oracle curse cannot select this revelation.",
+            var feat = Helpers.CreateFeature("MysteryFlameCinderDance", "余烬之舞",
+                "你的基础移动速度提高10英尺，在10级时，你在移动时可忽视困难地形带来的移动阻碍。有跛足诅咒的先知无法选择此启示。",
                 "87cdb2075e0f4212895facaeb68cc3ab",
                 Helpers.GetIcon("4f8181e7a7f1d904fbaea64220e83379"), // ExpeditiousRetreat
                 FeatureGroup.None);
 
-            var ignoreTerrain = Helpers.CreateFeature($"{feat.name}IgnoreTerrain", "Cinder Dance", feat.Description,
+            var ignoreTerrain = Helpers.CreateFeature($"{feat.name}IgnoreTerrain", "余烬之舞", feat.Description,
                 "7a83ca46db704d6e991559795f088906",
                 Helpers.GetIcon("f3c0b267dd17a2a45a40805e31fe3cd1"), // FeatherStep
                 FeatureGroup.None,
@@ -256,8 +256,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateHeatAura()
         {
-            var feat = Helpers.CreateFeature("MysteryFlameHeatAura", "Heat Aura",
-                "As a swift action, you can cause waves of heat to radiate from your body. This heat deals 1d4 points of fire damage per two oracle levels (minimum 1d4) to all creatures within 10 feet. A Reflex save halves the damage. In addition, your form wavers and blurs, granting you 20% concealment until your next turn. You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter.",
+            var feat = Helpers.CreateFeature("MysteryFlameHeatAura", "热能对流",
+                "以一个迅捷动作，你能以你为中心制造一波热量辐射。这股热量对10尺之内的所有目标造成每两个先知等级1d4点火焰伤害（最少1d4点）。通过反射可使伤害减半。此外，你的身形在灼热的空气中显得扭曲而模糊，使你获得20%隐蔽，直到你下一轮。你每天可以使用此能力1次，在5级以及之后的每5级多一次使用次数。",
                 "0eeea06535d349e7bafb3e8dcc538fa4",
                 FireSpells.wallOfFire.Icon, FeatureGroup.None);
 
@@ -293,8 +293,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateFireBreath()
         {
-            var feat = Helpers.CreateFeature("MysteryFlameBreath", "Fire Breath",
-                "As a standard action, you can unleash a 15-foot cone of flame from your mouth. This flame deals 1d4 points of fire damage per level. A Reflex save halves this damage. You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter. The save DC is Charisma-based.",
+            var feat = Helpers.CreateFeature("MysteryFlameBreath", "烈焰喷发",
+                "以一个标准动作，你可以从口中喷出一个15尺锥形火焰。这个火焰会造成1d4每等级的火焰伤害，最大10d4。通过反射检定可使伤害减半。你每天可以使用此能力1次，在5级以及之后的每5级再加1次使用次数。该豁免DC基于魅力。",
                 "3f254ece8752466d8fd76ca358990eb9",
                 Helpers.GetIcon("2a711cd134b91d34ab027b50d721778b"), // gold dragon fire breath
                 FeatureGroup.None);
@@ -323,8 +323,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateFormOfFlame()
         {
-            var feat = Helpers.CreateFeature("MysteryFlameForm", "Form of the Flame",
-                "As a standard action, you can assume the form of a small fire elemental, as Elemental Body I. At 9th level, you can assume the form of a medium fire elemental, as Elemental Body II. At 11th level, you can assume the form of a large fire elemental, as Elemental Body III. At 13th level, you can assume the form of a huge fire elemental, as Elemental Body IV. You can use this ability once per day, but the duration is 1 hour/level. You must be at least 7th level to select this revelation.",
+            var feat = Helpers.CreateFeature("MysteryFlameForm", "烈焰形态",
+                "以一个标准动作，你可以变成小型火元素，如同“元素形态I”。9级你可以变成中型火元素，如同“元素形态II”。11级你可以变成大型火元素，如同“元素形态III”。13级你可以变成超大型火元素，如同“元素形态IV”。你每天可以使用此能力1次，持续时间为每先知等级1小时。要选择此启示你至少要达到7级。",
                 "1c18972911284249a0bc38f6f4ec4304",
                 Helpers.GetIcon("bb6bb6d6d4b27514dae8ec694433dcd3"), // elemental body fire 1
                 FeatureGroup.None);
@@ -367,8 +367,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateMoltenSkin()
         {
-            var feat = Helpers.CreateFeature("MysteryFlamesMoltenSkin", "Molten Skin",
-                "You gain resist fire 5. This resistance increases to 10 at 5th level and 20 at 11th level. At 17th level, you gain immunity to fire.",
+            var feat = Helpers.CreateFeature("MysteryFlamesMoltenSkin", "熔岩皮肤",
+                "你获得5点火焰抗力。5级该抗力变为10，11级变为20。17级你免疫火焰。",
                 "9fc56e88f4dc4733bc99fad0be185ad5",
                 Helpers.GetIcon("ddfb4ac970225f34dbff98a10a4a8844"),
                 FeatureGroup.None);
@@ -403,9 +403,9 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateTouchOfFlame()
         {
-            var feat = Helpers.CreateFeature("MysteryFlameTouch", "Touch of Flame",
-                "As a standard action, you can perform a melee touch attack that deals 1d6 points of fire damage +1 point for every two oracle levels you possess. You can use this ability a number of times per day equal to 3 + your Charisma modifier.\n" +
-                "At 11th level, any weapon that you wield is treated as a flaming weapon.",
+            var feat = Helpers.CreateFeature("MysteryFlameTouch", "火焰之触",
+                "以一个标准动作，你可以通过近战接触攻击对敌人造成“1d6+1/2先知等级”火焰伤害。你每天可以使用此能力的次数为“3+魅力修正”。\n" +
+                "11级你持有的任何武器都将成为炽焰武器。",
                 "b4b0a59bf8d645c0b4329e26176e1cc0",
                 Helpers.GetIcon("05b7cbe45b1444a4f8bf4570fb2c0208"), // burning hands
                 FeatureGroup.None);
@@ -427,7 +427,7 @@ namespace EldritchArcana
             spell.EffectOnEnemy = AbilityEffectOnUnit.Harmful;
 
             var flamingEnchant = library.Get<BlueprintWeaponEnchantment>("30f90becaaac51f41bf56641966c4121");
-            var flamingWeapon = Helpers.CreateFeature($"{feat.name}Flaming", "${feat.Name} — Flaming Weapon", feat.Description,
+            var flamingWeapon = Helpers.CreateFeature($"{feat.name}Flaming", "${feat.Name} — 火焰武器", feat.Description,
                 "8eb6532176974cdbbf20c38c0f433bad",
                 Helpers.GetIcon("05b7cbe45b1444a4f8bf4570fb2c0208"), // arcane weapon flaming
                 FeatureGroup.None,
@@ -445,8 +445,8 @@ namespace EldritchArcana
         {
             var redDragonWings = library.Get<BlueprintActivatableAbility>("b00344e4b4134bb42a374ad8971392fd");
             var feat = Helpers.CreateFeature("MysteryFlameWings",
-                "Wings of Fire",
-                "As a swift action, you can manifest a pair of fiery wings that grant you a fly speed of 60 feet with average maneuverability. You can use these wings for 1 minute per day per oracle level. This duration does not need to be consecutive, but it must be spent in 1 minute increments. You must be at least 7th level before selecting this revelation.",
+                "烈焰羽翼",
+                "以一个迅捷动作，你可以显化一对火焰构成的翅膀，并给你提供60尺的飞行速度，机动性一般。你每天可以使用这对翅膀每先知等级1分钟，时间不必连续，但每次至少花费1分钟。要选择此启示你至少要达到7级。",
                 "bec6ab62414447909cc1393982c10b62",
                 redDragonWings.Icon,
                 FeatureGroup.None);
@@ -483,17 +483,17 @@ namespace EldritchArcana
             // - Reach, Intensified and Extend.
             //
             // Those have the same cost and seem somewhat on-theme for the Flame revelation.
-            var feat = Helpers.CreateFeature("MysteryFlameFinalRevelation", "Final Revelation",
-                "Upon reaching 20th level, you become a master of fire. You can apply any one of the following feats to any fire spell you cast without increasing the level or casting time: Extend Spell, Intensified Spell, or Reach Spell. You do not need to possess these feats to use this ability.",
+            var feat = Helpers.CreateFeature("MysteryFlameFinalRevelation", "最终启示",
+                "当达到20级时，你成为火焰的大师。你可以将以下任何一个专长应用于你的火系法术而不需要提高法术等级：法术增远，法术强效或法术延时。",
                 "afdb91ba551440afad8b506b03f3aa5d",
                 Helpers.GetIcon("98734a2665c18cd4db71878b0532024a"), // firebrand
                 FeatureGroup.None);
 
 
             feat.SetComponents(Helpers.CreateAddFacts(ExclusiveAbilityToggle.AddToAbilities(
-                CreateMetamagicAbility(feat, "Extend", "Extend Spell (Fire)", Metamagic.Extend, "bb491aec901f43ebabc1c2a651b1c690"),
-                CreateMetamagicAbility(feat, "Intensified", "Intensified Spell (Fire)", (Metamagic)ModMetamagic.Intensified, "3fe9e72e1e1a4fd3b2cb871b8068c258"),
-                CreateMetamagicAbility(feat, "Reach", "Reach Spell (Fire)", Metamagic.Reach, "5b3c0178959641b08de7c9280ca19f3e"))));
+                CreateMetamagicAbility(feat, "Extend", "延时超魔 (火焰)", Metamagic.Extend, "bb491aec901f43ebabc1c2a651b1c690"),
+                CreateMetamagicAbility(feat, "Intensified", "强效超魔 (火焰)", (Metamagic)ModMetamagic.Intensified, "3fe9e72e1e1a4fd3b2cb871b8068c258"),
+                CreateMetamagicAbility(feat, "Reach", "增远超魔 (火焰)", Metamagic.Reach, "5b3c0178959641b08de7c9280ca19f3e"))));
             return feat;
         }
 

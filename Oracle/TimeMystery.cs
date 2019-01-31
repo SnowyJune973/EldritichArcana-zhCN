@@ -106,14 +106,14 @@ namespace EldritchArcana
             var skill2 = StatType.SkillMobility;
             var description = new StringBuilder(mysteryDescription).AppendLine();
             description.AppendLine(
-                $"Class skills: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}\n" +
-                "An oracle with the time mystery can choose from any of the following revelations:");
+                $"本职技能: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}\n" +
+                "选择了时间秘视域的先知可以选择以下启示:");
             foreach (var r in revelations)
             {
                 description.AppendLine($"• {r.Name}");
             }
 
-            var mystery = Helpers.CreateProgression("MysteryTimeProgression", "Time Mystery", description.ToString(),
+            var mystery = Helpers.CreateProgression("MysteryTimeProgression", "时间秘视域", description.ToString(),
                 "b05d63ba0f634061af15c995c1a3340d",
                 TimeStop.spell.Icon,
                 UpdateLevelUpDeterminatorText.Group,
@@ -125,7 +125,7 @@ namespace EldritchArcana
             var finalRevelation = CreateFinalRevelation();
             mystery.LevelEntries = new LevelEntry[] { Helpers.LevelEntry(20, finalRevelation) };
 
-            var revelation = Helpers.CreateFeatureSelection("MysteryTimeRevelation", "Time Revelation",
+            var revelation = Helpers.CreateFeatureSelection("MysteryTimeRevelation", "时间启示",
                 mystery.Description, "d9a38bc21fd6441094e4a48de1aa4fad", null, FeatureGroup.None,
                 mystery.PrerequisiteFeature());
             revelation.Mode = SelectionMode.OnlyNew;
@@ -143,9 +143,9 @@ namespace EldritchArcana
             var constructType = library.Get<BlueprintFeature>("fd389783027d63343b4a5634bd81645f");
             var undeadType = library.Get<BlueprintFeature>("734a29b693e9ec346ba2951b27987e33");
 
-            var ability = Helpers.CreateAbility($"{name}Ability", "Aging Touch",
-                "Your touch ages living creatures and objects. As a melee touch attack, you can deal 1 point of Strength damage for every two oracle levels you possess to living creatures. " +
-                "Against objects or constructs, you can deal 1d6 points of damage per oracle level. You can use this ability once per day, plus one additional time per day for every five oracle levels you possess.",
+            var ability = Helpers.CreateAbility($"{name}Ability", "岁月之触",
+                "你可以用一个近战接触攻击加速生物或是对像老化崩坏的速度。当你用此方式攻击一个活物，将造成每两先知等级1点的力量伤害。 " +
+                "而对于对像或构装生物来说，此接触将造成每先知等级1d6点伤害。你每天可以使用此能力1次，之后每5级再多加1次。",
                 "15b84f000f6449abb34f52c093957389",
                 Helpers.GetIcon("5bf3315ce1ed4d94e8805706820ef64d"), // touch of fatigue
                 AbilityType.Supernatural, CommandType.Standard, AbilityRange.Touch,
@@ -178,10 +178,10 @@ namespace EldritchArcana
         static BlueprintFeature CreateEraseFromTime()
         {
             var name = "MysteryTimeErase";
-            var displayName = "Erase From Time";
-            var description = "As a melee touch attack, you can temporarily remove a creature from time altogether. The target creature must make a Fortitude save or vanish completely for a number of rounds equal to 1/2 your oracle level (minimum 1 round). " +
-                "No magic or divinations can detect the creature during this time, as it exists outside of time and space—in effect, the creature ceases to exist for the duration of this ability. " +
-                "At the end of the duration, the creature reappears unharmed in the space it last occupied (or the nearest possible space, if the original space is now occupied). You can use this ability once per day, plus one additional time per day at 11th level.";
+            var displayName = "抹销时空";
+            var description = "以一个近战接触攻击，你可以把一个生物从多元宇宙的时轴中暂时抹除。目标必须通过一个强韧检定否则彻底消失，持续轮数相当于你先知等级的一半（最少1轮）。" +
+                "在这段时间里任何魔法或是神术效果都没办法找到受术者——实际上，此生物在这个时空之中存在可能性已经被暂时抹去。" +
+                "在效果结束的时候，此生物将会在他之前占据的空间里面出现。如果格子已经被占据，则在旁边任何可能的格子中出现。你每天可以使用此能力1次，11级的时候额外1次。";
             var icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936"); // vanish, TODO: better icon.
 
             var resource = Helpers.CreateAbilityResource($"{name}Resource", "", "", "24ec4a772de14e65840e4848748e0d55", null);
@@ -219,8 +219,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateKnowledgeOfTheAges()
         {
-            var feat = Helpers.CreateFeature("MysteryTimeKnowledgeOfTheAges", "Knowledge of the Ages",
-                "You can search through time to recall some bit of forgotten lore or information. If this ability is active, you automatically retry any Knowledge skill check you fail, gaining an insight bonus on the check equal to your Charisma modifier. You can use this ability a number times per day equal to your Charisma modifier.",
+            var feat = Helpers.CreateFeature("MysteryTimeKnowledgeOfTheAges", "岁月学识",
+                "你搜寻时间，并寻找有关传奇或信息的遗漏片段。激活此技能时，你将自动重投你失败的任何知识检定，并得到相当于你魅力修正的洞察加值。每日你可以使用此能力的次数相当于你的魅力修正。",
                 "4b2c7a1b5cd74658a88283c02fa0bb3e",
                 Helpers.GetIcon("3adf9274a210b164cb68f472dc1e4544"), // human skilled
                 FeatureGroup.None);
@@ -249,10 +249,10 @@ namespace EldritchArcana
         {
             // Note: for simplicity this gives all of the +2 bonuses for 1 round, instead of to 1 roll.
             // (It's still not a great ability in combat, due to the standard action requirement.)
-            var feat = Helpers.CreateFeature("MysteryTimeMomentaryGlimpse", "Momentary Glimpse",
-                "Once per day, you can gain a glimpse into your immediate future. " +
-                "On the round after you use this ability, you gain a +2 insight bonus on attack rolls, saving throws, skill checks and to your Armor Class until the start of your next turn. " +
-                "At 5th level, and every four levels thereafter, you can use this ability one additional time per day.",
+            var feat = Helpers.CreateFeature("MysteryTimeMomentaryGlimpse", "瞬息一瞥",
+                "O每天1次，你可以看到极其有限的未来。 " +
+                "在使用此能力之后1轮中，你的单次攻击检定，豁免掷骰，AC和技能检定得到+2洞察加值，持续到你下轮开始。 " +
+                "5级和之后的每4级，你能使用此能力的次数增加1次。",
                 "b192d167fd874508b78acdabc0850bfe",
                 Helpers.GetIcon("2483a523984f44944a7cf157b21bf79c"), // elven immunities
                 FeatureGroup.None);
@@ -299,12 +299,12 @@ namespace EldritchArcana
         {
             // Note: reworked slightly so you get toggles to select what to reroll.
             // Because you have to anticipate the need for a reroll (which is less useful) the uses per day are doubled.
-            var feat = Helpers.CreateFeature("MysteryTimeRewind", "Rewind Time",
-                "Once per day as an immediate action, this ability will automatically reroll any one d20 roll that failed. " +
-                "You can choose the type of rolls to anticipate (such as Attack Rolls, Saving Throws, Skill Checks, etc). " +
-                "You must take the result of the reroll, even if it’s worse than the original roll. " +
-                "You can use this ability twice per day, and an additional time per day at 9th level, and every two levels thereafter. " +
-                "You must be at least 7th level to select this revelation.",
+            var feat = Helpers.CreateFeature("MysteryTimeRewind", "回溯时空",
+                "每日一次，作为即时动作，此能力将自动重投一个失败的d20骰。 " +
+                "你可以选择希望重投的类型 (例如攻击检定，豁免检定或者技能检定等等)。 " +
+                "你必须接受重投的结果，即使它比原先的结果更糟。 " +
+                "你每天可以使用两次此能力。并在九级和之后的每两级获得每日一次的额外使用次数。" +
+                "你必须达到7级才能选择此启示。",
                 "1ae499fda64f4a2c990e04361cdf351e",
                 Helpers.GetIcon("576933720c440aa4d8d42b0c54b77e80"), // evasion
                 FeatureGroup.None);
@@ -323,12 +323,12 @@ namespace EldritchArcana
 
             feat.SetComponents(resource.CreateAddAbilityResource(),
                 oracle.PrerequisiteClassLevel(7),
-                CreateRewindTime(feat, resource, ids[0], RuleType.AttackRoll, "Attack Rolls").CreateAddFact(),
-                CreateRewindTime(feat, resource, ids[1], RuleType.Intiative, "Intiative").CreateAddFact(),
-                CreateRewindTime(feat, resource, ids[2], RuleType.Maneuver, "Combat Maneuver").CreateAddFact(),
-                CreateRewindTime(feat, resource, ids[3], RuleType.SavingThrow, "Saving Throw").CreateAddFact(),
-                CreateRewindTime(feat, resource, ids[4], RuleType.SkillCheck, "Skill Check").CreateAddFact(),
-                CreateRewindTime(feat, resource, ids[5], RuleType.SpellResistance, "Spell Resistance").CreateAddFact());
+                CreateRewindTime(feat, resource, ids[0], RuleType.AttackRoll, "攻击检定").CreateAddFact(),
+                CreateRewindTime(feat, resource, ids[1], RuleType.Intiative, "先攻权检定").CreateAddFact(),
+                CreateRewindTime(feat, resource, ids[2], RuleType.Maneuver, "战技检定").CreateAddFact(),
+                CreateRewindTime(feat, resource, ids[3], RuleType.SavingThrow, "豁免检定").CreateAddFact(),
+                CreateRewindTime(feat, resource, ids[4], RuleType.SkillCheck, "技能检定").CreateAddFact(),
+                CreateRewindTime(feat, resource, ids[5], RuleType.SpellResistance, "法术抗力检定").CreateAddFact());
             return feat;
         }
 
@@ -362,16 +362,16 @@ namespace EldritchArcana
             var haste = library.Get<BlueprintAbility>("486eaff58293f6441a5c2759c4872f98");
             var slow = library.Get<BlueprintAbility>("f492622e473d34747806bdb39356eb89");
 
-            var feat = Helpers.CreateFeature("MysteryTimeSpeedOrSlow", "Speed or Slow Time",
-                "As a standard action, you can speed up or slow down time, as either the haste or slow spell. You can use this ability once per day, plus one additional time per day at 12th level and 17th level. You must be at least 7th level before selecting this revelation.",
+            var feat = Helpers.CreateFeature("MysteryTimeSpeedOrSlow", "加减时流",
+                "以一个标准动作，你可以加速或减缓时间的流动，如同“加速术”和“迟缓术”。你每天可以使用此能力1次，12和17级再加一次。你必须达到7级才能选取此启示。",
                 "4df30dbc2ad147a995fce23e765b9726", haste.Icon, FeatureGroup.None);
             var resource = Helpers.CreateAbilityResource($"{feat.name}Resource", "", "", "3388b2b6812246ea801c0f4140192a66", null);
             resource.SetIncreasedByLevelStartPlusDivStep(1, 7, 1, 5, 1, 0, 0, oracleArray);
 
-            var hasteAbility = DragonMystery.CopyBuffSpellToAbility(haste, $"{feat.name}Haste",
+            var hasteAbility = DragonMystery.CopyBuffSpellToAbility(haste, $"{feat.name}加速",
                     "e996186da70d4c0b95c5a6609ff92d88", AbilityType.SpellLike, haste.Description, resource);
 
-            var slowAbility = DragonMystery.CopyBuffSpellToAbility(slow, $"{feat.name}Slow",
+            var slowAbility = DragonMystery.CopyBuffSpellToAbility(slow, $"{feat.name}减速",
                     "dec33450a0b9410e90a69049afce691d", AbilityType.SpellLike, slow.Description, resource);
 
             feat.SetComponents(
@@ -391,8 +391,8 @@ namespace EldritchArcana
             var displacement = library.Get<BlueprintAbility>("903092f6488f9ce45a80943923576ab3");
             var displacementBuff = library.Get<BlueprintBuff>("00402bae4442a854081264e498e7a833");
 
-            var feat = Helpers.CreateFeature("MysteryTimeFlicker", "Time Flicker",
-                "As a standard action, you can flicker in and out of time, gaining concealment (as the blur spell). You can use this ability for 1 minute per oracle level that you possess per day. This duration does not need to be consecutive, but it must be spent in 1-minute increments. At 7th level, each time you activate this ability, you can treat it as the displacement spell, though each round spent this way counts as 1 minute of your normal time flicker duration. You must be at least 3rd level to select this revelation.",
+            var feat = Helpers.CreateFeature("MysteryTimeFlicker", "时空闪现",
+                "以一个标准动作，你在时空之间跳跃，造成如同“朦胧术”的效果。每日你可以使用此能力的分钟数相当于你的先知等级。这些时间不需要是连续的，但必须以1分钟为单位使用。7级时你可以选择造成“闪现术”的效果，不过处在闪现状态下的每轮将消耗你1分钟的使用时数。你必须达到3级才能选择此启示。",
                 "76384613da7f419dbda62cf482343ef8", displacement.Icon, FeatureGroup.None);
             var resource = Helpers.CreateAbilityResource($"{feat.name}Resource", "", "", "c8fba597ff6545afa4b5567a663dc4eb", null);
             resource.SetIncreasedByLevel(0, 1, oracleArray);
@@ -427,7 +427,7 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateTemporalClarity()
         {
-            return BattleMystery.CreateRerollInitiative("MysteryTimeTemporalClarity", "Temporal Clarity", "5f41b06772ca43c3bcd1b6f2cdca4735");
+            return BattleMystery.CreateRerollInitiative("MysteryTimeTemporalClarity", "时之迅捷", "5f41b06772ca43c3bcd1b6f2cdca4735");
         }
 
         static BlueprintFeature CreateTimeHop()
@@ -438,8 +438,8 @@ namespace EldritchArcana
             var dimensionDoor = library.Get<BlueprintAbility>("5bdc37e4acfa209408334326076a43bc");
             var dimensionDoorCaster = library.Get<BlueprintAbility>("a9b8be9b87865744382f7c64e599aeb2");
 
-            var feat = Helpers.CreateFeature("MysteryTimeHop", "Time Hop",
-                "As a move action, you can teleport up to 50 feet per 3 oracle levels, as the dimension door spell. This movement does not provoke attacks of opportunity. You must have line of sight to your destination to use this ability. You can bring other willing creatures with you, but you must expend 2 uses of this ability. You must be at least 7th level before selecting this revelation.",
+            var feat = Helpers.CreateFeature("MysteryTimeHop", "光阴跃步",
+                "以一个移动动作，你可以像使用任意门法术一样，传送50尺。每3先知等级可使用一次。这个移动不会引起藉机攻击，你和你的目的地之间必须有效果线存在。你可以让其它自愿的生物随你伴行，不过你得消耗两次使用次数。要选择此启示，你必须达到7级。",
                 "5ba08ff4d852464a9bee80442deda276", dimensionDoor.Icon, FeatureGroup.None);
             var resource = Helpers.CreateAbilityResource($"{feat.name}Resource", "", "", "239347ee299945fabc0e8e18402104ab", null);
             resource.SetIncreasedByLevelStartPlusDivStep(1, 3, 1, 3, 1, 0, 0, oracleArray);
@@ -453,6 +453,7 @@ namespace EldritchArcana
 
             feat.SetComponents(oracle.PrerequisiteClassLevel(7),
                 resource.CreateAddAbilityResource(),
+                hopCaster.CreateAddFact(), hopMass.CreateAddFact(),
                 hopCaster.CreateBindToClass(oracle, StatType.Charisma),
                 hopMass.CreateBindToClass(oracle, StatType.Charisma));
             return feat;
@@ -469,10 +470,10 @@ namespace EldritchArcana
             var resource = Helpers.CreateAbilityResource($"{name}Resource", "", "", "6aba92b9f4b34548b485d0131433367b", null);
             resource.SetIncreasedByLevel(0, 1, oracleArray);
 
-            var feat = Helpers.CreateFeature(name, "Time Sight",
-                "You can peer through the mists of time to see things as they truly are, as if using the true seeing spell. " +
+            var feat = Helpers.CreateFeature(name, "时间视野",
+                "你穿越时间迷雾，并看透一切事物的真相，如同使用“真知术”。 " +
                 //"At 15th level, this functions like moment of prescience. " +
-                "At 18th level, this functions like foresight. You can use this ability for a number of minutes per day equal to your oracle level, but these minutes do not need to be consecutive. You must be at least 11th level to select this revelation.\n" +
+                "18级时则可造成“预警术”的效果。每日你可以使用此能力的分钟数相当于你的先知等级。这些时间不需要是连续的。你必须达到11级才有办法选择此启示.\n" +
                 $"{trueSeeing.Name}: {trueSeeing.Description}\n{foresight.Name}: {foresight.Description}",
                 "a4334c2d0c094b6183a3c94bfeafae50", trueSeeing.Icon, FeatureGroup.None);
 
@@ -503,8 +504,8 @@ namespace EldritchArcana
             var name = "MysteryTimeFinalRevelation";
             var resource = Helpers.CreateAbilityResource($"{name}Resource", "", "", "372c0f8d0b1241a6a3c0ef2c5b8ad459", timeStop.Icon);
             resource.SetFixedResource(1);
-            var feat = Helpers.CreateFeature(name, "Final Revelation",
-                "Upon reaching 20th level, you become a true master of time and stop aging. You cannot be magically aged and no longer take penalties to your ability scores for aging. Age bonuses still accrue, and any aging penalties that you have already accrued remain in place. You cannot die of old age, but you can be killed or die through accident, disease, poison, or other external effects. In addition, you can cast time stop once per day as a spell-like ability.",
+            var feat = Helpers.CreateFeature(name, "最终启示",
+                "20级时，你终于成为时空的统驭者，同时不再衰老。你免疫任何由魔法和自然造成的衰老效果，不过之前的年纪减值仍然存在、加值也予以保留。你将永远不会老死，不过仍然可能因为意外，疾病，毒素或什么其他莫名奇妙的原因死去。此外，你每天还可以用类法术能力施展1次“时间停止”。",
                 "6a3786190da74a5d9e71d83c1c327a15", timeStop.Icon, FeatureGroup.None,
                 resource.CreateAddAbilityResource(),
                 DragonMystery.CopyBuffSpellToAbility(timeStop, $"{name}Spell", "c85dfa2de6fb472ebc79c0802df0cefb",

@@ -3,46 +3,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using Kingmaker;
-using Kingmaker.AreaLogic;
-using Kingmaker.Assets.UI.LevelUp;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
-using Kingmaker.Blueprints.Classes.Prerequisites;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.Blueprints.Facts;
-using Kingmaker.Blueprints.Items;
-using Kingmaker.Blueprints.Items.Equipment;
-using Kingmaker.Blueprints.Root;
-using Kingmaker.Controllers;
-using Kingmaker.Controllers.Combat;
-using Kingmaker.Controllers.Units;
-using Kingmaker.Designers;
 using Kingmaker.Designers.Mechanics.Buffs;
 using Kingmaker.Designers.Mechanics.Facts;
-using Kingmaker.Designers.Mechanics.Recommendations;
 using Kingmaker.ElementsSystem;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.Enums.Damage;
-using Kingmaker.Localization;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Abilities;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UI.Common;
-using Kingmaker.UI.ServiceWindow.CharacterScreen;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
-using Kingmaker.UnitLogic.Abilities.Components;
-using Kingmaker.UnitLogic.Abilities.Components.AreaEffects;
 using Kingmaker.UnitLogic.Abilities.Components.Base;
 using Kingmaker.UnitLogic.Abilities.Components.TargetCheckers;
 using Kingmaker.UnitLogic.ActivatableAbilities;
@@ -50,10 +32,6 @@ using Kingmaker.UnitLogic.Buffs;
 using Kingmaker.UnitLogic.Buffs.Actions;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Buffs.Components;
-using Kingmaker.UnitLogic.Class.LevelUp;
-using Kingmaker.UnitLogic.Class.LevelUp.Actions;
-using Kingmaker.UnitLogic.Commands;
-using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
@@ -61,12 +39,6 @@ using Kingmaker.UnitLogic.Mechanics.Components;
 using Kingmaker.UnitLogic.Mechanics.Conditions;
 using Kingmaker.UnitLogic.Parts;
 using Kingmaker.Utility;
-using Kingmaker.View;
-using Kingmaker.Visual.Animation.Kingmaker.Actions;
-using Kingmaker.Visual.Sound;
-using Newtonsoft.Json;
-using UnityEngine;
-using static Kingmaker.RuleSystem.RulebookEvent;
 using static Kingmaker.UnitLogic.ActivatableAbilities.ActivatableAbilityResourceLogic;
 using static Kingmaker.UnitLogic.Commands.Base.UnitCommand;
 
@@ -101,14 +73,14 @@ namespace EldritchArcana
             var skill2 = StatType.SkillLoreNature;
             var description = new StringBuilder(mysteryDescription).AppendLine();
             description.AppendLine(
-                $"Class skills: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}\n" +
-                "An oracle with the life mystery can choose from any of the following revelations:");
+                $"本职技能: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}\n" +
+                "选择了生命秘视域的先知可以选择以下启示:");
             foreach (var r in revelations)
             {
                 description.AppendLine($"• {r.Name}");
             }
 
-            var mystery = Helpers.CreateProgression("MysteryLifeProgression", "Life Mystery", description.ToString(),
+            var mystery = Helpers.CreateProgression("MysteryLifeProgression", "生命秘视域", description.ToString(),
                 "a2c3c801deb84bc9bab6bd35e5290d5d",
                 Helpers.GetIcon("a79013ff4bcd4864cb669622a29ddafb"), // channel energy
                 UpdateLevelUpDeterminatorText.Group,
@@ -139,7 +111,7 @@ namespace EldritchArcana
             mystery.LevelEntries = entries.ToArray();
             mystery.UIGroups = Helpers.CreateUIGroups(new List<BlueprintFeatureBase>(spells) { finalRevelation });
 
-            var revelation = Helpers.CreateFeatureSelection("MysteryLifeRevelation", "Life Revelation",
+            var revelation = Helpers.CreateFeatureSelection("MysteryLifeRevelation", "生命启示",
                 mystery.Description, "6949da6445394dabbfb327c000706122", null, FeatureGroup.None,
                 mystery.PrerequisiteFeature());
             revelation.Mode = SelectionMode.OnlyNew;
@@ -152,9 +124,9 @@ namespace EldritchArcana
             var channelEnergy = library.Get<BlueprintAbility>("f5fc9a1a2a3c1a946a31b320d1dd31b2");
             var channelPositiveHarm = library.Get<BlueprintAbility>("279447a6bf2d3544d93a0a39c3b8e91d");
 
-            var feat = Helpers.CreateFeature("MysteryLifeChannel", "Channel Energy",
-                "You can channel positive energy like a cleric, using your oracle level as your effective cleric level when determining the amount of damage healed (or caused to undead) and the DC. " +
-                "You can use this ability a number of times per day equal to 1+your Charisma modifier.",
+            var feat = Helpers.CreateFeature("MysteryLifeChannel", "导引能量",
+                "你可以像牧师一样引导正能量。当决定你的导能的治疗效果或者对不死生物的伤害和豁免DC时，使用你的先知等级作为有效牧师等级。 " +
+                "你每天可以导引能量的次数为1+你的魅力调整值。",
                 "86763655ebbc406f8a4d9a58415847d5",
                 channelEnergy.Icon, FeatureGroup.None);
             var resource = library.CopyAndAdd<BlueprintAbilityResource>("5e2bba3e07c37be42909a12945c27de7", // channel energy resource
@@ -179,7 +151,7 @@ namespace EldritchArcana
             // Add Extra Channel, fix Selective Channel
             var extraChannel = library.CopyAndAdd<BlueprintFeature>("cd9f19775bd9d3343a31a065e93f0c47",
                 "ExtraChannelOracle", "670d560ed7fe4329b2d311eba3600949");
-            extraChannel.SetName("Extra Channel (Oracle)");
+            extraChannel.SetName("额外导能 (先知)");
             extraChannel.SetComponents(feat.PrerequisiteFeature(), resource.CreateIncreaseResourceAmount(2));
             library.AddFeats(extraChannel);
 
@@ -193,8 +165,8 @@ namespace EldritchArcana
             var elementalBodyIIFireBuff = library.Get<BlueprintBuff>("103a680886ba18742a40b840c3b237f6");
             var auraOfHealingEffectBuff = library.Get<BlueprintBuff>("8960038b7e7fbcc46897ca86ce70bae4");
 
-            var feat = Helpers.CreateFeature("MysteryLifeEnergyBody", "Energy Body",
-                "As a standard action, you can transform your body into pure life energy, resembling a golden-white fire elemental. In this form, you gain the elemental subtype and give off a warm, welcoming light that increases the light level within 10 feet by one step, up to normal light. Any undead creature striking you with its body or a handheld weapon deals normal damage, but at the same time the attacker takes 1d6 points of positive energy damage + 1 point per oracle level. Creatures wielding melee weapons with reach are not subject to this damage if they attack you. If you grapple or attack an undead creature using unarmed strikes or natural weapons, you may deal this damage in place of the normal damage for the attack. Once per round, if you pass through a living allied creature’s square or the ally passes through your square, it heals 1d6 hit points + 1 per oracle level. You may use this ability to heal yourself as a move action. You choose whether or not to heal a creature when it passes through your space. You may return to your normal form as a free action. You may remain in energy body form for a number of rounds per day equal to your oracle level.",
+            var feat = Helpers.CreateFeature("MysteryLifeEnergyBody", "能量盈身",
+                "以一个标准动作，你可以将你的身体转化为纯净的生命之力，外观有如一个散发着白金火焰的火元素。在这个型态下，你获得元素亚种，同时散发出一圈温暖，舒适的光环，这可以将你10尺内的光照等级提升一级，最多达到正常光照。任何不死生物用它的身躯或手持武器攻击你时，将受到“1d6+先知等级”点正能量伤害。使用长触及武器攻击你的不死生物将不会受到伤害。若你擒抱或用天生武器攻击不死生物，你可以用此伤害取代正常伤害。每轮1次，当你通过一个活体战友的方格，或着当活体战友通过你的方格时，他将恢复“1d6+先知等级”的生命值，你可以用一个移动等效动作对自己造成这个效果。当生物通过你的方格时，你可以选择要不要治疗对方。你可以用一个自由动作变回原形。你每天可以使用这个状态的轮数相当于你的先知等级。",
                 "af6f1094822c4a34b0c81270a6fe281b",
                 Helpers.GetIcon("4093d5a0eb5cae94e909eb1e0e1a6b36"), // remove disease
                 FeatureGroup.None);
@@ -266,8 +238,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateEnhancedCures()
         {
             ContextRankConfig_GetValue_Patch.Apply();
-            return enhancedCures = Helpers.CreateFeature("MysteryLifeEnhancedCures", "Enhanced Cures",
-                "Whenever you cast a cure spell, the maximum number of hit points healed is based on your oracle level, not the limit based on the spell. For example, an 11th-level oracle of life with this revelation may cast cure light wounds to heal 1d8+11 hit points instead of the normal 1d8+5 maximum.",
+            return enhancedCures = Helpers.CreateFeature("MysteryLifeEnhancedCures", "强力治疗",
+                "当你施展一个治疗法术的时候，以你的先知等级，而不是法术提供的上限来决定额外的治疗加值。例如一个11级的先知施展“治疗轻伤”的时候，他将治疗“1d8+11”点伤害，而非“1d8+5”点。",
                 "111a339509c140b2818877f538351bca",
                 Helpers.GetIcon("3361c5df793b4c8448756146a88026ad"), // cure serious wounds
                 FeatureGroup.None);
@@ -276,8 +248,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateHealingHands()
         {
             var treatAfflictions = library.Get<BlueprintAbility>("4843cb4c23951f54290c5149a4907f54"); // LoreReligionUseAbility
-            var feat = Helpers.CreateFeature("MysteryLifeHealingHands", "Healing Hands",
-                $"You gain a +4 bonus on Heal checks. You may use {treatAfflictions.Name} as a swift action.",
+            var feat = Helpers.CreateFeature("MysteryLifeHealingHands", "治愈之手",
+                $"你在治疗检定中获得+4加值，你可以以迅捷动作使用 {treatAfflictions.Name} 。",
                 "72138f6a0753498aaa6b5134f61e88ab",
                 treatAfflictions.Icon,
                 FeatureGroup.None,
@@ -287,9 +259,9 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateLifeLink()
         {
-            var feat = Helpers.CreateFeature("MysteryLifeLink", "Life Link",
-                "As a standard action, you may create a bond between yourself and another creature. Each round at the start of your turn, if the bonded creature is wounded for 5 or more hit points below its maximum hit points, it heals 5 hit points and you take 5 hit points of damage. " +
-                "You may have one bond active per oracle level. This bond continues until the bonded creature dies, you die, the distance between you and the other creature exceeds medium range, or you end it as an immediate action (if you have multiple bonds active, you may end as many as you want as part of the same immediate action).",
+            var feat = Helpers.CreateFeature("MysteryLifeLink", "生命连接",
+                "以一个标准动作，你可以在你与一个生物之间建立生命连结。每轮开始的时候，如果该生物的生命值比最大生命值低5点或以上，该生物恢复5点生命值而你受到5点伤害。 " +
+                "你可以激活每先知等级1个额外链接。这个链接持续到你或该生物死亡；当你与该生物的距离超过中距，或你用直觉动作切断也能使连结结束。若你同时保有多条连结，你可以用同一个直觉动作将其切断。",
                 "1c493aa458b94e13b6cd727b492d6cb4",
                 Helpers.GetIcon("f8bce986adfc88544a42bf4ab7ae75b2"), // remove paralysis
                 FeatureGroup.None);
@@ -304,28 +276,30 @@ namespace EldritchArcana
                 "66ec04bf0853419fa5dd742dba10ea30", feat.Icon, null,
                 (SpellDescriptor.RestoreHP | SpellDescriptor.Cure).CreateSpellDescriptor(),
                 Helpers.CreateAddFactContextActions(
-                    activated: Helpers.Create<ContextSpendResource>(c => c.Resource = resource),
                     deactivated: Helpers.Create<ContextRestoreResource>(c => c.Resource = resource),
                     newRound: Helpers.CreateConditional(
                         Helpers.Create<ContextConditionDistanceToTarget>(c => c.DistanceGreater = 40.Feet()),
-                        new GameAction[] { removeBuff },
-                        new GameAction[] {
-                            Helpers.Create<ContextActionSpawnFx>(c =>
-                                c.PrefabLink = cureLightWounds.GetComponent<AbilitySpawnFx>().PrefabLink),
-                            Helpers.Create<ContextActionTransferDamageToCaster>(c => c.Value = 5)
-                        })));
+                        removeBuff,
+                        Helpers.CreateConditional(
+                            Helpers.Create<ContextConditionHasDamage>(),
+                            new GameAction[] {
+                                Helpers.Create<ContextActionSpawnFx>(c =>
+                                    c.PrefabLink = cureLightWounds.GetComponent<AbilitySpawnFx>().PrefabLink),
+                                Helpers.Create<ContextActionTransferDamageToCaster>(c => c.Value = 5)
+                            }))));
+            buff.SetBuffFlags(BuffFlags.RemoveOnRest);
             removeBuff.Buff = buff;
 
-            var bondAbility = Helpers.CreateAbility($"{feat.name}Ability", feat.Name, feat.Description,
+            var linkAbility = Helpers.CreateAbility($"{feat.name}Ability", feat.Name, feat.Description,
                 "3d1e78466db341b285fb3d97ce408a0d", feat.Icon,
                 AbilityType.Supernatural, CommandType.Standard, AbilityRange.Medium, "", "",
                 resource.CreateResourceLogic(),
                 Helpers.CreateRunActions(buff.CreateApplyBuff(Helpers.CreateContextDuration(),
                     fromSpell: false, dispellable: false, permanent: true)));
-            bondAbility.CanTargetFriends = true;
-            bondAbility.EffectOnAlly = AbilityEffectOnUnit.Helpful;
+            linkAbility.CanTargetFriends = true;
+            linkAbility.EffectOnAlly = AbilityEffectOnUnit.Helpful;
 
-            var dismissAbility = library.CopyAndAdd(bondAbility, $"{feat.name}Dismiss", "9cadee2d79bd436596296704a5637578");
+            var dismissAbility = library.CopyAndAdd(linkAbility, $"{feat.name}Dismiss", "9cadee2d79bd436596296704a5637578");
             dismissAbility.SetName($"End {feat.Name}");
             dismissAbility.ActionType = CommandType.Free;
             dismissAbility.SetComponents(
@@ -334,14 +308,14 @@ namespace EldritchArcana
                 Helpers.CreateRunActions(removeBuff));
 
             feat.SetComponents(resource.CreateAddAbilityResource(),
-                bondAbility.CreateAddFact(), dismissAbility.CreateAddFact());
+                linkAbility.CreateAddFact(), dismissAbility.CreateAddFact());
             return lifeLink = feat;
         }
 
         static BlueprintFeature CreateLifeSense()
         {
-            return Helpers.CreateFeature("MysteryLifeSense", "Life Sense",
-                "You notice and locate living creatures within 30 feet, just as if you possessed the blindsight ability. You must be at least 11th level to select this revelation.",
+            return Helpers.CreateFeature("MysteryLifeSense", "生命感知",
+                "你可以感觉到30尺内的活物，如同你拥有“盲视”能力。你必须达到11级才有办法选择这个启示。",
                 "9a9f7afcc70742fca888ab73f73996d4",
                 Helpers.GetIcon("4cf3d0fae3239ec478f51e86f49161cb"), // true seeing
                 FeatureGroup.None,
@@ -354,8 +328,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateDelayAffliction()
         {
             var delayPoisonBuff = library.Get<BlueprintBuff>("51ebd62ee464b1446bb01fa1e214942f");
-            var feat = Helpers.CreateFeature("MysteryLifeDelayAffliction", "Delay Affliction",
-                "Once per day as an immediate action, whenever you fail a saving throw against a disease or poison, you may ignore its effects for 1 hour per level. At 7th and 15th level, you can use this ability one additional time per day.",
+            var feat = Helpers.CreateFeature("MysteryLifeDelayAffliction", "推迟痛苦",
+                "每日1次，以一个直觉动作，当你在对抗毒素或疾病的豁免检定失败的时候，你可以忽视此不良效果的影响每先知等级1小时。7级和15级你可以得到1次额外的使用次数。",
                 "42f849d6508949658931e4ed9bca77a8",
                 delayPoisonBuff.Icon,
                 FeatureGroup.None);
@@ -389,8 +363,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreateSafeCuring()
         {
-            return Helpers.CreateFeature("MysteryLifeSafeCuring", "Safe Curing",
-                "Whenever you cast a spell that cures the target of hit point damage, you do not provoke attacks of opportunity for spellcasting.",
+            return Helpers.CreateFeature("MysteryLifeSafeCuring", "安全治疗",
+                "当你使用“治疗”法术治疗伤害的时候，你不会引起对施法的藉机攻击。",
                 "fe4e347238a544ec94be7a665d6b7910",
                 Helpers.GetIcon("7aa83ee3526a946419561d8d1aa09e75"), // arcane combat casting
                 FeatureGroup.None,
@@ -400,8 +374,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateSpiritBoost()
         {
             var falseLifeBuff = library.Get<BlueprintBuff>("0fdb3cca6744fd94b9436459e6d9b947");
-            var feat = Helpers.CreateFeature("MysteryLifeSpiritBoost", "Spirit Boost",
-                "Whenever your healing spells heal a target up to its maximum hit points, any excess points persist for 1 round per level as temporary hit points (up to a maximum number of temporary hit points equal to your oracle level).",
+            var feat = Helpers.CreateFeature("MysteryLifeSpiritBoost", "灵性提升",
+                "如果你的治疗法术把目标的生命提升到最大值以上的话，多出的治疗量将以临时生命值的方式保存，持续时间最多每先知等级1轮（最大临时生命值等同于你的先知等级）。",
                 "769eba54ba5f40548eab67f0c5aff6e4",
                 falseLifeBuff.Icon, FeatureGroup.None);
 
@@ -418,10 +392,10 @@ namespace EldritchArcana
         {
             var immunities = SpellDescriptor.Bleed | SpellDescriptor.Death | SpellDescriptor.Exhausted | SpellDescriptor.Fatigue | SpellDescriptor.Nauseated | SpellDescriptor.Sickened;
 
-            var feat = Helpers.CreateFeature("MysteryLifeFinalRevelation", "Final Revelation",
-                "Upon reaching 20th level, you become a perfect channel for life energy. " +
-                "You become immune to bleed, death attacks, exhaustion, fatigue, nausea effects, negative levels, and sickened effects." +
-                "Ability damage and drain cannot reduce you below 1 in any ability score.",
+            var feat = Helpers.CreateFeature("MysteryLifeFinalRevelation", "最终启示",
+                "20级时，你化身为完整纯粹的生命能量。 " +
+                "你免疫出血、即死效果、力竭、疲乏、恶心、反胃和负向等级，" +
+                "而且任何属性伤害和属性吸取能力没办法将你的属性降到1以下。",
                 "88c41e041d3d4e68b24e4d0d04ed51a0",
                 Helpers.GetIcon("be2062d6d85f4634ea4f26e9e858c3b8"), // cleanse
                 FeatureGroup.None,
@@ -579,6 +553,13 @@ namespace EldritchArcana
                 if (Owner.Resources.GetResourceAmount(Resource) == 0) Buff.Remove();
             }
         }
+    }
+
+    public class ContextConditionHasDamage : ContextCondition
+    {
+        protected override bool CheckCondition() => Target.Unit?.Damage > 0;
+
+        protected override string GetConditionCaption() => "Whether the target is damaged";
     }
 
     public class ContextActionTransferDamageToCaster : BuffAction

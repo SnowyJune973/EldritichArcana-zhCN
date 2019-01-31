@@ -47,9 +47,9 @@ namespace EldritchArcana
             oracleArray = new BlueprintCharacterClass[] { oracle };
             oracle.name = "OracleClass";
             library.AddAsset(oracle, "ec73f4790c1d4554871b81cde0b9399b");
-            oracle.LocalizedName = Helpers.CreateString("Oracle.Name", "Oracle");
-            oracle.LocalizedDescription = Helpers.CreateString("Oracle.Description", "Although the gods work through many agents, perhaps none is more mysterious than the oracle. These divine vessels are granted power without their choice, selected by providence to wield powers that even they do not fully understand. Unlike a cleric, who draws her magic through devotion to a deity, oracles garner strength and power from many sources, namely those patron deities who support their ideals. Instead of worshiping a single source, oracles tend to venerate all of the gods that share their beliefs. While some see the powers of the oracle as a gift, others view them as a curse, changing the life of the chosen in unforeseen ways.\n" +
-                "Role: Oracles do not usually associate with any one church or temple, instead preferring to strike out on their own, or with a small group of like-minded individuals. Oracles typically use their spells and revelations to further their understanding of their mystery, be it through fighting mighty battles or tending to the poor and sick.");
+            oracle.LocalizedName = Helpers.CreateString("Oracle.Name", "先知");
+            oracle.LocalizedDescription = Helpers.CreateString("Oracle.Description", "虽然众神有无数代言人为祂们在地上行走，这些人中最为神秘的一群恐怕莫过于先知了。这些获选者在并不知情的状况下成为了神祇伟力的容器，得以操纵他们并不能完全理解的大能。和通过虔诚侍奉以从他们的主宰手中获得神力的牧师不同，先知的力量可能来源于多种多样的途径，换句话说，他们可以从所有与自己分享同一理念的神祇那里获得支持。先知并不依靠敬拜单一神明，而是向所有与自己的信仰融会贯通的神祇表达敬意。当然，有人将先知掌握的力量视为天赋，而另一些人则将之看作是这些人背负的诅咒——它们以种种不可预料的方法影响着这些获选者的命运之路。\n" +
+                "角色定位：先知的任务并不一定与某个特定的教会或神殿相关，他们更喜欢独来独往或是和一小群志同道合的先知合作。运用自己的法术和通过启迪自己所身负的秘示之能，一个先知既可以呼啸沙场战无不胜，也可以医疗疾患救死扶伤。");
             oracle.m_Icon = cleric.Icon;
             oracle.SkillPoints = 4;
             oracle.HitDie = DiceType.D8;
@@ -123,7 +123,7 @@ namespace EldritchArcana
                 "e62f392949c24eb4b8fb2bc9db4345e3", // cleric orisions
                 "OracleOrisonsFeature",
                 "926891a8e8a74d9eac63a1e296b1a4f3");
-            orisons.SetDescription("Oracles learn a number of orisons, or 0-level spells. These spells are cast like any other spell, but they do not consume any slots and may be used again.");
+            orisons.SetDescription("先知可以了解一些祷念，或称0环法术。祷念的数量见上表。这些法术的施法方式和正常法术相同，不过它们不会消耗任何法术位且可以重复施放。");
             orisons.SetComponents(orisons.ComponentsArray.Select(c =>
             {
                 var bind = c as BindAbilitiesToClass;
@@ -137,8 +137,8 @@ namespace EldritchArcana
                 "8c971173613282844888dc20d572cfc9", // cleric proficiencies
                 "OracleProficiencies",
                 "baee2212dee249cb8136bda72a872ba4");
-            proficiencies.SetName("Oracle Proficiencies");
-            proficiencies.SetDescription("Oracles are proficient with all simple weapons, light armor, medium armor, and shields (except tower shields). Some oracle revelations grant additional proficiencies.");
+            proficiencies.SetName("先知擅长");
+            proficiencies.SetDescription("先知擅长所有的简单武器，轻甲，中甲以及所有盾牌（除了塔盾）。一些秘示域会赋予先知额外的武器和护甲擅长。");
 
             // Note: curses need to be created first, because some revelations use them (e.g. Cinder Dance).
             var curse = OracleCurses.CreateSelection();
@@ -179,7 +179,7 @@ namespace EldritchArcana
             oracle.RegisterClass();
 
             var extraRevelation = Helpers.CreateFeatureSelection("ExtraRevelation",
-                "Extra Revelation", "You gain one additional revelation. You must meet all of the prerequisites for this revelation.\nSpecial: You can gain Extra Revelation multiple times.",
+                "额外启示", "你获得了一个额外启示，你必须满足此启示的所有先决条件。.\n特殊：你可以多次选择此专长。",
                 "e91bd89bb5534ae2b61a3222a9b7325e",
                 Helpers.GetIcon("fd30c69417b434d47b6b03b9c1f568ff"), // selective channel
                 FeatureGroup.Feat,
@@ -191,8 +191,8 @@ namespace EldritchArcana
             extras.Add(UndoSelection.Feature.Value);
             extraRevelation.SetFeatures(extras);
             var abundantRevelations = Helpers.CreateFeatureSelection("AbundantRevelations",
-                "Abundant Revelations",
-                "Choose one of your revelations that has a number of uses per day. You gain 1 additional use per day of that revelation.\nSpecial: You can gain this feat multiple times. Its effects do not stack. Each time you take the feat, it applies to a new revelation.",
+                "额外启示次数",
+                "选择一项你已拥有的有每日使用次数的启示，此启示获得每日一次额外使用次数。\n特殊：你可以多次选择此专长。它的效果不会叠加。你每次选择此专长，它都只适用于新的启示。",
                 "1614c7b40565481fa3728fd7375ddca0",
                 Helpers.GetIcon("a2b2f20dfb4d3ed40b9198e22be82030"), // extra lay on hands
                 FeatureGroup.Feat);
@@ -241,8 +241,8 @@ namespace EldritchArcana
         static (BlueprintFeatureSelection, BlueprintFeatureSelection, BlueprintFeature) CreateMysteryAndRevelationSelection()
         {
             // This feature allows archetypes to replace mystery class skills with something else.
-            var classSkill = Helpers.CreateFeature("MysteryClassSkills", "Bonus Class Skills",
-                "Oracles receive additional class skills depending upon their oracle mystery.",
+            var classSkill = Helpers.CreateFeature("MysteryClassSkills", "奖励本职技能",
+                "先知基于他们选择的秘视域获得额外的本职技能。",
                 "3949c44664d047c99d870b1f3728457c",
                 null,
                 FeatureGroup.None);
@@ -269,8 +269,8 @@ namespace EldritchArcana
             // Heroism/Greater Heroism, since that's the 2 spells Loremaster gives up,
             // and duplicating spells as SLAs is common for revelations.)
 
-            var mysteryDescription = "Each oracle draws upon a divine mystery to grant her spells and powers. This mystery also grants additional class skills and other special abilities. This mystery can represent a devotion to one ideal, prayers to deities that support the concept, or a natural calling to champion a cause. For example, an oracle with the waves mystery might have been born at sea and found a natural calling to worship the gods of the oceans, rivers, and lakes, be they benign or malevolent. Regardless of its source, the mystery manifests in a number of ways as the oracle gains levels. An oracle must pick one mystery upon taking her first level of oracle. Once made, this choice cannot be changed.\n" +
-                            "At 2nd level, and every two levels thereafter, an oracle learns an additional spell derived from her mystery. These spells are in addition to the number of chosen known spells. They cannot be exchanged for different spells at higher levels.";
+            var mysteryDescription = "每一个先知都拥有属于自己的神力奥秘以为力量和法术之源，这些秘示域也同样会给予他们以额外的本职技能和其他特殊能力。秘示域代表了一个先知所追随的信念以及对于支持类型概念神祇的赞美，或是这些大能赋予一个代行者发自内心的召唤。举例来说，一个拥有波涛秘示域的先知可能是因为她在在风口浪尖之间出生长大、并受到了江河湖海之神的启迪，作为水之平静与狂暴双面的化身在人间行走。这些来源不明的能力将随着先知等级的提升而渐变演化为更多更强的力量，在她的第一个等级先知需要选择一个秘示域，一旦选定即无法更改。\n" +
+                            "在2级，以及之后每提升2个等级时，取决于她的秘示域，先知可以将额外的一个法术加入她的已知法术列表。这些法术计在她已知法术数量之外，在提升等级时，先知无法替换这些法术。";
 
             var mysteriesAndRevelations = new (BlueprintFeature, BlueprintFeature)[] {
                 BattleMystery.Create(mysteryDescription, classSkill),
@@ -279,15 +279,15 @@ namespace EldritchArcana
                 LifeMystery.Create(mysteryDescription, classSkill),
                 TimeMystery.Create(mysteryDescription, classSkill),
             };
-            var mysteryChoice = Helpers.CreateFeatureSelection("OracleMysterySelection", "Mystery",
+            var mysteryChoice = Helpers.CreateFeatureSelection("OracleMysterySelection", "秘视域",
                             mysteryDescription,
                             "ec3a4ede658f4b2696c89bdd590b5e04",
                             null,
                             UpdateLevelUpDeterminatorText.Group);
             mysteryChoice.SetFeatures(mysteriesAndRevelations.Select(m => m.Item1));
-            var revelationChoice = Helpers.CreateFeatureSelection("OracleRevelationSelection", "Revelation",
-                "At 1st level, 3rd level, and every four levels thereafter (7th, 11th, and so on), an oracle uncovers a new secret about her mystery that grants her powers and abilities. The oracle must select a revelation from the list of revelations available to her mystery (see FAQ at right). If a revelation is chosen at a later level, the oracle gains all of the abilities and bonuses granted by that revelation based on her current level. Unless otherwise noted, activating the power of a revelation is a standard action.\n" +
-                "Unless otherwise noted, the DC to save against these revelations is equal to 10 + 1 / 2 the oracle’s level + the oracle’s Charisma modifier.",
+            var revelationChoice = Helpers.CreateFeatureSelection("OracleRevelationSelection", "启示",
+                "在1级，3级以及之后每提升4个等级时（7级，11级，以此类推），先知可以从自己的秘示域中学习和领悟到新的力量与能力。先知只能选择她秘示域所给予的启示，如果一项启示具有随等级提升的效能，先知以她的现有等级来计算这些效果。除非特别提及，否则激活启示能力将是一个标准动作。\n" +
+                "除非另有说明，否则对抗先知启示的DC为10+先知等级的一半+先知的魅力调整值。",
                 "1dd88ec42dc249ca94bf3c2fc239064d",
                 null,
                 FeatureGroup.None);
@@ -298,14 +298,14 @@ namespace EldritchArcana
 
         static BlueprintFeatureSelection CreateCureOrInflictSpellSelection()
         {
-            var selection = Helpers.CreateFeatureSelection("OracleCureOrInflictSpellSelection", "Cure or Inflict Spells",
-                "In addition to the spells gained by oracles as they gain levels, each oracle also adds all of either the cure spells or the inflict spells to her list of spells known (cure spells include all spells with “cure” in the name, inflict spells include all spells with “inflict” in the name). These spells are added as soon as the oracle is capable of casting them. This choice is made when the oracle gains her first level and cannot be changed.",
+            var selection = Helpers.CreateFeatureSelection("OracleCureOrInflictSpellSelection", "治愈或伤害法术",
+                "除了先知在升级时获得的法术，每个先知还可以将治愈X伤或造成X伤系列法术加入其已知法术列表。 (治愈法术包括所有名字中含有 “治愈X伤” 的法术, 伤害法术包括所有名字中含有 “造成X伤” 的法术)。一旦先知达到了可以释放这些法术的等级，他就会立刻习得它们。此选择必须在先知等级一时做出，并且无法更改。",
                 "4e685b25900246939394662b7fa36295",
                 null,
                 UpdateLevelUpDeterminatorText.Group);
 
             var cureProgression = Helpers.CreateProgression("OracleCureSpellProgression",
-                "Cure Spells",
+                "治愈法术",
                 selection.Description,
                 "99b17564aaf94886b6858c92eec20285",
                 Helpers.GetIcon("47808d23c67033d4bbab86a1070fd62f"), // cure light wounds
@@ -323,7 +323,7 @@ namespace EldritchArcana
             cureProgression.UIGroups = Helpers.CreateUIGroups(cureSpells);
 
             var inflictProgression = Helpers.CreateProgression("OracleInflictSpellProgression",
-                "Inflict Spells",
+                "伤害法术",
                 selection.Description,
                 "1ad92576cf214c9a8890cd9ef6a06a31",
                 Helpers.GetIcon("e5cb4c4459e437e49a4cd73fde6b9063"), // inflict light wounds

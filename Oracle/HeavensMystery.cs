@@ -78,9 +78,9 @@ namespace EldritchArcana
             var skill1 = StatType.SkillKnowledgeArcana;
             var skill2 = StatType.SkillPerception;
 
-            var mystery = Helpers.CreateProgression("MysteryHeavensProgression", "Heavens Mystery", $"{mysteryDescription}\n" +
-                "Oracles who drawn to the night sky learn spells and revelations that draw power from the heavens: the many colors of starlight, the moon, or the empty void of space.\n" +
-                $"Class skills: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}",
+            var mystery = Helpers.CreateProgression("MysteryHeavensProgression", "夜空秘视域", $"{mysteryDescription}\n" +
+                "被深邃夜空吸引的先知可以学到一系列从夜空中汲取力量的法术和启示，璀璨炫目的星光，空灵皎洁的银月，或是幽暗深沉的虚空，都是他们的力量之源。\n" +
+                $"本职技能: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}",
                 "dabcaefe63bc471dac44e8e23c1c330f",
                 Helpers.GetIcon("91da41b9793a4624797921f221db653c"), // color spray
                 UpdateLevelUpDeterminatorText.Group,
@@ -105,7 +105,7 @@ namespace EldritchArcana
                 // TODO
             };
             var description = new StringBuilder(mystery.Description).AppendLine();
-            description.AppendLine("An oracle with the flame mystery can choose from any of the following revelations:");
+            description.AppendLine("选择了火焰秘视域的先知可以选择以下启示:");
             foreach (var r in revelations)
             {
                 description.AppendLine($"• {r.Name}");

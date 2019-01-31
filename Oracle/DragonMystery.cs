@@ -46,10 +46,10 @@ namespace EldritchArcana
         {
             var skill1 = StatType.SkillPerception;
             var skill2 = StatType.SkillKnowledgeArcana;
-            var mystery = Helpers.CreateFeatureSelection("MysteryDragonSelection", "Dragon Mystery", $"{mysteryDescription}\n" +
-                "Oracles who draw their power from the mysterious and primal might of dragons are usually solitary folk. They are deep thinkers and often quick of wit, but prideful and equally quick-tempered.\n" +
-                "Upon selecting this mystery, the oracle must select an energy type (acid, cold, electricity, or fire) to be her associated element, which impacts several revelations.\n" +
-                $"Class skills: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}",
+            var mystery = Helpers.CreateFeatureSelection("MysteryDragonSelection", "巨龙秘视域", $"{mysteryDescription}\n" +
+                "追寻着巨龙的神秘并从那原始的魔力中汲取力量的先知们常常在这条道路上踽踽独行。他们往往深思熟虑，聪明骄傲。但与此同时，巨龙们的暴躁个性也渗透进了他们的灵魂中。\n" +
+                "在选择这个启示时，先知们必须选择一种能量类型 (酸，冷，电或者火) 作为他的专注元素。这会影响几个他所获得的启示。\n" +
+                $"本职技能: {UIUtility.GetStatText(skill1)}, {UIUtility.GetStatText(skill2)}",
                 "aec53bfbee334a0e93b90a283d4e308d",
                 Helpers.GetIcon("da48f9d7f697ae44ca891bfc50727988"), // Blood of Dragons selection
                 UpdateLevelUpDeterminatorText.Group);
@@ -78,7 +78,7 @@ namespace EldritchArcana
                 CreateWingsOfTheDragon(),
             };
             var description = new StringBuilder(mystery.Description).AppendLine();
-            description.AppendLine("An oracle with the dragon mystery can choose from any of the following revelations:");
+            description.AppendLine("选择了巨龙秘视域的先知可以选择以下启示:");
             foreach (var r in revelations)
             {
                 description.AppendLine($"• {r.Name}");
@@ -101,7 +101,7 @@ namespace EldritchArcana
             {
                 choice.SetDescription(descriptionStr);
             }
-            var revelation = Helpers.CreateFeatureSelection("MysteryDragonRevelation", "Dragon Revelation",
+            var revelation = Helpers.CreateFeatureSelection("MysteryDragonRevelation", "巨龙启示",
                 mystery.Description, "b5bff56fe6cc4ca192df65f5ced050c9", null, FeatureGroup.None,
                 mystery.PrerequisiteFeature());
             revelation.Mode = SelectionMode.OnlyNew;
@@ -126,8 +126,8 @@ namespace EldritchArcana
             // (Wish/Limited Wish/Miracle do use SLAs like this, but they use a different resource pool.)
             var noFeature = Helpers.PrerequisiteNoFeature(null);
             var name = "MysteryDragonMagic";
-            var feat = Helpers.CreateFeatureSelection($"{name}Selection", "Dragon Magic",
-                "Your draconic power grants you a limited form of access to arcane magic. Select one spell from the sorcerer/wizard spell list that is 2 levels lower than the highest-level spell you can cast, or two spells that are both at least 3 levels lower. You add them to your spellbook and can cast them as divine spells.",
+            var feat = Helpers.CreateFeatureSelection($"{name}Selection", "龙之魔力",
+                "你来自于巨龙的庞大魔力可以给予你模仿有限的奥术法术的能力。从法师/术士列表中选择一个比你当前可释放的最高环位的法术低两环的法术，或者两个比你当前可释放的最高环位的法术低三环的法术，将他们加入你的已知法术中，并且视作神术释放。",
                 "e8c546fcff0b4734a787281cb5d37d32",
                 Helpers.GetIcon("55edf82380a1c8540af6c6037d34f322"), // elven magic
                 FeatureGroup.None,
@@ -137,7 +137,7 @@ namespace EldritchArcana
 
             var pickOneSpell = Helpers.CreateParamSelection<SelectAnySpellAtComputedLevel>(
                 $"{name}OneSpellSelection",
-                "Dragon Magic (one spell)",
+                "龙之魔力 (one spell)",
                 feat.Description,
                 "6215b0ab90574ed1b228b70d83959694",
                 null,
@@ -148,7 +148,7 @@ namespace EldritchArcana
             pickOneSpell.SpellLevelPenalty = 2;
 
             var pickTwoSpells = Helpers.CreateFeature($"{name}TwoSpellProgression",
-                "Dragon Magic (two spells)",
+                "龙之魔力 (two spells)",
                 feat.Description,
                 "b76fa49eab1e4fa7bdb2a6e678b7ba2b",
                 null,
@@ -193,8 +193,8 @@ namespace EldritchArcana
             // +4 Perception at level 5
             // Blindsense 30ft at level 11
             // Blindsense 60ft at level 15
-            var feat = Helpers.CreateFeature("MysteryDragonSenses", "Dragon Senses",
-                "Your senses take on a keen draconic edge. You gain a +2 bonus on Perception checks. At 5th level this bonus increases to +4. At 11th level, you gain blindsense with a range of 30 feet. At the 15th level, your blindsense range increases to 60 feet.",
+            var feat = Helpers.CreateFeature("MysteryDragonSenses", "龙之感知",
+                "你的感官变得更加敏锐。你在察觉检定中获得+2加值。在5级，此加值增加到+4。在11级，你获得30尺范围盲感，在15级，盲感范围增加到60尺。",
                 "42ab3372fc2c473190d470a4ec398ae9",
                 Helpers.GetIcon("82962a820ebc0e7408b8582fdc3f4c0c"), // sense vitals
                 FeatureGroup.None);
@@ -226,8 +226,8 @@ namespace EldritchArcana
             var formSpell2 = library.Get<BlueprintAbility>("666556ded3a32f34885e8c318c3a0ced");
             var formSpell3 = library.Get<BlueprintAbility>("1cdc4ad4c208246419b98a35539eafa6");
 
-            var feat = Helpers.CreateFeature("MysteryDragonForm", "Form of the Dragon",
-                "Your kinship with dragonkind allows you to take on the form of a dragon. As a standard action, you can assume the form of a Medium dragon, as per form of the dragon I. At 15th level, you can assume the form of a Large dragon, as per form of the dragon II. At 19th level, you can assume the form of a Huge dragon, as per form of the dragon III. You can use this ability once per day, but the duration is 10 minutes per oracle level. If you are at least 15th level and choose to have this ability function as per form of the dragon I, the duration is instead 1 hour per oracle level.",
+            var feat = Helpers.CreateFeature("MysteryDragonForm", "龙之形态",
+                "你与龙神的紧密联系让你可以变成巨龙。 以一个标准动作，你可以变成中等龙的形态如同变化巨龙I。 在15级，你可以变成大型龙的形态如同变化巨龙II。 在19级，你可以变成巨龙的形态如同变化巨龙III。 你每天可以使用1此此能力。 但是持续时间为每先知等级10分钟。如果你至少有15级先知等级，并且决定使用此能力如同变化巨龙I, 则此能力持续时间变为每先知等级一小时。",
                 "48accc5693ff4704a16938d365ac7d36",
                 formSpell1.Icon,
                 FeatureGroup.None);
@@ -315,8 +315,8 @@ namespace EldritchArcana
 
         static BlueprintFeature CreatePresenceOfDragons()
         {
-            var feat = Helpers.CreateFeature("MysteryDragonPresence", "Presence of Dragons",
-                "Those who would oppose you must overcome their fear of dragons or be struck with terror at your draconic majesty. As a swift action, you can manifest an aura of draconic might around yourself. Enemies within 30 feet who can see you when you activate this ability must attempt a Will save. Success means that the creature is immune to this ability for the following 24 hours. On a failed save, the opponent is shaken for 2d6 rounds. This is a mind-affecting fear effect. You can use this ability once per day at 1st level, plus one additional time per day at 5th level and for every 5 levels beyond 5th.",
+            var feat = Helpers.CreateFeature("MysteryDragonPresence", "龙之威压",
+                "那些敢于反抗你的人必须克服他们对龙的恐惧，或者在你如同巨龙般的威严下颤抖。以一个迅捷行动，你可以在你周围散布恐惧。当你激活此能力时，30尺内能看到你的敌人必须尝试意志豁免，成功则此生物在接下来24小时内对此能力免疫。当豁免失败时，敌人陷入战栗 2d6 轮。这是一个影响心灵的恐惧效果。你可以在1级时每日使用一次此能力。并且在5级和5级之后的每5级获得每日额外一次使用次数。",
                 "94e000ab4ab3471087244cac565be105",
                 Helpers.GetIcon("41cf93453b027b94886901dbfc680cb9"), // overwhelming presence
                 FeatureGroup.None);
@@ -326,7 +326,7 @@ namespace EldritchArcana
             resource.SetIncreasedByLevelStartPlusDivStep(1, 5, 1, 5, 1, 0, 0, oracleArray);
 
             var presenceImmunity = Helpers.CreateBuff($"{feat.name}ImmuneForDay",
-                $"Immune to {feat.Name}", "A successful save means that you are nowimmune to this ability for 24 hours.",
+                $"免疫 {feat.Name}", "一次成功的豁免检定使你在24小时内对龙之威压能力免疫。",
                 "a2c921fde72c40b3baccca9a54beafbd",
                 Helpers.GetIcon("55a037e514c0ee14a8e3ed14b47061de"), // remove fear
                 null);
@@ -360,8 +360,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateScaledToughness()
         {
             var barkskin = library.Get<BlueprintBuff>("533592a86adecda4e9fd5ed37a028432");
-            var feat = Helpers.CreateFeature("MysteryDragonScaledToughness", "Scaled Toughness",
-                "You can manifest the scaly toughness of dragonkind. Once per day as a swift action, you can harden your skin, giving it a scaly appearance and granting you DR 10/magic. During this time, you are also immune to paralysis and sleep effects. This effect lasts for a number of rounds equal to your oracle level. At 13th level, you can use this ability twice per day.",
+            var feat = Helpers.CreateFeature("MysteryDragonScaledToughness", "龙之皮肤",
+                "你可以将你的皮肤转变为龙鳞。每日一次，以迅捷动作，你可以硬化你的皮肤，让它呈现出鳞片状并且获得DR10/魔法。并且在此期间，你免疫麻痹和睡眠效果。此能力持续时间为每先知等级1轮。在13级时，你每日可以使用两次此能力。",
                 "b61e6876f14b440e804878bf1fb85b72",
                 barkskin.Icon,
                 FeatureGroup.None);
@@ -411,8 +411,8 @@ namespace EldritchArcana
             //   - RuleAttackWithWeapon.IsAttackOfOpportunity (created by UnitAttackOfOpportunity.OnAction)
             //   - UnitCombatState.AttackOfOpportunityCount == 1 (to know it's the tail swipe one)
             // - create an item for the tail
-            return Helpers.CreateFeature("MysteryDragonTailSwipe", "Tail Swipe",
-                "You express your wrath through sweeps of a wicked tail. You can grow a scaly tail. This tail improves your balance, allowing you to make one additional attack of opportunity each round with your weapon.",
+            return Helpers.CreateFeature("MysteryDragonTailSwipe", "龙之扫尾",
+                "你可以变化出一条巨龙之尾来宣泄你的愤怒。你长出巨龙之尾，提升你的平衡性，让你每回合可以使用你的武器进行一次额外的借机攻击。",
                 "895b438d49f748c684db8db865735cea",
                 Helpers.GetIcon("02be9687e105dd742aeafbafff0c450e"), // weapon spec tail, greater
                 FeatureGroup.None,
@@ -422,8 +422,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateTalonsOfTheDragon(BlueprintFeature mystery, DamageEnergyType energy, String bloodlineId)
         {
             // Note: this is identical to dragon bloodline claws, so we just need to link it up.
-            var revelation = Helpers.CreateFeature($"MysteryDragonTalons{energy}", "Talons of the Dragon",
-                "You fight with the fearsome talons of dragonkind. You can grow claws as a free action. These claws are treated as natural weapons, allowing you to perform two claw attacks as a full attack action using your full base attack bonus. Each of these attacks deals an amount of slashing damage equal to 1d4 (1d3 if you are Small) + your Strength modifier. At 5th level, these claws are considered magic weapons for the purpose of overcoming DR. At 7th level, the damage die increases by 1 step, to deal an amount of slashing damage equal to 1d6 (1d4 if you are Small) + your Strength modifier. At 11th level, these claws deal an additional 1d6 points of damage of your chosen energy type on a successful hit. You can use your claws for a number of rounds per day equal to 3 + your Charisma modifier. These rounds do not need to be consecutive.",
+            var revelation = Helpers.CreateFeature($"MysteryDragonTalons{energy}", "龙之利爪",
+                "你变化出巨龙的利爪协助你战斗。你可以以自由动作长出一只利爪。此利爪被视作天生武器，当你在进行全回合攻击时可以以你的满额攻击加值进行两次爪击。每一次攻击都会造成1d4点伤害（小型生物则为1d3）+你的力量调整值。在5级时，这些利爪被视作魔法武器以穿透伤害减免。在7级时，伤害骰增大一级成为1d6（小型为1d4）+你的力量调整值。在11级时，这些利爪会造成额外1d6点你选择的能量类型的伤害。你每日可以使用此能力的次数为3+你的魅力调整值。这些回合不必是连续的。",
                 Helpers.MergeIds(mystery.AssetGuid, "805440d7056742dca6708b40f323d36e"),
                 Helpers.GetIcon("3a27e888cae24684695182fc53554261"),
                 FeatureGroup.None);
@@ -462,8 +462,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateWingsOfTheDragon()
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var revelation = Helpers.CreateFeatureSelection("MysteryDragonWingsSelection", "Wings of the Dragon",
-                "Like the great dragons, you can take to the skies and terrorize opponents from above. As a swift action, you can manifest leathery dragon wings that grant you a fly speed of 60 feet (clumsy maneuverability). At 10th level, your maneuverability increases to poor. You can use these wings for 1 minute per day for each oracle level you have. This duration does not need to be consecutive, but it must be spent in 1-minute increments. At 11th level you can use these wings for 10 minutes per day for each oracle level you have. At 15th level, you can use the wings indefinitely.",
+            var revelation = Helpers.CreateFeatureSelection("MysteryDragonWingsSelection", "龙之翼",
+                "如同巨龙一般，你可以从天而降的威吓你的敌人。以一个迅捷动作，你可以长出龙翼，使你的飞行速度达到60尺（机动性笨拙）。每天可使用每先知等级1分钟。这些时间不必是连续的，但必须以1分钟为单位使用。在11级时，你每天可以使用此能力每先知等级10分钟。在15级时，你可以无限的使用龙翼。",
                 "ed6599167d3841ccafeeac5297546963",
                 Helpers.GetIcon("e0bdad79800cbfd40afdbe7fdec2441e"), // Black dragon wings
                 FeatureGroup.None,
@@ -536,7 +536,7 @@ namespace EldritchArcana
             resource.SetIncreasedByLevelStartPlusDivStep(1, 5, 1, 5, 1, 0, 0, oracleArray);
 
             var feat = Helpers.CreateFeatureSelection("MysteryDragonBreathWeaponSelection",
-                "Breath Weapon", "The primal power of dragonkind seethes within you. You gain a breath weapon. This breath weapon deals 1d6 points of damage of your energy type per 2 oracle levels you have (minimum 1d6; Reflex half ). The shape of the breath weapon is either a 30-foot cone or a 60-foot line, selected when choosing this revelation. You can use this ability once per day at 1st level, plus one additional time at 5th level and one additional time per day for every 5 levels beyond 5th.",
+                "龙之吐息", "巨龙的原始力量在你的体内流淌。你获得喷吐攻击。造成每两个先知等级1d6点你选择的能量类型的伤害（最小1d6点，反射豁免减半）。喷吐攻击的形状为30尺锥形或者60尺线状。在选择此启示时做出选择并且无法更改。在1级时，你每天可以使用此能力1此，在5级和5级之后的每5级获得每日一次的额外使用次数。",
                 "881dd19e19eb498db0ce341368f29d86",
                 Helpers.GetIcon("5e826bcdfde7f82468776b55315b2403"), // Dragon's Breath
                 FeatureGroup.None,
@@ -567,7 +567,7 @@ namespace EldritchArcana
             var assetId = shapeName == "Line" ? "9cc10f40f706427daff880074c1c423c" : "99bee4ae51af40839154c17c434bca17";
             var feat = library.CopyAndAdd<BlueprintFeature>(existingId,
                 $"{name}Feature", assetId, energyFeat.AssetGuid);
-            feat.SetName($"Breath Weapon — {shapeName} of {energyName}");
+            feat.SetName($"喷吐攻击 — {shapeName} of {energyName}");
 
             var ability = library.CopyAndAdd(feat.GetComponent<AddFacts>().Facts[0] as BlueprintAbility,
                 $"{name}Ability", feat.AssetGuid, "56e4f7ee4085483ab996b65b24671d8b");
@@ -652,8 +652,8 @@ namespace EldritchArcana
             // Note: the 1d4+1 breath weapon cooldown is implemented in the breath weapon feat.
             var dragonType = library.Get<BlueprintFeature>("455ac88e22f55804ab87c2467deff1d6");
             return Helpers.CreateFeature($"MysteryDragonFinalRevelation{energy}",
-                $"Final Revelation — {energy}",
-                "Upon reaching 20th level, your draconic destiny unfolds. You gain immunity to paralysis, sleep, and damage of your energy type. You count as a dragon for the purposes of spells and magical effects. If you have the breath weapon revelation, you can use your breath weapon an unlimited number of times per day, though no more often than once every 1d4+1 rounds.",
+                $"最终启示 — {energy}",
+                "达到20级时，你的命运将一览无遗。你获得对麻痹，睡眠和你所选的能量类型的免疫。对于法术和魔法效果而言，你的物种变为龙。如果你拥有龙之吐息的启示，你可以无限制的使用你的喷吐攻击。但每1d4+1轮不超过1次。",
                 Helpers.MergeIds("325e4b89871c41549c235cbe7dd1d948", mystery.AssetGuid),
                 Helpers.GetIcon(resistIconId),
                 FeatureGroup.None,
@@ -665,8 +665,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateDragonResistanceToEnergy(BlueprintFeature mystery, DamageEnergyType energy, String iconId)
         {
             var result = Helpers.CreateFeature($"MysteryDragonResistances{energy}",
-                $"Draconic Resistances — {energy}",
-                "Like the great dragons, you are not easily harmed by common means of attack. You gain resistance 5 against your chosen energy type and a +1 natural armor bonus. At 9th level, your energy resistance increases to 10 and your natural armor bonus increases to +2. At 15th level, your energy resistance increases to 20 and your natural armor bonus increases to +4.",
+                $"龙之抗性 — {energy}",
+                "如同巨龙一般，你不容易受到你所选的能量类型的伤害。你获得+1AC的天生护甲值和对于所选能量的5点抗性。在9级时，你获得的天生护甲值增加到+2，能量抗性增加到10。在15级时，你的天生护甲值增加到+4，能量抗性增加到20。",
                 Helpers.MergeIds(mystery.AssetGuid, "f11c13c0684348ff8a2c9104391c5e77"),
                 Helpers.GetIcon(iconId),
                 FeatureGroup.None,

@@ -46,8 +46,8 @@ namespace EldritchArcana
 
         internal static BlueprintFeatureSelection CreateSelection()
         {
-            var selection = Helpers.CreateFeatureSelection("OracleCurseSelection", "Curse",
-                "Each oracle is cursed, but this curse comes with a benefit as well as a hindrance.This choice is made at 1st level, and once made, it cannot be changed.The oracle’s curse cannot be removed or dispelled without the aid of a deity.An oracle’s curse is based on her oracle level plus one for every two levels or Hit Dice other than oracle.Each oracle must choose one of the following curses.",
+            var selection = Helpers.CreateFeatureSelection("OracleCurseSelection", "诅咒",
+                "每个先知都背负着诅咒，这些诅咒既为他们造成不利也会带来有利之处。先知必须在1级时选择自己的诅咒，一旦选择即不能更改。除非有神祇力量的介入，否则先知无法以任何方式摆脱自己的诅咒。先知诅咒的等级基于她的“先知等级+1/2非先知等级或HD”。每一个先知都必须选择以下诅咒之一：",
                 "b4c9164ec94a47589eeb2a6688b24320",
                 null,
                 UpdateLevelUpDeterminatorText.Group);
@@ -108,27 +108,27 @@ namespace EldritchArcana
             //
             // Note: I tried altering fog of war settings, but this seems to break some of the game's
             // cutscene scripts, so those patches are removed.
-            var curse = Helpers.CreateProgression("OracleCurseCloudedVision", "Clouded Vision",
-                "Your eyes are obscured, making it difficult for you to see.\nYou cannot see anything beyond 20 feet. " +
-                "Targets beyond this range have concealment, and you cannot target any point past that range.",
+            var curse = Helpers.CreateProgression("OracleCurseCloudedVision", "盲目",
+                "先知的双眼蒙上一层雾翳，让她难以看清东西。\n你的视野降低为20尺。 " +
+                "超出此范围的目标被视为隐蔽, 并且你不能瞄准超出此范围的任何一点。",
                 "a4556beb36e742db9361c50587de9514",
                 Helpers.GetIcon("46fd02ad56c35224c9c91c88cd457791"), // blindness
                 FeatureGroup.None,
                 Helpers.Create<CloudedVisionLogic>());
 
             var level5 = Helpers.CreateFeature($"{curse.name}Level5", curse.Name,
-                "At 5th level, your vision distance increases to 30 feet.",
+                "在等级5，你的视野范围上升为30尺。",
                 "9ee32f1d54984aa7b635891fa778205d", curse.Icon, FeatureGroup.None);
 
-            var level10 = Helpers.CreateFeature($"{curse.name}Blindsense", "Blindsense",
-                "At 10th level, you gain blindsense out to a range of 30 feet.",
+            var level10 = Helpers.CreateFeature($"{curse.name}Blindsense", "盲感",
+                "在等级10，你获得30尺盲感。",
                 "b92a0776b8984f19b6ae0a83c4b90579",
                 Helpers.GetIcon("30e5dc243f937fc4b95d2f8f4e1b7ff3"), // see invisible
                 FeatureGroup.None,
                 Helpers.Create<Blindsense>(b => b.Range = 30.Feet()));
 
-            var level15 = Helpers.CreateFeature($"{curse.name}Blindsight", "Blindsight",
-                "At 15th level, you gain blindsight out to a range of 15 feet.",
+            var level15 = Helpers.CreateFeature($"{curse.name}Blindsight", "盲视",
+                "在等级15，你获得15尺盲视。",
                 "69c483cbe48647f2af576275c2a30b59",
                 Helpers.GetIcon("4cf3d0fae3239ec478f51e86f49161cb"), // true seeing
                 FeatureGroup.None,
@@ -147,8 +147,8 @@ namespace EldritchArcana
         static BlueprintProgression CreateDeafCurse()
         {
             var pcVoiceNone = library.Get<BlueprintUnitAsksList>("e7b22776ba8e2b84eaaff98e439639a7");
-            var curse = Helpers.CreateProgression("OracleCurseDeaf", "Deaf",
-                "You cannot hear and suffer all of the usual penalties for being deafened: -4 penalty on initiative and -4 perception. You cast all of your spells as if they were modified by the Silent Spell feat. This does not increase their level or casting time.",
+            var curse = Helpers.CreateProgression("OracleCurseDeaf", "失聪",
+                "先知失去听力并承受所有因为耳聋而获得的正常减值：先攻-4和察觉-4，不过，你施放的所有法术都视为搭配有“法术默发”专长，并且这些法术的施法时间和法术环级不会增加。",
                 "a69e00e4787d4f4c9bf38540c88fce13",
                 Helpers.GetIcon("c3893092a333b93499fd0a21845aa265"), // sound burst
                 FeatureGroup.None,
@@ -160,19 +160,19 @@ namespace EldritchArcana
             Main.ApplyPatch(typeof(AbilityData_VoiceIntensity_Patch), "Oracle Deaf curse, cast using Silent Spell");
 
             var level5 = Helpers.CreateFeature($"{curse.name}Level5", curse.Name,
-                "At 5th level, you no longer receive a penalty on Perception checks, and the initiative penalty for being deaf is reduced to –2.",
+                "在等级5，你不再承受察觉惩罚，并且先攻权处罚减少到-2。",
                 "373c4a9b4d304cbfa77472613010a367", curse.Icon, FeatureGroup.None,
                 AddStatBonusOnCurseLevel.Create(StatType.Initiative, -2, ModifierDescriptor.Penalty, minLevel: 5, maxLevel: 9));
 
             var level10 = Helpers.CreateFeature($"{curse.name}Level10", curse.Name,
-                "At 10th level, you receive a +3 competence bonus on Perception checks, and you do not suffer any penalty on initiative checks due to being deaf.",
+                "在等级10，你在察觉检定上获得+3加值，并且不再承受先攻权惩罚。",
                 "649e4b7f719b4a5d93c322d12ed4ae5b",
                 Helpers.GetIcon("c927a8b0cd3f5174f8c0b67cdbfde539"), // remove blindness
                 FeatureGroup.None,
                 AddStatBonusOnCurseLevel.Create(StatType.SkillPerception, 3, ModifierDescriptor.Competence, minLevel: 10));
 
             var tremorsense = Helpers.CreateFeature($"{curse.name}Tremorsense", "Tremorsense",
-                "At 15th level, you gain tremorsense out to a range of 30 feet.",
+                "在等级15，你获得30尺盲感。",
                 "26c9d319adb04110b4ee687a3d573190",
                 Helpers.GetIcon("30e5dc243f937fc4b95d2f8f4e1b7ff3"), // see invisible
                 FeatureGroup.None,
@@ -190,9 +190,9 @@ namespace EldritchArcana
         static BlueprintProgression CreateBlackenedCurse()
         {
             var burningHands = library.Get<BlueprintAbility>("4783c3709a74a794dbe7c8e7e0b1b038");
-            var curse = Helpers.CreateProgression("OracleCurseBlackened", "Blackened",
-                "Your hands and forearms are shriveled and blackened, as if you had plunged your arms into a blazing fire, and your thin, papery skin is sensitive to the touch.\n" +
-                "You take a –4 penalty on weapon attack rolls, but you add burning hands to your list of spells known.",
+            var curse = Helpers.CreateProgression("OracleCurseBlackened", "焦黑手臂",
+                "你的手掌与前臂干瘪发黑，就如同你曾经把手臂插入熊熊火焰中一样。你那薄如纸张的皮肤对碰触极为敏感。\n" +
+                "你在武器攻击检定中受到-4减值，不过你能够将燃烧之手加入到你的已知法术列表中。",
                 "753f68b73c73472db713c06057a6009f",
                 burningHands.Icon,
                 FeatureGroup.None);
@@ -213,7 +213,7 @@ namespace EldritchArcana
             var scorchingRay = library.Get<BlueprintAbility>("cdb106d53c65bbc4086183d54c3b97c7");
             var burningArc = library.Get<BlueprintAbility>("eaac3d36e0336cb479209a6f65e25e7c");
             var level5 = Helpers.CreateFeature($"{curse.name}Level5", curse.Name,
-                "At 5th level, add scorching ray and burning arc to your list of spells known.",
+                "5级起，将灼热射线以及燃烧之弧加入到你的已知法术列表中。",
                 "a27670ecc84f4b1d9dd9d434eeb1e782",
                 scorchingRay.Icon,
                 FeatureGroup.None,
@@ -222,7 +222,7 @@ namespace EldritchArcana
 
             var wallOfFire = FireSpells.wallOfFire;
             var level10 = Helpers.CreateFeature($"{curse.name}Level10", curse.Name,
-                "At 10th level, add wall of fire to your list of spells known and your penalty on weapon attack rolls is reduced to –2.",
+                "10级起，将火墙术加入到你的已知法术列表中。并且你的武器攻击检定所受的减值降低至-2。",
                 "3fb920932967478687bae1d71ffe5c97",
                 wallOfFire.Icon,
                 FeatureGroup.None,
@@ -242,7 +242,7 @@ namespace EldritchArcana
 
             var delayedBlastFireball = FireSpells.delayedBlastFireball;
             var level15 = Helpers.CreateFeature($"{curse.name}Level15", curse.Name,
-                "At 15th level, add delayed blast fireball to your list of spells known.",
+                "15级起，将延迟爆裂火球加入到你的已知法术列表中。",
                 "330d3fca05884799aef73b546dd27aa5",
                 delayedBlastFireball.Icon,
                 FeatureGroup.None,
@@ -271,8 +271,8 @@ namespace EldritchArcana
             var debuff = library.CopyAndAdd<BlueprintBuff>("4e42460798665fd4cb9173ffa7ada323",
                 "OracleCurseCovetousSickened", "be50bd73d0fd4c22be3c26954e097c8c");
 
-            var curse = Helpers.CreateProgression("OracleCurseCovetous", "Covetous",
-                "You find yourself drawn to the luster of wealthy living.\nYou must have a gold reserve worth at least 100 gp + 200 gp per character level you have beyond 1st. If you do not have sufficient wealth, you feel a strong desire (but are not compelled) to sell existing items or steal from others to obtain it. You are sickened whenever you do not meet this requirement. Use Magic Device becomes a class skill for you.",
+            var curse = Helpers.CreateProgression("OracleCurseCovetous", "贪婪",
+                "你常常被富裕生活所吸引。\n你必须至少持有100gp的金钱储备。这个数值在1级之后每等级增加200gp。如果你没有足够的财富，你会感到一股强烈的欲望（并不是强迫）出售现有的物品或者从其他人手中窃取财富以持有如此多的金钱。只要你没有足够财富，你就会感到恶心。使用魔法装置成为你的一项本职技能。",
                 "e42c5119978c438b9c445a90198632b0",
                 library.Get<BlueprintItemEquipmentRing>("ba4276197d204314d9b4a69a4366b2a3").Icon, // Gold ring
                 FeatureGroup.None,
@@ -283,7 +283,7 @@ namespace EldritchArcana
             debuff.SetDescription($"{debuff.Description}\n{curse.Name}: {curse.Description}");
 
             var level5 = Helpers.CreateFeature($"{curse.name}Level5", curse.Name,
-                $"At 5th level, you gain a +4 insight bonus on {UIUtility.GetStatText(StatType.SkillUseMagicDevice)} checks.",
+                $"在等级5，你获得+4洞察加值当你在进行 {UIUtility.GetStatText(StatType.SkillUseMagicDevice)} 检定时。",
                 "04d79bcdcf7d44ea97fd5f09763bb7bc",
                 Helpers.GetSkillFocus(StatType.SkillUseMagicDevice).Icon,
                 FeatureGroup.None,
@@ -292,7 +292,7 @@ namespace EldritchArcana
             // Note: reworked; "Fabricate" spell is not in game.
             // It's now the ability to use UMD to identify items (based on the identify bonus from level 5).
             var level10 = Helpers.CreateFeature($"{curse.name}Level10", curse.Name,
-                $"At 10th level, you can use your {UIUtility.GetStatText(StatType.SkillUseMagicDevice)} skill to identify items.",
+                $"在等级10，你可以使用你的 {UIUtility.GetStatText(StatType.SkillUseMagicDevice)} 技能来鉴定物品。",
                 "2a32af175975459b9a960b79cfcaaf64",
                 Helpers.GetSkillFocus(StatType.SkillUseMagicDevice).Icon,
                 FeatureGroup.None,
@@ -300,7 +300,7 @@ namespace EldritchArcana
 
             // Note: reworked to Thievery since there's no steal checks against PC.
             var level15 = Helpers.CreateFeature($"{curse.name}Level15", curse.Name,
-                $"At 15th level, you gain a +4 insight bonus on {UIUtility.GetStatText(StatType.SkillThievery)} checks.",
+                $"在等级15，你获得+4洞察加值当你在进行 {UIUtility.GetStatText(StatType.SkillThievery)} 检定时。",
                 "c761a8e5ac6e40c087678a3ede5d9bdd",
                 Helpers.GetSkillFocus(StatType.SkillThievery).Icon,
                 FeatureGroup.None,
@@ -330,10 +330,10 @@ namespace EldritchArcana
             // Should be: reverse gravity
             var invisibilityMass = library.Get<BlueprintAbility>("98310a099009bbd4dbdf66bcef58b4cd");
 
-            var curse = Helpers.CreateProgression("OracleCurseHaunted", "Haunted",
-                "Malevolent spirits follow you wherever you go, causing minor mishaps and strange occurrences (such as unexpected breezes, small objects moving on their own, and faint noises).\n" +
-                "Retrieving any stored item from your gear requires a standard action, unless it would normally take longer.Any item you drop lands 10 feet away from you in a random direction.\n" +
-                $"Add {vanish.Name} to your list of spells known.",
+            var curse = Helpers.CreateProgression("OracleCurseHaunted", "鬼扰",
+                "恶意的灵魂如影随形，在你身边制造各种不快和怪事（比如诡异的气流，小物件无主自动，轻微的噪声等）。\n" +
+                "取出任何携带的物品都需要你使用一个标准动作，除非它需要的时间长于一个标准动作，且任何你掉落的物品都会自动朝随机方向远离你10尺距离。\n" +
+                $"将 {vanish.Name} 加入你的已知法术列表",
                 "e2aa739f54c94f7199f550d7a499a2a0",
                 Helpers.GetIcon("c83447189aabc72489164dfc246f3a36"), // frigid touch
                 FeatureGroup.None,
@@ -342,21 +342,21 @@ namespace EldritchArcana
             curse.Classes = oracleArray;
 
             var level5 = Helpers.CreateFeature($"{curse.name}Level5", invisibility.Name,
-                $"At 5th level, add {invisibility.Name} to your list of spells known.",
+                $"在等级5，将 {invisibility.Name} 加入你的已知法术列表。",
                 "84247c143a9b4d478f4ac3241cce32ab",
                 invisibility.Icon,
                 FeatureGroup.None,
                 invisibility.CreateAddKnownSpell(oracle, 2));
 
             var level10 = Helpers.CreateFeature($"{curse.name}Level10", invisibilityGreater.Name,
-                $"At 10th level, add {invisibilityGreater.Name} to your list of spells known.",
+                $"在等级10，将 {invisibilityGreater.Name} 加入你的已知法术列表。",
                 "bd62288494144997b3c32cbaa04b25ab",
                 invisibilityGreater.Icon,
                 FeatureGroup.None,
                 invisibilityGreater.CreateAddKnownSpell(oracle, 5));
 
             var level15 = Helpers.CreateFeature($"{curse.name}Level15", invisibilityMass.Name,
-                $"At 15th level, add {invisibilityMass.Name} to your list of spells known.",
+                $"在等级15，将 {invisibilityMass.Name} 加入你的已知法术列表。",
                 "90d84dca2e06494cae92566ede0ca6f0",
                 invisibilityMass.Icon,
                 FeatureGroup.None,
@@ -379,24 +379,24 @@ namespace EldritchArcana
             Main.ApplyPatch(typeof(PartyEncumbranceController_UpdatePartyEncumbrance_Patch), "Lame curse (party speed not reduced by encumbrance");
             Main.ApplyPatch(typeof(UnitPartEncumbrance_GetSpeedPenalty_Patch), "Lame curse (speed not reduced by encumbrance)");
 
-            var curse = Helpers.CreateProgression("OracleCurseLame", "Lame",
-                "One of your legs is permanently wounded, reducing your base land speed by 10 feet if your base speed is 30 feet or more. If your base speed is less than 30 feet, your speed is reduced by 5 feet. Your speed is never reduced due to encumbrance.",
+            var curse = Helpers.CreateProgression("OracleCurseLame", "跛足",
+                "你的一条腿受到了永久性的伤损，如果你拥有30尺或更多的基础速度，那么你的移动速度降低10尺；如果你的基础速度低于30尺，那么你的移动速度降低5尺。你将不会再因为重负而降低移动速度。",
                 "08f1f729406a43f5ab9fece5e92579b6",
                 Helpers.GetIcon("f492622e473d34747806bdb39356eb89"), // slow
                 FeatureGroup.None,
                 Helpers.Create<OracleCurseLameSpeedPenalty>());
 
             curse.Classes = oracleArray;
-            var fatigueImmunity = Helpers.CreateFeature("OracleCurseLameFatigueImmunity", "Immune to Fatigue",
-                "At 5th level, you are immune to the fatigued condition (but not exhaustion).",
+            var fatigueImmunity = Helpers.CreateFeature("OracleCurseLameFatigueImmunity", "免疫疲劳",
+                "5级时，你免疫疲乏效果（但不包括力竭）。",
                 "b2b9ef97c1b54faeb552247e731d7270",
                 Helpers.GetIcon("e5aa306af9b91974a9b2f2cbe702f562"), // mercy fatigue
                 FeatureGroup.None,
                 UnitCondition.Fatigued.CreateImmunity(),
                 SpellDescriptor.Fatigue.CreateBuffImmunity());
 
-            var effortlessArmor = Helpers.CreateFeature("OracleCurseLameEffortlessArmor", "Effortless Armor",
-                "At 10th level, your speed is never reduced by armor.",
+            var effortlessArmor = Helpers.CreateFeature("OracleCurseLameEffortlessArmor", "重甲轻装",
+                "10级时，你不会再因为着甲而降低移动速度。",
                 "fbe8560cf3f14cd58f380a8dc630b1c7",
                 Helpers.GetIcon("e1291272c8f48c14ab212a599ad17aac"), // effortless armor
                 FeatureGroup.None,
@@ -404,8 +404,8 @@ namespace EldritchArcana
                 AddMechanicsFeature.MechanicsFeatureType.ImmunToMediumArmorSpeedPenalty.CreateAddMechanics(),
                 AddMechanicsFeature.MechanicsFeatureType.ImmunToArmorSpeedPenalty.CreateAddMechanics());
 
-            var exhaustionImmunity = Helpers.CreateFeature("OracleCurseLameExhaustionImmunity", "Immune to Exhausted",
-                "At 15th level, you are immune to the exhausted condition.",
+            var exhaustionImmunity = Helpers.CreateFeature("OracleCurseLameExhaustionImmunity", "免疫力竭",
+                "15级时，你免疫力竭效果。",
                 "be45e9251c134ac9baee97e1e3ffc30a",
                 Helpers.GetIcon("25641bda25467224e930e8c70eaf9a83"), // mercy exhausted
                 FeatureGroup.None,
@@ -434,11 +434,11 @@ namespace EldritchArcana
             //
             // Since languages aren't implemented, this instead gives a bonus to knowledge skills.
             var linguistics = UIUtility.GetStatText(StatType.SkillKnowledgeWorld);
-            var curse = Helpers.CreateProgression("OracleCurseTongues", "Tongues",
-                "In times of stress or unease, you speak in tongues.\n" +
-                "Pick one of the following languages: Abyssal, Aklo, Aquan, Auran, Celestial, Ignan, Infernal, or Terran.\n" +
-                $"Whenever you are in combat, you can only speak and understand the selected language. This does not interfere with spellcasting, but it does apply to spells that are language dependent. You know the selected language, and gain a +2 bonus to {linguistics} representing your knowledge of otherworldly languages.\n" +
-                $"If your party members have at least 1 rank in {linguistics} they can communicate with you in combat, allowing you to issue orders to them or vice versa.",
+            var curse = Helpers.CreateProgression("OracleCurseTongues", "饶舌",
+                "在承受压力或不安的状态下你会变得语无伦次。\n" +
+                "从以下语言中选择一项：深渊语，邪灵语，水族语，风族语，天界语，火族语，炼狱语或土族语。\n" +
+                $"当你进入战斗时你将只能说和理解此种语言。这并不会干扰你的施法，但确实会影响基于语言成分的法术。你熟知你所选的语言。并且在 {linguistics} 上由于你对此语言的理解获得+2加值。\n" +
+                $"如果你的队友有至少1点的 {linguistics} 。他们可以在战斗中与你沟通。允许你向他们发出命令，反之亦然。",
                 "983b66fc844a496da24acbcbdceebede",
                 Helpers.GetIcon("f09453607e683784c8fca646eec49162"), // shout
                 FeatureGroup.None,
@@ -446,22 +446,22 @@ namespace EldritchArcana
                 Helpers.Create<OracleCurseLogic>(o => o.Curse = OracleCurse.Tongues));
             curse.Classes = oracleArray;
 
-            var level5 = Helpers.CreateFeature($"{curse.name}Level5", "Bonus Language",
-                $"At 5th level, you learn a new language, gaining an additional +2 {linguistics} representing this knowledge.",
+            var level5 = Helpers.CreateFeature($"{curse.name}Level5", "奖励语言",
+                $"在等级5，你获得另一种奖励语言，在 {linguistics} 上获得额外+2加值。",
                 "7b08ed37b3034c94b5e00c7f507f1000",
                 curse.Icon,
                 FeatureGroup.None,
                 Helpers.CreateAddStatBonus(StatType.SkillKnowledgeWorld, 2, ModifierDescriptor.UntypedStackable));
 
-            var level10 = Helpers.CreateFeature($"{curse.name}Level10", "Understand All Languages",
-                $"At 10th level, you can understand any spoken language, as if under the effects of tongues, even during combat.\nYou gain an additional +4 {linguistics} representing this knowledge.",
+            var level10 = Helpers.CreateFeature($"{curse.name}Level10", "通晓语言",
+                $"在等级10，你可以理解任何口语，如同处于巧言术的影响下。即使在战斗中也是如此。\n你在 {linguistics} 上获得额外+4加值。",
                 "9a38bf8a757e4980b4d07298d7cdad52",
                 curse.Icon,
                 FeatureGroup.None,
                 Helpers.CreateAddStatBonus(StatType.SkillKnowledgeWorld, 4, ModifierDescriptor.UntypedStackable));
 
-            var level15 = Helpers.CreateFeature($"{curse.name}Level15", "Speak All Languages",
-                $"At 15th level, you can speak and understand any language, but your speech is still restricted during combat.\nYou gain an additional +4 {linguistics} representing this knowledge.",
+            var level15 = Helpers.CreateFeature($"{curse.name}Level15", "巧言",
+                $"15级时，你可以说和理解任何语言，不过在战斗时诅咒依然会照常生效。\n你在 {linguistics} 上获得额外+4加值。",
                 "40ef931c66c94183a3a6b34454e6cde1",
                 curse.Icon,
                 FeatureGroup.None,
@@ -479,8 +479,8 @@ namespace EldritchArcana
 
         static BlueprintProgression CreateWastingCurse()
         {
-            var curse = Helpers.CreateProgression("OracleCurseWasting", "Wasting",
-                "Your body is slowly rotting away.\nYou take a –4 penalty on Charisma-based skill checks, except for Intimidate. You gain a +4 competence bonus on saves made against disease.",
+            var curse = Helpers.CreateProgression("OracleCurseWasting", "虚耗",
+                "你的躯体处于缓慢的腐朽状态。\n你所有基于魅力的技能检定承受-4减值，除了威吓。你对抗疾病效果的强韧检定获得+4表现加值。",
                 "12fcf38c71064c9a8e9a79e5d7c115bc",
                 Helpers.GetIcon("4e42460798665fd4cb9173ffa7ada323"), // sickened
                 FeatureGroup.None,
@@ -496,24 +496,24 @@ namespace EldritchArcana
 
             curse.Classes = oracleArray;
 
-            var level5 = Helpers.CreateFeature($"{curse.name}SickenImmunity", "Immune to Sickened",
-                "At 5th level, you are immune to the sickened condition (but not nauseated).",
+            var level5 = Helpers.CreateFeature($"{curse.name}SickenImmunity", "I免疫恶心",
+                "5级时，你免疫恶心效果（但不包括反胃）。",
                 "a325e582ba97456784cb3c0e206de8e0",
                 Helpers.GetIcon("7ee2ef06226a4884f80b7647a2aa2dee"), // mercy sickened
                 FeatureGroup.None,
                 UnitCondition.Sickened.CreateImmunity(),
                 SpellDescriptor.Sickened.CreateBuffImmunity());
 
-            var level10 = Helpers.CreateFeature($"{curse.name}DiseaseImmunity", "Immune to Disease",
-                "At 10th level, you gain immunity to disease.",
+            var level10 = Helpers.CreateFeature($"{curse.name}DiseaseImmunity", "免疫疾病",
+                "10级时，你免疫疾病效果。",
                 "ffebfb47717246c58304a01223c26086",
                 Helpers.GetIcon("3990a92ce97efa3439e55c160412ce14"), // mercy diseased
                 FeatureGroup.None,
                 SpellDescriptor.Disease.CreateSpellImmunity(),
                 SpellDescriptor.Disease.CreateBuffImmunity());
 
-            var level15 = Helpers.CreateFeature($"{curse.name}NauseatedImmunity", "Immune to Nauseated",
-                "At 15th level, you are immune to the nauseated condition.",
+            var level15 = Helpers.CreateFeature($"{curse.name}NauseatedImmunity", "免疫反胃",
+                "15级时，你免疫反胃效果。",
                 "9fb165ed9340414085930eb72b0661b6",
                 Helpers.GetIcon("a0cacf71d872d2a42ae3deb6bf977962"), // mercy nauseated
                 FeatureGroup.None,
@@ -712,9 +712,11 @@ namespace EldritchArcana
     {
         static void Postfix(UnitEntityData __instance, ref bool __result)
         {
-            try {
+            try
+            {
                 if (!__result) return;
                 if (Main.settings?.RelaxTonguesCurse == true) return;
+
                 // Tongues only has effect in combat.
                 var self = __instance;
                 if (!self.IsInCombat) return;
@@ -732,13 +734,15 @@ namespace EldritchArcana
                 // doesn't have 1 rank in linguistics (Knowledge: World), then they
                 // can't be communicated with in combat (i.e. ordered around).
                 if (pc.Stats.SkillKnowledgeWorld.BaseValue == 0 && npc.Get<UnitPartOracleCurse>()?.HasTongues == true ||
-                    npc.Stats.SkillKnowledgeWorld.BaseValue == 0 && pc.Get<UnitPartOracleCurse>()?.HasTongues == true) {
+                    npc.Stats.SkillKnowledgeWorld.BaseValue == 0 && pc.Get<UnitPartOracleCurse>()?.HasTongues == true)
+                {
                     // Tongues curse: can't talk to this party member in combat.
                     __result = false;
                     return;
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Error(e);
             }
         }
@@ -890,17 +894,20 @@ namespace EldritchArcana
     {
         internal static void Postfix(AbilityData __instance, UnitEntityData target, ref float __result)
         {
-            try {
+            try
+            {
                 var caster = __instance.Caster;
                 var part = caster.Get<UnitPartOracleCurse>();
-                if (part?.HasCloudedVision == true) {
+                if (part?.HasCloudedVision == true)
+                {
                     var maxRange = part.CloudedVisionDistance + (caster.Unit.View?.Corpulence ?? 0.5f) + (target?.View.Corpulence ?? 0.5f);
                     var original = __result;
                     __result = Math.Min(maxRange, original);
                     Log.Write($"Clouded Vision: adjust range from {original} to {__result} (max range: {maxRange})");
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Error(e);
             }
         }
