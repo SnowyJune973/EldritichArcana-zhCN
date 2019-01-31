@@ -632,8 +632,9 @@ namespace EldritchArcana
             // - Militant Merchant (perception)
             // - Ruthless (+1 confirm crits)
             // - Zest for Battle (+1 trait dmg if has morale attack bonus)
-            choices.Add(Helpers.CreateFeature("GroundedTrait", "Grounded (Dwarf)",
-                "You are well balanced, both physically and mentally.\nBenefit: You gain a +2 trait bonus on Mobility checks, and a +1 trait bonus on Reflex saves.",
+            choices.Add(Helpers.CreateFeature("GroundedTrait", Main.lc.GetTranslate("Traits.trRa.GroundedName"),
+                Main.lc.GetTranslate("Traits.trRa.GroundedDesc"),
+                //"You are well balanced, both physically and mentally.\nBenefit: You gain a +2 trait bonus on Mobility checks, and a +1 trait bonus on Reflex saves.",
                 "9b13923527a64c3bbf8de904c5a9ef8b",
                 Helpers.GetIcon("3a8d34905eae4a74892aae37df3352b9"), // Skill Focus Stealth (mobility)
                 FeatureGroup.None,
@@ -641,20 +642,23 @@ namespace EldritchArcana
                 Helpers.CreateAddStatBonus(StatType.SkillMobility, 2, ModifierDescriptor.Trait),
                 Helpers.CreateAddStatBonus(StatType.SaveReflex, 1, ModifierDescriptor.Trait)));
 
-            choices.Add(CreateSkillFeat("MilitantMerchantTrait", "Militant Merchant (Dwarf)",
-                "You know what it takes to get your goods to market and will stop at nothing to protect your products. Years of fending off thieves, cutthroats, and brigands have given you a sixth sense when it comes to danger.",
+            choices.Add(CreateSkillFeat("MilitantMerchantTrait", Main.lc.GetTranslate("Traits.trRa.MilitantMerchantName"),
+                Main.lc.GetTranslate("Traits.trRa.MilitantMerchantDesc"),
+                //"You know what it takes to get your goods to market and will stop at nothing to protect your products. Years of fending off thieves, cutthroats, and brigands have given you a sixth sense when it comes to danger.",
                 "38226f4ad9ed4211878ef95497d01857", StatType.SkillPerception, dwarfReq));
 
-            choices.Add(Helpers.CreateFeature("RuthlessTrait", "Ruthless (Dwarf)",
-                "You never hesitate to strike a killing blow.\nBenefit: You gain a +1 trait bonus on attack rolls to confirm critical hits.",
+            choices.Add(Helpers.CreateFeature("RuthlessTrait", Main.lc.GetTranslate("Traits.trRa.RuthlessName"),
+                Main.lc.GetTranslate("Traits.trRa.RuthlessDesc"),
+                //"You never hesitate to strike a killing blow.\nBenefit: You gain a +1 trait bonus on attack rolls to confirm critical hits.",
                 "58d18289cb7f4ad4a690d9502d397a3a",
                 Helpers.GetIcon("f4201c85a991369408740c6888362e20"), // Improved Critical
                 FeatureGroup.None,
                 dwarfReq,
                 Helpers.Create<CriticalConfirmationBonus>(a => { a.Bonus = 1; a.Value = 0; })));
 
-            choices.Add(Helpers.CreateFeature("ZestForBattleTrait", "Zest for Battle (Dwarf)",
-                "Your greatest joy is being in the thick of battle, and smiting your enemies for a righteous or even dastardly cause.\nBenefit: Whenever you have a morale bonus to weapon attack rolls, you also receive a +1 trait bonus on weapon damage rolls.",
+            choices.Add(Helpers.CreateFeature("ZestForBattleTrait", Main.lc.GetTranslate("Traits.trRa.ZestForBattleName"),
+                Main.lc.GetTranslate("Traits.trRa.ZestForBattleDesc"),
+                //"Your greatest joy is being in the thick of battle, and smiting your enemies for a righteous or even dastardly cause.\nBenefit: Whenever you have a morale bonus to weapon attack rolls, you also receive a +1 trait bonus on weapon damage rolls.",
                 "a987f5e69db44cdd98983985e37a6c2a",
                 Helpers.GetIcon("31470b17e8446ae4ea0dacd6c5817d86"), // Weapon Specialization
                 FeatureGroup.None,
@@ -705,15 +709,17 @@ namespace EldritchArcana
                 a.CheckedFact = library.Get<BlueprintFeature>(id);
             })));
 
-            choices.Add(Helpers.CreateFeature("AnimalFriendTrait", "Animal Friend (Gnome)",
-                "You’ve long been a friend to animals, and feel safer when animals are nearby.\nBenefits: You gain a +1 trait bonus on Will saving throws as long as you have an animal companion or familiar, and Lore (Nature) is always a class skill for you.",
+            choices.Add(Helpers.CreateFeature("AnimalFriendTrait", Main.lc.GetTranslate("Traits.trRa.AnimalFriendName"),
+                Main.lc.GetTranslate("Traits.trRa.AnimalFriendDesc"),
+                //"You’ve long been a friend to animals, and feel safer when animals are nearby.\nBenefits: You gain a +1 trait bonus on Will saving throws as long as you have an animal companion or familiar, and Lore (Nature) is always a class skill for you.",
                 "91c612b225d54adaa4ce4c633501b58e",
                 Helpers.GetIcon("1670990255e4fe948a863bafd5dbda5d"), // Boon Companion
                 FeatureGroup.None,
                 components.ToArray()));
 
-            choices.Add(Helpers.CreateFeature("Rapscallion", "Rapscallion (Gnome)",
-                "You’ve spent your entire life thumbing your nose at the establishment and take pride in your run-ins with the law. Somehow, despite all your mischievous behavior, you’ve never been caught.\nBenefits: You gain a +1 trait bonus on Mobility checks and a +1 trait bonus on initiative checks.",
+            choices.Add(Helpers.CreateFeature("Rapscallion", Main.lc.GetTranslate("Traits.trRa.RapscallionName"),
+                Main.lc.GetTranslate("Traits.trRa.RapscallionDesc"),
+                //"You’ve spent your entire life thumbing your nose at the establishment and take pride in your run-ins with the law. Somehow, despite all your mischievous behavior, you’ve never been caught.\nBenefits: You gain a +1 trait bonus on Mobility checks and a +1 trait bonus on initiative checks.",
                 "4f95abdcc70e4bda818be5b8860585c5",
                 Helpers.GetSkillFocus(StatType.SkillMobility).Icon,
                 FeatureGroup.None,
@@ -728,8 +734,9 @@ namespace EldritchArcana
 
             // TODO: Enlightened Warrior
 
-            choices.Add(Helpers.CreateFeature("MartyrsBloodTrait", "Martyr’s Blood (Aasimar)",
-                "You carry the blood of a self-sacrificing celestial, and strive to live up to your potential for heroism.\nBenefit(s): As long as your current hit point total is less than half of your maximum hit points possible, you gain a +1 trait bonus on attack rolls against evil foes.",
+            choices.Add(Helpers.CreateFeature("MartyrsBloodTrait", Main.lc.GetTranslate("Traits.trRa.MartyrBloodName"),
+                Main.lc.GetTranslate("Traits.trRa.MartyrBloodDesc"),
+                //"You carry the blood of a self-sacrificing celestial, and strive to live up to your potential for heroism.\nBenefit(s): As long as your current hit point total is less than half of your maximum hit points possible, you gain a +1 trait bonus on attack rolls against evil foes.",
                 "729d27ad020d485f843264844f0f2155",
                 Helpers.GetIcon("3ea2215150a1c8a4a9bfed9d9023903e"), // Iron Will Improved
                 FeatureGroup.None,
@@ -756,8 +763,9 @@ namespace EldritchArcana
                     a.Type = AttackTypeAttackBonus.WeaponRangeType.RangedNormal;
                 })));
 
-            choices.Add(Helpers.CreateFeature("WaryTrait", "Wary (Aasimar)",
-                "You grew up around people who were jealous of and hostile toward you. Perhaps your parents were not pleased to have a child touched by the divine—they may have berated or beaten you, or even sold you into slavery for an exorbitant price. You grew up mistrustful of others and believing your unique appearance to be a curse.\nBenefit: You gain a +1 trait bonus on Persuasion and Perception checks.",
+            choices.Add(Helpers.CreateFeature("WaryTrait", Main.lc.GetTranslate("Traits.trRa.WaryName"),
+                Main.lc.GetTranslate("Traits.trRa.WaryDesc"),
+                //"You grew up around people who were jealous of and hostile toward you. Perhaps your parents were not pleased to have a child touched by the divine—they may have berated or beaten you, or even sold you into slavery for an exorbitant price. You grew up mistrustful of others and believing your unique appearance to be a curse.\nBenefit: You gain a +1 trait bonus on Persuasion and Perception checks.",
                 "7a72a0e956784cc38ea049e503189810",
                 Helpers.GetIcon("86d93a5891d299d4983bdc6ef3987afd"), // Persuasive
                 FeatureGroup.None,
@@ -771,8 +779,9 @@ namespace EldritchArcana
             // - God Scorn (Demodand heritage; +1 saves vs divine spells)
             // - Shadow Stabber (+2 damage if opponent can't see you)
 
-            choices.Add(Helpers.CreateFeature("EverWaryTrait", "Ever wary (Tiefling)",
-                "Constant fear that your fiendish nature might provoke a sudden attack ensures that you never completely let down your guard.\nBenefit During the surprise round and before your first action in combat, you can apply half your Dexterity bonus (if any) to your AC. You still count as flat-footed for the purposes of attacks and effects.",
+            choices.Add(Helpers.CreateFeature("EverWaryTrait", Main.lc.GetTranslate("Traits.trRa.EverwaryName"),
+                Main.lc.GetTranslate("Traits.trRa.EverwaryDesc"),
+                //"Constant fear that your fiendish nature might provoke a sudden attack ensures that you never completely let down your guard.\nBenefit During the surprise round and before your first action in combat, you can apply half your Dexterity bonus (if any) to your AC. You still count as flat-footed for the purposes of attacks and effects.",
                 "0400c9c99e704a1f81a769aa88044a03",
                 Helpers.GetIcon("3c08d842e802c3e4eb19d15496145709"), // uncanny dodge
                 FeatureGroup.None,
@@ -780,8 +789,8 @@ namespace EldritchArcana
                 Helpers.Create<ACBonusDuringSurpriseRound>()));
 
             var tieflingHeritageDemodand = library.Get<BlueprintFeature>("a53d760a364cd90429e16aa1e7048d0a");
-            choices.Add(Helpers.CreateFeature("GodScornTrait", "God Scorn (Demodand Tiefling)",
-                "Your contempt for the gods and their sad little priests makes it easier to shake off the effects of their prayers.\nBenefit You gain a +1 trait bonus on saving throws against divine spells.",
+            choices.Add(Helpers.CreateFeature("GodScornTrait", Main.lc.GetTranslate("Traits.trRa.GodScornName"),
+                Main.lc.GetTranslate("Traits.trRa.GodScornDesc"),
                 "db41263f6fd3450ea0a3bc45c98330f7",
                 Helpers.GetIcon("2483a523984f44944a7cf157b21bf79c"), // Elven Immunities
                 FeatureGroup.None,
@@ -789,8 +798,8 @@ namespace EldritchArcana
                 Helpers.Create<SavingThrowBonusAgainstSpellSource>(s => s.Source = SpellSource.Divine)));
 
             var tieflingHeritageSelection = library.Get<BlueprintFeatureSelection>("c862fd0e4046d2d4d9702dd60474a181");
-            choices.Add(Helpers.CreateFeature("ProlongMagicTrait", "Prolong Magic (Tiefling)",
-                "Constant drills and preparation allow you to get more out of your innate magic.\nBenefit Whenever you use a spell - like ability gained through your tiefling heritage, it automatically acts as if affected by the Extend Spell metamagic feat.",
+            choices.Add(Helpers.CreateFeature("ProlongMagicTrait",Main.lc.GetTranslate("Traits.trRa.ProlongMagicName"),
+                Main.lc.GetTranslate("Traits.trRa.ProlongMagicDesc"),
                 "820f697f59114993a55c46044c98bf9c",
                 tieflingHeritageSelection.Icon,
                 FeatureGroup.None,
@@ -798,8 +807,8 @@ namespace EldritchArcana
                 // TODO: double check that this actually works for SLAs.
                 Helpers.Create<AutoMetamagic>(a => { a.Metamagic = Metamagic.Extend; a.Abilities = CollectTieflingAbilities(tieflingHeritageSelection); })));
 
-            choices.Add(Helpers.CreateFeature("ShadowStabberTrait", "Shadow Stabber (Tiefling)",
-                "An instinct for dishonorable conduct serves you well when fighting opponents who are blind, oblivious, or blundering around in the dark.\nBenefit You gain a +2 trait bonus on melee weapon damage rolls made against foes that cannot see you.",
+            choices.Add(Helpers.CreateFeature("ShadowStabberTrait", Main.lc.GetTranslate("Traits.trRa.ShadowStabberName"),
+                Main.lc.GetTranslate("Traits.trRa.ShadowStabberDesc"),
                 "b67d04e21a9147e3b8f9bd81ba36f409",
                 Helpers.GetIcon("9f0187869dc23744292c0e5bb364464e"), // accomplished sneak attacker
                 FeatureGroup.None,
@@ -830,14 +839,16 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateCampaignTraits()
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var campaignTraits = Helpers.CreateFeatureSelection("CampaignTrait", "Campaign Trait",
-                "Campaign traits are specifically tailored to relate to the Kingmaker campaign.",
+            var campaignTraits = Helpers.CreateFeatureSelection("CampaignTrait", Main.lc.GetTranslate("Traits.st.CampaignTraitName"),
+                Main.lc.GetTranslate("Traits.st.CampaignTraitDesc"),
+                //"Campaign traits are specifically tailored to relate to the Kingmaker campaign.",
                 "f3c611a76bbc482c9c15219fa982fa17", null, FeatureGroup.None, noFeature);
             noFeature.Feature = campaignTraits;
 
             var choices = new List<BlueprintFeature>();
-            choices.Add(Helpers.CreateFeature("BastardTrait", "Bastard",
-                "One of your parents was a member of one of the great families of Brevoy, perhaps even of the line of Rogarvia itself. Yet you have no substantive proof of your nobility, and you’ve learned that claiming nobility without evidence makes you as good as a liar. While you might own a piece of jewelry, a scrap of once-rich fabric, or an aged confession of love, none of this directly supports your claim. Thus, you’ve lived your life in the shadow of nobility, knowing that you deserve the comforts and esteem of the elite, even though the contempt of fate brings you nothing but their scorn. Whether a recent attempt to prove your heritage has brought down the wrath of a noble family’s henchmen or you merely seek to prove the worth of the blood in your veins, you’ve joined an expedition into the Stolen Lands, hoping to make a name all your own. You take a –1 penalty on all Charisma-based skill checks made when dealing with members of Brevic nobility but gain a +1 trait bonus on Will saves as a result of your stubbornness and individuality. (The penalty aspect of this trait is removed if you ever manage to establish yourself as a true noble.)",
+            choices.Add(Helpers.CreateFeature("BastardTrait", Main.lc.GetTranslate("Traits.trCp.BastardName"),
+                Main.lc.GetTranslate("Traits.trCp.BastardDesc"),
+                //"One of your parents was a member of one of the great families of Brevoy, perhaps even of the line of Rogarvia itself. Yet you have no substantive proof of your nobility, and you’ve learned that claiming nobility without evidence makes you as good as a liar. While you might own a piece of jewelry, a scrap of once-rich fabric, or an aged confession of love, none of this directly supports your claim. Thus, you’ve lived your life in the shadow of nobility, knowing that you deserve the comforts and esteem of the elite, even though the contempt of fate brings you nothing but their scorn. Whether a recent attempt to prove your heritage has brought down the wrath of a noble family’s henchmen or you merely seek to prove the worth of the blood in your veins, you’ve joined an expedition into the Stolen Lands, hoping to make a name all your own. You take a –1 penalty on all Charisma-based skill checks made when dealing with members of Brevic nobility but gain a +1 trait bonus on Will saves as a result of your stubbornness and individuality. (The penalty aspect of this trait is removed if you ever manage to establish yourself as a true noble.)",
                 "d4f7e0915bd941cbac6f655927135817",
                 Helpers.GetIcon("175d1577bb6c9a04baf88eec99c66334"), // Iron Will
                 FeatureGroup.None,
@@ -865,8 +876,9 @@ namespace EldritchArcana
             families.Add();
             */
 
-            choices.Add(Helpers.CreateFeature("RostlanderTrait", "Rostlander",
-                "You were raised in the south of Brevoy, a land of dense forests and rolling plains, of crystalline rivers and endless sapphire skies. You come from hearty stock and were raised with simple sensibilities of hard work winning well-deserved gains, the importance of charity and compassion, and the value of personal and familial honor. Yours is the country of the Aldori swordlords and the heroes who refused to bend before the armies of a violent conqueror. You care little for matters of politics and nobles or of deception and schemes. As you are thoroughly Brevic, the call for champions willing to expand your land’s influence into the Stolen Lands has inflamed your sense of patriotism and honor, and so you have joined an expedition to quest southward. Your hardy nature grants you a +1 trait bonus on all Fortitude saves.",
+            choices.Add(Helpers.CreateFeature("RostlanderTrait", Main.lc.GetTranslate("Traits.trCp.RostlanderName"),
+                Main.lc.GetTranslate("Traits.trCp.RostlanderDesc"),
+                //"You were raised in the south of Brevoy, a land of dense forests and rolling plains, of crystalline rivers and endless sapphire skies. You come from hearty stock and were raised with simple sensibilities of hard work winning well-deserved gains, the importance of charity and compassion, and the value of personal and familial honor. Yours is the country of the Aldori swordlords and the heroes who refused to bend before the armies of a violent conqueror. You care little for matters of politics and nobles or of deception and schemes. As you are thoroughly Brevic, the call for champions willing to expand your land’s influence into the Stolen Lands has inflamed your sense of patriotism and honor, and so you have joined an expedition to quest southward. Your hardy nature grants you a +1 trait bonus on all Fortitude saves.",
                 "d99b9398af66406cac173884df308eb7",
                 Helpers.GetIcon("79042cb55f030614ea29956177977c52"), // Great Fortitude
                 FeatureGroup.None,
@@ -874,8 +886,9 @@ namespace EldritchArcana
 
             var duelingSword = library.Get<BlueprintWeaponType>("a6f7e3dc443ff114ba68b4648fd33e9f");
             var longsword = library.Get<BlueprintWeaponType>("d56c44bc9eb10204c8b386a02c7eed21");
-            choices.Add(Helpers.CreateFeature("SwordScionTrait", "Sword Scion",
-                "You have lived all your life in and around the city of Restov, growing up on tales of Baron Sirian Aldori and the exploits of your home city’s heroic and legendary swordlords. Perhaps one of your family members was an Aldori swordlord, you have a contact among their members, or you have dreamed since childhood of joining. Regardless, you idolize the heroes, styles, and philosophies of the Aldori and have sought to mimic their vaunted art. Before you can petition to join their ranks, however, you feel that you must test your mettle. Joining an expedition into the Stolen Lands seems like a perfect way to improve your skills and begin a legend comparable to that of Baron Aldori. You begin play with a longsword or Aldori dueling sword and gain a +1 trait bonus on all attacks and combat maneuvers made with such weapons.",
+            choices.Add(Helpers.CreateFeature("SwordScionTrait", Main.lc.GetTranslate("Traits.trCp.SwordScionName"),
+                Main.lc.GetTranslate("Traits.trCp.SwordScionDesc"),
+                //"You have lived all your life in and around the city of Restov, growing up on tales of Baron Sirian Aldori and the exploits of your home city’s heroic and legendary swordlords. Perhaps one of your family members was an Aldori swordlord, you have a contact among their members, or you have dreamed since childhood of joining. Regardless, you idolize the heroes, styles, and philosophies of the Aldori and have sought to mimic their vaunted art. Before you can petition to join their ranks, however, you feel that you must test your mettle. Joining an expedition into the Stolen Lands seems like a perfect way to improve your skills and begin a legend comparable to that of Baron Aldori. You begin play with a longsword or Aldori dueling sword and gain a +1 trait bonus on all attacks and combat maneuvers made with such weapons.",
                 "e16eb56b2f964321a29076226dccb29e",
                 Helpers.GetIcon("c3a66c1bbd2fb65498b130802d5f183a"), // DuelingMastery
                 FeatureGroup.None,
@@ -895,8 +908,9 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateRegionalTraits()
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var regionalTraits = Helpers.CreateFeatureSelection("RegionalTrait", "Regional Trait",
-                "Regional traits are keyed to specific regions, be they large (such as a nation or geographic region) or small (such as a city or a specific mountain). In order to select a regional trait, your PC must have spent at least a year living in that region. At 1st level, you can only select one regional trait (typically the one tied to your character’s place of birth or homeland), despite the number of regions you might wish to write into your character’s background.",
+            var regionalTraits = Helpers.CreateFeatureSelection("RegionalTrait", Main.lc.GetTranslate("Traits.st.RegionalTraitName"),
+                Main.lc.GetTranslate("Traits.st.RegionalTraitDesc"),
+                //"Regional traits are keyed to specific regions, be they large (such as a nation or geographic region) or small (such as a city or a specific mountain). In order to select a regional trait, your PC must have spent at least a year living in that region. At 1st level, you can only select one regional trait (typically the one tied to your character’s place of birth or homeland), despite the number of regions you might wish to write into your character’s background.",
                 "6158dd4ad2544c27bc3a9b48c2e8a2ca", null, FeatureGroup.None, noFeature);
             noFeature.Feature = regionalTraits;
 
@@ -904,8 +918,9 @@ namespace EldritchArcana
 
             // Note: use the generic feat names/text to let players RP this as they choose.
             var choices = new List<BlueprintFeature>();
-            var signatureSpell = Helpers.CreateFeatureSelection("SignatureSpellTrait", "Signature Spell",
-                "You have learned a mystical secret that empowers your spellcasting.\nBenefit: Pick one spell when you choose this trait—from this point on, whenever you cast that spell, you do so at +1 caster level.",
+            var signatureSpell = Helpers.CreateFeatureSelection("SignatureSpellTrait", Main.lc.GetTranslate("Traits.trRe.SignatureSpellName"),
+                Main.lc.GetTranslate("Traits.trRe.SignatureSpellDesc"),
+                //"You have learned a mystical secret that empowers your spellcasting.\nBenefit: Pick one spell when you choose this trait—from this point on, whenever you cast that spell, you do so at +1 caster level.",
                 "6a3dfe274f45432b85361bdbb0a3009b",
                 Helpers.GetIcon("fe9220cdc16e5f444a84d85d5fa8e3d5"), // Spell Specialization Progression
                 FeatureGroup.None,
@@ -913,8 +928,9 @@ namespace EldritchArcana
             FillSpellSelection(signatureSpell, 1, 9, Helpers.Create<IncreaseCasterLevelForSpell>());
             choices.Add(signatureSpell);
 
-            var metamagicMaster = Helpers.CreateFeatureSelection("MetamagicMasterTrait", "Metamagic Master",
-                "Your ability to alter your spell of choice is greater than expected.\nBenefit: Select one spell of 3rd level or below; when you use the chosen spell with a metamagic feat, it uses up a spell slot one level lower than it normally would.",
+            var metamagicMaster = Helpers.CreateFeatureSelection("MetamagicMasterTrait", Main.lc.GetTranslate("Traits.trRe.MetamagicMasterName"),
+                Main.lc.GetTranslate("Traits.trRe.MetamagicMasterDesc"),
+                //"Your ability to alter your spell of choice is greater than expected.\nBenefit: Select one spell of 3rd level or below; when you use the chosen spell with a metamagic feat, it uses up a spell slot one level lower than it normally would.",
                 "00844f940e434033ab826e5ff5929011",
                 Helpers.GetIcon("ee7dc126939e4d9438357fbd5980d459"), // Spell Penetration
                 FeatureGroup.None);
@@ -941,7 +957,7 @@ namespace EldritchArcana
             {
                 var spellChoice = Helpers.CreateParamSelection<SelectAnySpellAtLevel>(
                     $"{selection.name}Level{level}",
-                    $"{selection.Name} (Spell Level {level})",
+                    string.Format(Main.lc.GetTranslate("Traits.st.SpellSelectionDesc"), selection.Name, level),
                     selection.Description,
                     Helpers.MergeIds(selection.AssetGuid, FavoredClassBonus.spellLevelGuids[level - 1]),
                     null,
@@ -966,7 +982,8 @@ namespace EldritchArcana
             var skillText = UIUtility.GetStatText(skill);
             return Helpers.CreateFeature(name,
                 displayName,
-                $"{description}\nBenefits: You gain a +1 trait bonus on {skillText} checks, and {skillText} is always a class skill for you.",
+                string.Format(Main.lc.GetTranslate("Traits.st.TraitSkillBonusDesc"), description, skillText),
+                //$"{description}\nBenefits: You gain a +1 trait bonus on {skillText} checks, and {skillText} is always a class skill for you.",
                 assetId,
                 Helpers.GetSkillFocus(skill).Icon,
                 FeatureGroup.None,
