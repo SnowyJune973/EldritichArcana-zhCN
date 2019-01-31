@@ -106,10 +106,10 @@ namespace EldritchArcana
             var lorekeeper = Helpers.Create<BlueprintArchetype>(a =>
             {
                 a.name = "AncientLorekeeperArchetype";
-                a.LocalizedName = Helpers.CreateString($"{a.name}.Name", "Ancient Lorekeeper");
+                a.LocalizedName = Helpers.CreateString($"{a.name}.Name", "传古学者");
                 a.LocalizedDescription = Helpers.CreateString($"{a.name}.Description",
-                    "The ancient lorekeeper is a repository for all the beliefs and vast knowledge of an elven people. They show a strong interest in and understanding of histories and creation legends at a young age, and as they mature their calling to serve as the memory of their long-lived people becomes clear to all who know them.\n" +
-                    "An ancient lorekeeper adds Knowledge (arcana) to their list of class skills. This replaces the bonus skills the ancient lorekeeper gains from their mystery.");
+                    "传古学者是精灵一族广博知识和信仰的活生生的图书馆。她在年轻时就已对此展现出浓厚的兴趣，并能理解历史、续写传说；而当成年时，她为自己这个长寿种族的久远记忆服务的意愿便已被所有认识她的人所熟知。\n" +
+                    "传古学者将知识（奥秘）加入她的本职技能列表中。该能力取代来自先知秘示域的额外本职技能。");
             });
             Helpers.SetField(lorekeeper, "m_ParentClass", oracle);
             library.AddAsset(lorekeeper, "df571bf056a941babe0903e94430dc9d");
@@ -120,7 +120,7 @@ namespace EldritchArcana
 
             var classSkill = Helpers.CreateFeature("AncientLorekeeperClassSkills",
                 UIUtility.GetStatText(StatType.SkillKnowledgeArcana),
-                "An ancient lorekeeper adds Knowledge (arcana) to their class skills.",
+                "传古学者将知识（奥秘）加入她的本职技能列表中。",
                 "a6edf10077d24a95b6d8a701b8fb51d5", null, FeatureGroup.None,
                 Helpers.Create<AddClassSkill>(a => a.Skill = StatType.SkillKnowledgeArcana));
 
@@ -163,9 +163,9 @@ namespace EldritchArcana
 
             var chooseSpell = Helpers.CreateParamSelection<SelectAnySpellAtComputedLevel>(
                 "AncientLorekeeperElvenArcana",
-                "Elven Arcana",
-                "At 2nd level, an ancient lorekeeper’s mastery of elven legends and philosophy has allowed them to master one spell used by elven wizards. They select one spell from the sorcerer/ wizard spell list that is at least one level lower than the highest-level oracle spell they can cast. The ancient lorekeeper gains this as a bonus spell known. The spell is treated as one level higher than its true level for all purposes. The ancient lorekeeper may choose an additional spell at 4th, 6th, 8th, 10th, 12th, 14th, 16th, and 18th levels.\n" +
-                "This ability replaces the bonus spells they would normally gain at these levels from their chosen mystery.",
+                "精灵秘术",
+                "2级时，传古学者对精灵传奇和哲学的精通让她能够掌握一项精灵法师的法术。她选择一个法师/术士列表中的法术，这一法术等级需比她当前可以获得的最高环级法术低一环。传古学者将这一法术作为额外已知法术。这一法术在任何情况下都被视为比起本身法术等级高一环的法术。传古学者在4级，6级，8级，10级，12级，14级，16级和18级可以再选择一项额外法术。\n" +
+                "该能力取代先知秘示域的奖励法术。",
                 "aee6d141ddd545c287f64e553ab0bf04",
                 elvenMagic.Icon,
                 FeatureGroup.None,
@@ -186,9 +186,9 @@ namespace EldritchArcana
             var seeker = Helpers.Create<BlueprintArchetype>(a =>
             {
                 a.name = "SeekerOracleArchetype";
-                a.LocalizedName = Helpers.CreateString($"{a.name}.Name", "Seeker");
+                a.LocalizedName = Helpers.CreateString($"{a.name}.Name", "追寻者");
                 a.LocalizedDescription = Helpers.CreateString($"{a.name}.Description",
-                    "Oracles gain their magical powers through strange and mysterious ways, be they chosen by fate or blood. While most might be content with their strange powers, some oracles join the Pathfinders specifically to find out more about their mysteries and determine the genesis and history of their eldritch talents. These spellcasters are known among the Spells as seekers, after their obsession with researching ancient texts and obscure ruins for any clues they can find about their heritage and histories.");
+                    "被命运和血脉所选中的先知透过神秘又奇异的方式获得他的魔法。虽然大多数的先知满足于自身的神秘力量，但是有些先知加入了探索者组织，以确认其诡异背景的起源和历史。这些施法者广为人知的名称就是追寻者，他们研究古代典籍和晦涩的废墟，痴迷于任何可以协助他们找到过去遗产和历史的线索。");
             });
             Helpers.SetField(seeker, "m_ParentClass", oracle);
             library.AddAsset(seeker, "15c95e56e3414c089b624b50c18127a0");
@@ -208,8 +208,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateSeekerTinkering()
         {
             var trapfinding = library.Get<BlueprintFeature>("dbb6b3bffe6db3547b31c3711653838e");
-            var tinkering = Helpers.CreateFeature("SeekerTinkering", "Tinkering",
-                "Seekers often look to ancient devices, old tomes, and strange magical items in order to learn more about their oracle mysteries. As a result of this curiosity and thanks to an innate knack at deciphering the strange and weird, a seeker adds half their oracle level on Perception checks made to locate traps (minimum +1). If the seeker also possesses levels in rogue or another class that provides the trapfinding ability, those levels stack with their oracle levels for determining their overall bonus on these skill checks.\nThis ability replaces all of the bonus class skills they would otherwise normally gain from their mystery.",
+            var tinkering = Helpers.CreateFeature("SeekerTinkering", "修修补补",
+                "追寻者常常寻找古代装置、老旧典籍和奇奇怪怪的魔法物品以学习他们的先知启示。这种好奇心使破解陌生而怪异机关的诀窍变成他们与生俱来的本能。追寻者得到解除装置作为其本职技能，此外，在一级时，他在寻找陷阱的察觉检定和解除装置时得到相当其先知等级一半的加值。追寻者可以用解除装置检定解除魔法陷阱，如果追寻者同时拥有具有寻找陷阱能力的盗贼等级，在决定技能加值时其追寻者等级和盗贼的寻找陷阱叠加。\n这个能力取代先知通常能从秘视域中获得的所有奖励本职技能。",
                 "fe8c5a9648414b35ae86176b7d77ea2b",
                 trapfinding.Icon,
                 FeatureGroup.None,
@@ -222,8 +222,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateSeekerLore()
         {
             var arcaneCombatCastingAdept = library.Get<BlueprintFeature>("7aa83ee3526a946419561d8d1aa09e75");
-            var feat = Helpers.CreateFeature("SeekerLore", "Seeker Lore",
-                "By 3rd level, a seeker has already learned much about their mystery, and is more comfortable using the bonus spells gained by that mystery. They gain a +4 bonus on all concentration checks, on caster level checks made to overcome spell resistance with their bonus spells.\nThis ability replaces the revelation gained at 3rd level.",
+            var feat = Helpers.CreateFeature("SeekerLore", "追寻者学识",
+                "三级起，追寻者对于自身启示的掌握逐渐加深，他对其奖励法术相关的专注检定、突破法术抗力的施法者等级检定、奥术知识以及法术辨识检定得到+4的加值。\n追寻者学识取代先知三级的启示。",
                 "64270d88d68f4aaca5dd986fd6b60f1c",
                 arcaneCombatCastingAdept.Icon,
                 FeatureGroup.None,
@@ -235,8 +235,8 @@ namespace EldritchArcana
         static BlueprintFeature CreateSeekerMagic()
         {
             var arcaneSchoolPower = library.Get<BlueprintFeatureSelection>("3524a71d57d99bb4b835ad20582cf613");
-            var feat = Helpers.CreateFeature("SeekerMagic", "Seeker Magic",
-                "At 15th level, a seeker becomes skilled at modifying their mystery spells with metamagic. When a seeker applies a metamagic feat to any bonus spells granted by their mystery, they reduce the metamagic feat’s spell level adjustment by 1. Thus, applying a Metamagic feat like Extend Spell to a spell does not change its effective spell level at all, while applying Quicken Spell only increases the spell’s effective spell level by 3 instead of by 4. This reduction to the spell level adjustment for Metamagic feats does not stack with similar reductions from other abilities.\nThis ability replaces the revelation gained at 15th level.",
+            var feat = Helpers.CreateFeature("SeekerMagic", "追寻者魔法",
+                "十五级，追寻者对于其启示的展握炉火纯青，当追寻者将超魔法专长用于其启示法术时，其所需提高的法术等级降低一级。因此，将超魔专长（法术增远）运用于法术并不会改变其法术等级。而将超魔专长（法术瞬发）运用于法术只增加三法术等级而不是四法术等级。此降低超魔专长所需法术等级的能力不和其他提供类似效果的能力叠加。 \n追寻者魔法取代先知十五级的启示。",
                 "201005185def4d7687a94c81b9b9394d",
                 arcaneSchoolPower.Icon,
                 FeatureGroup.None,
@@ -350,11 +350,13 @@ namespace EldritchArcana
     {
         static void Postfix(DescriptionTemplatesLevelup __instance, DescriptionBricksBox box, TooltipData data, bool b)
         {
-            try {
+            try
+            {
                 if (data?.Archetype == null || Main.settings?.RelaxAncientLorekeeper == true) return;
                 Prerequisites(__instance, box, data.Archetype.GetComponents<Prerequisite>());
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Error(e);
             }
         }
@@ -371,7 +373,8 @@ namespace EldritchArcana
             {
                 var self = __instance;
                 var items = self.SelectorItems;
-                if (items == null || archetypesList == null || items.Count == 0 || Main.settings?.RelaxAncientLorekeeper == true) {
+                if (items == null || archetypesList == null || items.Count == 0 || Main.settings?.RelaxAncientLorekeeper == true)
+                {
                     return;
                 }
 
@@ -403,18 +406,21 @@ namespace EldritchArcana
     {
         static bool Prefix(CharacterBuildController __instance, BlueprintRace race)
         {
-            try {
+            try
+            {
                 if (race == null || Main.settings?.RelaxAncientLorekeeper == true) return true;
                 var self = __instance;
                 var levelUp = self.LevelUpController;
                 var @class = levelUp.State.SelectedClass;
                 if (@class == null) return true;
 
-                if (@class.Archetypes.Any(a => a.GetComponents<Prerequisite>() != null)) {
+                if (@class.Archetypes.Any(a => a.GetComponents<Prerequisite>() != null))
+                {
                     self.SetArchetype(null);
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Error(e);
             }
             return true;

@@ -41,7 +41,7 @@ namespace EldritchArcana
         internal static void Load()
         {
             bonusHitPointFeat = Helpers.CreateFeature("FavoredClassBonusHitPoint",
-                "Bonus Hit Point", "Gain +1 hit point",
+                "奖励生命值", "获得+1生命值。",
                 "33642179f90c4452a3122892ebc81692",
                 Helpers.GetIcon("d09b20029e9abfe4480b356c92095623"), // toughness
                 FeatureGroup.None,
@@ -49,7 +49,7 @@ namespace EldritchArcana
             bonusHitPointFeat.Ranks = 20;
 
             bonusSkillRankFeat = Helpers.CreateFeature("FavoredClassBonusSkillRank",
-                "Bonus Skill Rank", "Gain +1 skill rank",
+                "奖励技能点", "获得+1奖励技能点。",
                 "e0ede31846a0499d854391302f039ede",
                 Helpers.GetIcon("3adf9274a210b164cb68f472dc1e4544"), // human skilled
                 FeatureGroup.None,
@@ -68,9 +68,9 @@ namespace EldritchArcana
             var noFeature = Helpers.Create<PrerequisiteNoFeature>();
             favoredPrestigeClass = Helpers.CreateFeatureSelection(
                 "FavoredPresitgeClassSelection",
-                "Favored Prestige Class",
-                "You have come to favor a certain prestige class, either because you are particularly devoted to the class’s cause, have trained more than most others have for that specific role, or have simply been destined to excel in the prestige class all along. Regardless of the reason, levels gained in your favored prestige class grant additional benefits in a way similar to those you gain for taking levels in your base favored class.\n" +
-                "You can select this feat before you gain levels in your chosen favored prestige class, but the benefits of the feat do not apply until you actually gain at least 1 level in that prestige class.",
+                "天赋进阶职业",
+                "你对某个进阶职业产生了偏好，这可能是因为你对它有着更强的认同，比其他单一职业者经受了更多的训练或者是单纯擅长做这个职业。无论原因为何，进阶职业给你带来了一些额外好处，就和天赋基础职业一样。\n" +
+                "你可以在获取进阶职业前选择此专长，但在你在此进阶中至少提升1级前，你不会获得此专长的任何好处。",
                 "4fab2e6256e644daaa637093bc2421aa",
                 Helpers.skillFocusFeat.Icon,
                 FeatureGroup.Feat,
@@ -98,7 +98,7 @@ namespace EldritchArcana
             // Create the progression that will allow +1 HP or skill rank.
             var progression = Helpers.CreateProgression(
                 $"FavoredPrestige{prestigeClass.name}",
-                $"Favored Prestige Class — {prestigeClass.Name}",
+                $"天赋进阶职业 — {prestigeClass.Name}",
                 prestigeClass.LocalizedDescription,
                 Helpers.MergeIds(prestigeClass.AssetGuid, "989807536776445d9b4875b4cfbfdd11"),
                 prestigeClass.Icon,
@@ -144,7 +144,7 @@ namespace EldritchArcana
                 var paramSkill = Helpers.CreateParamSelection<CustomSkillSelection>(
                     favored.name + "SkillBonus",
                     favored.Name,
-                    favored.Description + "\nYou gain a +2 bonus on checks using the skill you chose from that prestige class’s class skills. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill. This bonus stacks with the bonus granted by Skill Focus, but does not stack with a bonus granted by any other feat (such as Magical Aptitude or Persuasive).",
+                    favored.Description + "\n你在你选择的进阶职业的本职技能上获得+2加值。如果你在这些技能上拥有10或者更多的等级，则此能力的奖励增加到+4。此奖励与技能专攻的奖励叠加。但不会与其它任何专长（例如魔法天赋或者说服力）给予的奖励叠加。",
                     Helpers.MergeIds(favoredClass.AssetGuid, "15faccea8a364cb39d091dd01b513c3a"),
                     Helpers.skillFocusFeat.Icon,
                     FeatureGroup.None,
@@ -167,8 +167,8 @@ namespace EldritchArcana
             // AddFavoredClassBonusChoice on level up. 
             var favoredClassAny = Helpers.CreateFeature(
                 "FavoredClassAny",
-                "Favored Class — Any",
-                "The favored class is automatically determined each level-up, and an extra hit point is awarded if gaining a level in that class. The favored class is your highest level non-prestige class. This is the default game behavior.",
+                "天赋职业 — 任何",
+                "每个等级自动确定天赋职业，如果选择此天赋职业，你就只能获得额外生命值。天赋职业为你最高等级的非进阶职业。这是默认的游戏设定。",
                 "ea5f395c351a4f00be7f7a300d3bb5b4",
                 null,
                 FeatureGroup.Feat);
@@ -192,10 +192,10 @@ namespace EldritchArcana
             var noFeature = Helpers.PrerequisiteNoFeature(null);
             var favoredClass = Helpers.CreateFeatureSelection(
                 "FavoredClass",
-                "Favored Class",
-                "Each character begins play with a single favored class of their choosing—typically, this is the same class as the one they choose at 1st level. " +
-                "Whenever a character gains a level in their favored class, they receive either +1 hit point, +1 skill rank, or the racial bonus associated with their favored class. " +
-                "The choice of favored class cannot be changed once the character is created.",
+                "天赋职业",
+                "每个角色以他选择的一个天赋职业开始游戏，通常这会是他们在1级时选择的职业。 " +
+                "每当一个角色提升他们选择的天赋职业时，他获得+1生命值，+1技能点，或者基于他们天赋职业的其他奖励。" +
+                "一旦角色被创建后，天赋职业将无法改变。",
                 "bc4c271ef0954eceb808d84978c500f7",
                 null,
                 UpdateLevelUpDeterminatorText.Group,
@@ -212,7 +212,7 @@ namespace EldritchArcana
         {
             var className = favoredClass.Name.ToLower();
             // TODO: implement other classes/races favored class benefits.
-            var description = $"Whenever you gain a {className} level, you can choose between +1 hit point, +1 skill rank, or the racial bonus associated with their favored class.";
+            var description = $"每当此角色提升 {className} 等级时, 你可以获得+1生命值，+1技能点，或者基于他们天赋职业的其它奖励。";
 
             var isSorcerer = favoredClass.AssetGuid == "b3a505fb61437dc4097f43c3f8f9a4cf";
             var isBard = favoredClass.AssetGuid == "772c83a25e2268e448e841dcd548235f";
@@ -220,13 +220,13 @@ namespace EldritchArcana
             var isExtraSpellClass = isSorcerer || isBard || isOracle;
             if (isExtraSpellClass)
             {
-                description += "\nRacial favored class benefits:" +
-                    $"\n  Human (and Half-Elf, Half-Orc, Aasimar) — Add one spell known from the {className} spell list. This spell must be at least one level below the highest {className} spell you can cast.";
+                description += "\n其它天赋职业奖励:" +
+                    $"\n  人类 (和半精灵，半兽人，阿斯莫) — 从 {className} 法术列表中获得一个额外已知法术。这个法术必须比你当前所能施展的最高环 {className} 法术低一环。";
             }
 
             var favored = Helpers.CreateProgression(
                 $"FavoredClass{favoredClass.name}Progression",
-                $"Favored Class — {favoredClass.Name}",
+                $"天赋职业 — {favoredClass.Name}",
                 description,
                 Helpers.MergeIds(favoredClass.AssetGuid, "081651146ada4d0a88f6e9190ac6b01a"),
                 favoredClass.Icon,
@@ -256,8 +256,8 @@ namespace EldritchArcana
             components.Add(Helpers.Create<AddOneSpellChoice>(a => { a.CharacterClass = @class; a.SpellLevel = spellLevel; }));
 
             var feat = Helpers.CreateFeature($"Favored{@class.name}BonusSpellLevel{spellLevel}",
-                $"Bonus Known Spell (Level {spellLevel})",
-                $"Add one level {spellLevel} spell known from the {className} spell list. This spell must be at least one level below the highest {className} spell you can cast.",
+                $"奖励已知法术 (Level {spellLevel})",
+                $"增加一个 {spellLevel} 环 {className} 法术。这个法术必须比你当前所能施展的最高环 {className} 法术低一环。",
                 Helpers.MergeIds(@class.AssetGuid, spellLevelGuids[spellLevel - 1]),
                 Helpers.GetIcon("55edf82380a1c8540af6c6037d34f322"), // elven magic
                 FeatureGroup.None,
@@ -281,8 +281,8 @@ namespace EldritchArcana
 
             var deitySelection = library.CopyAndAdd(baseDeitySelection, "DeitySelectionAny", "d5c3c9d4080043f98e6c09f4e843440e");
             deitySelection.Group = FeatureGroup.None; // to prevent "determinators" page clutter.
-            var noDeityChoice = Helpers.CreateFeature("SkipDeity", "(Skip)",
-                "Choose this to skip selecting a deity at character creation. You may select one later if you gain a level in a class that requires it (such as Cleric, Inquisitor, or Paladin).",
+            var noDeityChoice = Helpers.CreateFeature("SkipDeity", "(跳过)",
+                "选择此选项可在创建角色时选择跳过神灵选择。如果你在一个需要选择神灵的职业中提升了等级，你可以在稍后选择一个（例如牧师，审判官，或圣武士）。",
                 "e1f5711210404b34a805b00749eeba20",
                 null, FeatureGroup.None);
             noDeityChoice.HideInUI = true;
@@ -342,12 +342,12 @@ namespace EldritchArcana
             CharGenText = Game.Instance.BlueprintRoot.LocalizedTexts.UserInterfacesText.CharGen;
             SavedText = CharGenText.ChannelEnergy;
             SavedChoiceText = CharGenText.ChooseChannelEnergy;
-            MysteryText = Helpers.CreateString("CharGen.Mystery", "Mystery");
-            ChooseMysteryText = Helpers.CreateString("CharGen.ChooseMystery", "Choose Mystery");
-            FavoredClass = Helpers.CreateString("CharGen.FavoredClass", "Favored Class");
-            ChooseFavoredClass = Helpers.CreateString("CharGen.ChooseFavoredClass", "Choose Favored Class");
-            BonusText = Helpers.CreateString("CharGen.FavoredClassBonus", "Favored Class");
-            ChooseBonusText = Helpers.CreateString("CharGen.ChooseFavoredClassBonus", "Choose Favored Class Bonus");
+            MysteryText = Helpers.CreateString("CharGen.Mystery", "秘视域");
+            ChooseMysteryText = Helpers.CreateString("CharGen.ChooseMystery", "选择秘视域");
+            FavoredClass = Helpers.CreateString("CharGen.FavoredClass", "天赋职业s");
+            ChooseFavoredClass = Helpers.CreateString("CharGen.ChooseFavoredClass", "选择天赋职业");
+            BonusText = Helpers.CreateString("CharGen.FavoredClassBonus", "天赋职业");
+            ChooseBonusText = Helpers.CreateString("CharGen.ChooseFavoredClassBonus", "选择天赋职业奖励");
         }
 
         void ILevelUpSelectClassHandler.HandleSelectClass(UnitDescriptor unit, LevelUpState state)
@@ -365,7 +365,7 @@ namespace EldritchArcana
             {
                 SetText(SavedText, SavedChoiceText);
             }
-            else if (state.IsCharGen)
+            else if (state.NextLevel == 1)
             {
                 SetText(FavoredClass, ChooseFavoredClass);
             }
@@ -481,12 +481,14 @@ namespace EldritchArcana
             try
             {
                 var custom = prerequisite as CustomPrerequisite;
-                if (custom != null) {
+                if (custom != null)
+                {
                     __result = custom.GetCaption();
                     return false;
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Error(e);
             }
             return true;
@@ -540,7 +542,7 @@ namespace EldritchArcana
             // Note: this is different from the other favored class bonus components,
             // because the feature remains on the character, and kicks in at each level up.
             var levelUp = Game.Instance.UI.CharacterBuildController.LevelUpController;
-            if (levelUp.State.IsCharGen && (Owner == levelUp.Preview || Owner == levelUp.Unit))
+            if (levelUp.State.NextLevel == 1 && (Owner == levelUp.Preview || Owner == levelUp.Unit))
             {
                 // Handle the level 1 hit point adjustment in the character generator.
                 Apply(levelUp.State);
@@ -638,7 +640,7 @@ namespace EldritchArcana
         {
             try
             {
-                if (state.IsCharGen)
+                if (state.NextLevel == 1)
                 {
                     foreach (var action in onChargenApply) action(state, unit);
                 }
