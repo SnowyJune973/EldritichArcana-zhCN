@@ -350,15 +350,17 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateSocialTraits(out BlueprintFeatureSelection adopted)
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var socialTraits = Helpers.CreateFeatureSelection("SocialTrait", "Social Trait",
-                "Social traits focus on your character’s social class or upbringing.",
+            var socialTraits = Helpers.CreateFeatureSelection("SocialTrait", Main.lc.GetTranslate("Traits.st.SocialTraitName"),
+                Main.lc.GetTranslate("Traits.st.SocialTraitDesc"),
+                //"Social traits focus on your character’s social class or upbringing.",
                 "9e41e60c929e45bc84ded046148c07ec", null, FeatureGroup.None, noFeature);
             noFeature.Feature = socialTraits;
             var choices = new List<BlueprintFeature>();
 
             // This trait is finished by CreateRaceTraits.
-            adopted = Helpers.CreateFeatureSelection("AdoptedTrait", "Adopted",
-                "You were adopted and raised by someone not of your race, and raised in a society not your own.\nBenefit: As a result, you picked up a race trait from your adoptive parents and society, and may immediately select a race trait from your adoptive parents’ race.",
+            adopted = Helpers.CreateFeatureSelection("AdoptedTrait", Main.lc.GetTranslate("Traits.trSo.AdoptedName"),
+                Main.lc.GetTranslate("Traits.trSo.AdoptedDesc"),
+               // "You were adopted and raised by someone not of your race, and raised in a society not your own.\nBenefit: As a result, you picked up a race trait from your adoptive parents and society, and may immediately select a race trait from your adoptive parents’ race.",
                 "b4b37968273b4782b29d31c0ca215f41",
                 Helpers.GetIcon("26a668c5a8c22354bac67bcd42e09a3f"), // Adaptability
                 FeatureGroup.None);
@@ -367,26 +369,30 @@ namespace EldritchArcana
             adopted.Obligatory = true;
             choices.Add(adopted);
 
-            choices.Add(CreateSkillFeat("ChildOfTheStreetsTrait", "Child of the Streets",
-                "You grew up on the streets of a large city, and as a result you have developed a knack for picking pockets and hiding small objects on your person.",
+            choices.Add(CreateSkillFeat("ChildOfTheStreetsTrait", Main.lc.GetTranslate("Traits.trSo.ChildOfStreetsName"),
+                Main.lc.GetTranslate("Traits.trSo.ChildOfStreetsDesc"),
+                //"You grew up on the streets of a large city, and as a result you have developed a knack for picking pockets and hiding small objects on your person.",
                 "a181fd2561134715a04e1b05776ab7a3",
                 StatType.SkillThievery));
 
-            choices.Add(CreateSkillFeat("FastTalkerTrait", "Fast-Talker",
-                "You had a knack for getting yourself into trouble as a child, and as a result developed a silver tongue at an early age.",
+            choices.Add(CreateSkillFeat("FastTalkerTrait", Main.lc.GetTranslate("Traits.trSo.FastTalkerName"),
+                Main.lc.GetTranslate("Traits.trSo.FastTalkerDesc"),
+                //"You had a knack for getting yourself into trouble as a child, and as a result developed a silver tongue at an early age.",
                 "509458a5ded54ecd9a2a4ef5388de2b7",
                 StatType.SkillPersuasion));
 
             var performanceResource = library.Get<BlueprintAbilityResource>("e190ba276831b5c4fa28737e5e49e6a6");
-            choices.Add(Helpers.CreateFeature("MaestroOfTheSocietyTrait", "Maestro of the Society",
-                "The skills of the greatest musicians are at your fingertips, thanks to the vast treasure trove of musical knowledge in the vaults you have access to.\nBenefit: You may use bardic performance 3 additional rounds per day.",
+            choices.Add(Helpers.CreateFeature("MaestroOfTheSocietyTrait", Main.lc.GetTranslate("Traits.trSo.MaestroOfSocietyName"),
+                Main.lc.GetTranslate("Traits.trSo.MaestroOfSocietyDesc"),
+                //"The skills of the greatest musicians are at your fingertips, thanks to the vast treasure trove of musical knowledge in the vaults you have access to.\nBenefit: You may use bardic performance 3 additional rounds per day.",
                 "847cdf262e4147cda2c670db81852c58",
                 Helpers.GetIcon("0d3651b2cb0d89448b112e23214e744e"),
                 FeatureGroup.None,
                 Helpers.Create<IncreaseResourceAmount>(i => { i.Resource = performanceResource; i.Value = 3; })));
 
-            choices.Add(CreateSkillFeat("SuspiciousTrait", "Suspicious",
-                "You discovered at an early age that someone you trusted, perhaps an older sibling or a parent, had lied to you, and lied often, about something you had taken for granted, leaving you quick to question the claims of others.",
+            choices.Add(CreateSkillFeat("SuspiciousTrait", Main.lc.GetTranslate("Traits.trSo.SuspiciousName"),
+                Main.lc.GetTranslate("Traits.trSo.SuspiciousDesc"),
+                //"You discovered at an early age that someone you trusted, perhaps an older sibling or a parent, had lied to you, and lied often, about something you had taken for granted, leaving you quick to question the claims of others.",
                 "2f4e86a9d42547bc85b4c829a47d054c",
                 StatType.SkillPerception));
 
@@ -398,8 +404,9 @@ namespace EldritchArcana
         static BlueprintFeatureSelection CreateRaceTraits(BlueprintFeatureSelection adopted)
         {
             var noFeature = Helpers.PrerequisiteNoFeature(null);
-            var raceTraits = Helpers.CreateFeatureSelection("RaceTrait", "Race Trait",
-                "Race traits are keyed to specific races or ethnicities, which your character must belong to in order to select the trait.",
+            var raceTraits = Helpers.CreateFeatureSelection("RaceTrait", Main.lc.GetTranslate("Traits.st.RaceTraitName"),
+                Main.lc.GetTranslate("Traits.st.RaceTraitDesc"),
+                //"Race traits are keyed to specific races or ethnicities, which your character must belong to in order to select the trait.",
                 "6264aa9515be40cda55892da93685764", null, FeatureGroup.None,
                 Helpers.PrerequisiteNoFeature(adopted), noFeature);
             noFeature.Feature = raceTraits;
@@ -440,14 +447,16 @@ namespace EldritchArcana
                 a.Value = 2;
                 a.ModifierDescriptor = ModifierDescriptor.Trait;
             }));
-            choices.Add(Helpers.CreateFeature("CarefullyHiddenTrait", "Carefully Hidden (Human)",
-                "Your life as a member of an unpopular ethnic group has given you an uncanny knack for avoiding detection.\nBenefit: You gain a +1 trait bonus to Will saves and a +2 trait bonus to saving throws versus divination effects.",
+            choices.Add(Helpers.CreateFeature("CarefullyHiddenTrait", Main.lc.GetTranslate("Traits.trRa.CarefullyHiddenName"),
+                Main.lc.GetTranslate("Traits.trRa.CarefullyHiddenDesc"),
+                //"Your life as a member of an unpopular ethnic group has given you an uncanny knack for avoiding detection.\nBenefit: You gain a +1 trait bonus to Will saves and a +2 trait bonus to saving throws versus divination effects.",
                 "38b92d2ebb4c4cdb8e946e29f5b2f178",
                 Helpers.GetIcon("175d1577bb6c9a04baf88eec99c66334"), // Iron Will
                 FeatureGroup.None,
                 components.ToArray()));
-            choices.Add(CreateSkillFeat("FanaticTrait", "Fanatic (Human)",
-                "Your years spent in libraries reading every musty tome you could find about ancient lost civilizations has given you insight into the subjects of history and the arcane.",
+            choices.Add(CreateSkillFeat("FanaticTrait", Main.lc.GetTranslate("Traits.trRa.FanaticName"),
+                Main.lc.GetTranslate("Traits.trRa.FanaticDesc"),
+                //"Your years spent in libraries reading every musty tome you could find about ancient lost civilizations has given you insight into the subjects of history and the arcane.",
                 "6427e81ba399406c93b463c284a42055",
                 StatType.SkillKnowledgeArcana,
                 humanReq));
@@ -468,8 +477,9 @@ namespace EldritchArcana
                 a.Descriptor = ModifierDescriptor.UntypedStackable;
             })));
 
-            var historian = CreateSkillFeat("HistorianTrait", "Historian (Human)",
-                "Your parents were scholars of history, whether genealogists of your own family tree, sages on the subject of ancient empires, or simply hobbyists with a deep and abiding love for the past.\nBenefits: You gain a +1 trait bonus on Knowledge (history) checks and bardic knowledge checks, and Knowledge (history) is always a class skill for you.",
+            var historian = CreateSkillFeat("HistorianTrait", Main.lc.GetTranslate("Traits.trRa.HistorianName"),
+                Main.lc.GetTranslate("Traits.trRa.HistorianDesc"),
+                //"Your parents were scholars of history, whether genealogists of your own family tree, sages on the subject of ancient empires, or simply hobbyists with a deep and abiding love for the past.\nBenefits: You gain a +1 trait bonus on Knowledge (history) checks and bardic knowledge checks, and Knowledge (history) is always a class skill for you.",
                 "4af3871899e4440bae03d4c33d4b52fd",
                 StatType.SkillKnowledgeWorld,
                 components.ToArray());
@@ -484,24 +494,28 @@ namespace EldritchArcana
                 "be9b6408e6101cb4997a8996484baf19"  // WeaponHeavyShield
             }.Select(id => Helpers.Create<WeaponTypeDamageBonus>(w => { w.DamageBonus = 1; w.WeaponType = library.Get<BlueprintWeaponType>(id); })));
 
-            choices.Add(Helpers.CreateFeature("ShieldBearerTrait", "Shield Bearer (Human)",
-                "You have survived many battles thanks to your skill with your shield.\nBenefit: When performing a shield bash, you deal 1 additional point of damage.",
+            choices.Add(Helpers.CreateFeature("ShieldBearerTrait", Main.lc.GetTranslate("Traits.trRa.ShieldBearerName"),
+                Main.lc.GetTranslate("Traits.trRa.ShieldBearerDesc"),
+                //"You have survived many battles thanks to your skill with your shield.\nBenefit: When performing a shield bash, you deal 1 additional point of damage.",
                 "044ebbbadfba4d58afa11bfbf38df199",
                 Helpers.GetIcon("121811173a614534e8720d7550aae253"), // Shield Bash
                 FeatureGroup.None,
                 components.ToArray()));
 
-            choices.Add(Helpers.CreateFeature("SuperstitiousTrait", "Superstitious (Human)",
-                "You have a healthy fear of sorcerers’ speech and wizards’ words that has helped you to survive their charms.\nBenefit: You gain a +1 trait bonus on saving throws against arcane spells.",
+            choices.Add(Helpers.CreateFeature("SuperstitiousTrait", Main.lc.GetTranslate("Traits.trRa.SuperstitiousName"),
+                Main.lc.GetTranslate("Traits.trRa.SuperstitiousDesc"),
+                //"You have a healthy fear of sorcerers’ speech and wizards’ words that has helped you to survive their charms.\nBenefit: You gain a +1 trait bonus on saving throws against arcane spells.",
                 "f5d79e5fbb87473ca0b13ed15b742079",
                 Helpers.GetIcon("2483a523984f44944a7cf157b21bf79c"), // Elven Immunities
                 FeatureGroup.None,
                 humanReq,
                 Helpers.Create<SavingThrowBonusAgainstSpellSource>()));
 
-            var travelerDescription = "Your family has taken the love of travel to an extreme, roaming the world extensively. You’ve seen dozens of cultures and have learned to appreciate the diversity of what the world has to offer.";
-            var worldTraveler = Helpers.CreateFeatureSelection("WorldTravelerTrait", "World Traveler (Human)",
-                travelerDescription + "\nBenefits: Select one of the following skills: Persuasion, Knowledge (world), or Perception. You gain a +1 trait bonus on checks with that skill, and it is always a class skill for you.",
+            //var travelerDescription = "Your family has taken the love of travel to an extreme, roaming the world extensively. You’ve seen dozens of cultures and have learned to appreciate the diversity of what the world has to offer.";
+            var travelerDescription = Main.lc.GetTranslate("Traits.trRa.WorldTravelerDesc1");
+            var worldTraveler = Helpers.CreateFeatureSelection("WorldTravelerTrait", Main.lc.GetTranslate("Traits.trRa.WorldTravelerName"),
+                travelerDescription+Main.lc.GetTranslate("Traits.trRa.WorldTravelerDesc2"),
+                //travelerDescription + "\nBenefits: Select one of the following skills: Persuasion, Knowledge (world), or Perception. You gain a +1 trait bonus on checks with that skill, and it is always a class skill for you.",
                 "ecacfcbeddfe453cafc8d60fc1db7d34",
                 Helpers.GetIcon("3adf9274a210b164cb68f472dc1e4544"), // Human Skilled
                 FeatureGroup.None,
@@ -513,7 +527,8 @@ namespace EldritchArcana
                 StatType.SkillPerception
             }.Select(skill => CreateSkillFeat(
                 $"WorldTraveler{skill}Trait",
-                $"World Traveler — {UIUtility.GetStatText(skill)}",
+                //$"World Traveler — {UIUtility.GetStatText(skill)}",
+                string.Format(Main.lc.GetTranslate("Traits.trRa.WorldTravelerSubDesc"), UIUtility.GetStatText(skill)),
                 travelerDescription,
                 Helpers.MergeIds(Helpers.GetSkillFocus(skill).AssetGuid, "9b03b7ff17394007a3fbec18aa42604b"),
                 skill)).ToArray();
@@ -525,28 +540,30 @@ namespace EldritchArcana
             // - Forlorn (+1 fort save)
             // - Warrior of the Old (+2 init)
             // - Youthful Mischief (+1 ref)
-            choices.Add(CreateSkillFeat("DilettanteArtistTrait", "Dilettante Artist (Elf)",
-                "Art for you is a social gateway and you use it to influence and penetrate high society.",
+            choices.Add(CreateSkillFeat("DilettanteArtistTrait", Main.lc.GetTranslate("Traits.trRa.DilettanteArtistName"),
+                Main.lc.GetTranslate("Traits.trRa.DilettanteArtistDesc"),
+                //"Art for you is a social gateway and you use it to influence and penetrate high society.",
                 "ac5a16e72ef74b4884c674dcbb61692c", StatType.SkillPersuasion, elfReq));
 
-            choices.Add(Helpers.CreateFeature("ForlornTrait", "Forlorn (Elf)",
-                "Having lived outside of traditional elf society for much or all of your life, you know the world can be cruel, dangerous, and unforgiving of the weak.\nBenefit: You gain a +1 trait bonus on Fortitude saving throws.",
+            choices.Add(Helpers.CreateFeature("ForlornTrait", Main.lc.GetTranslate("Traits.trRa.ForlornName"),
+                Main.lc.GetTranslate("Traits.trRa.ForlornDesc"),
                 "1511289c92ea4233b14c4f51072ea10f",
                 Helpers.GetIcon("79042cb55f030614ea29956177977c52"), // Great Fortitude
                 FeatureGroup.None,
                 elfReq,
                 Helpers.CreateAddStatBonus(StatType.SaveFortitude, 1, ModifierDescriptor.Trait)));
 
-            choices.Add(Helpers.CreateFeature("WarriorOfOldTrait", "Warrior of Old (Elf)",
-                "As a child, you put in long hours on combat drills, and though time has made this training a dim memory, you still have a knack for quickly responding to trouble.\nBenefit: You gain a +2 trait bonus on initiative checks.",
+            choices.Add(Helpers.CreateFeature("WarriorOfOldTrait", Main.lc.GetTranslate("Traits.trRa.WarriorOfOldName"),
+                Main.lc.GetTranslate("Traits.trRa.WarriorOfOldDesc"),
                 "dc36a2c52abb4e6dbff549ac65a5a171",
                 Helpers.GetIcon("797f25d709f559546b29e7bcb181cc74"), // Improved Initiative
                 FeatureGroup.None,
                 elfReq,
                 Helpers.CreateAddStatBonus(StatType.Initiative, 2, ModifierDescriptor.Trait)));
 
-            choices.Add(Helpers.CreateFeature("YouthfulMischiefTrait", "Youthful Mischeif (Elf)",
-                "Though you gave up the life of a padfoot, scout, or minstrel decades before, you still know how to roll with the punches when things turn sour.\nBenefit: You gain a +1 trait bonus on Reflex saves.",
+            choices.Add(Helpers.CreateFeature("YouthfulMischiefTrait", Main.lc.GetTranslate("Traits.trRa.YouthfulMischiefName"),
+                Main.lc.GetTranslate("Traits.trRa.YouthfulMischiefDesc"),
+                //"Though you gave up the life of a padfoot, scout, or minstrel decades before, you still know how to roll with the punches when things turn sour.\nBenefit: You gain a +1 trait bonus on Reflex saves.",
                 "bfcc574d1f214455ac369fa46e07200e",
                 Helpers.GetIcon("15e7da6645a7f3d41bdad7c8c4b9de1e"), // Lightning Reflexes
                 FeatureGroup.None,
@@ -556,14 +573,16 @@ namespace EldritchArcana
             // Half-orc:
             // - Brute (persuasion)
             // - Legacy of Sand (+1 will save)
-            var brute = CreateSkillFeat("BruteTrait", "Brute (Half-Orc)",
-                "You have worked for a crime lord, either as a low-level enforcer or as a guard, and are adept at frightening away people.",
+            var brute = CreateSkillFeat("BruteTrait", Main.lc.GetTranslate("Traits.trRa.BruteName"),
+                Main.lc.GetTranslate("Traits.trRa.BruteDesc"),
+                //"You have worked for a crime lord, either as a low-level enforcer or as a guard, and are adept at frightening away people.",
                 "1ee0ce55ace74ccbb798e2fdc13181f6", StatType.SkillPersuasion, halfOrcReq);
             brute.SetIcon(Helpers.GetIcon("885f478dff2e39442a0f64ceea6339c9")); // Intimidating
             choices.Add(brute);
 
-            choices.Add(Helpers.CreateFeature("LegacyOfSandTrait", "Legacy of Sand (Half-Orc)",
-                "A large tribe of orcs adapted to life in the desert once dwelt in southeastern Katapesh. Although this tribe is long extinct, some half-orcs of Katapesh carry the traits of this tribe in their particularly large jaws, broad shoulders, and shockingly pale eyes. You often have dreams of hunts and strange ceremonies held under moonlight in the desert sands. Some ascribe these dreams to racial memory, others to visions or prophecies. These dreams have instilled in you a fierce sense of tradition.\nBenefit: You gain a +1 trait bonus on all Will saving throws.",
+            choices.Add(Helpers.CreateFeature("LegacyOfSandTrait", Main.lc.GetTranslate("Traits.trRa.LegacyOfSandName"),
+                Main.lc.GetTranslate("Traits.trRa.LegacyOfSandDesc"),
+                //"A large tribe of orcs adapted to life in the desert once dwelt in southeastern Katapesh. Although this tribe is long extinct, some half-orcs of Katapesh carry the traits of this tribe in their particularly large jaws, broad shoulders, and shockingly pale eyes. You often have dreams of hunts and strange ceremonies held under moonlight in the desert sands. Some ascribe these dreams to racial memory, others to visions or prophecies. These dreams have instilled in you a fierce sense of tradition.\nBenefit: You gain a +1 trait bonus on all Will saving throws.",
                 "e5fb1675eb6e4ef9accef7eb3a10862a",
                 Helpers.GetIcon("175d1577bb6c9a04baf88eec99c66334"), // Iron Will
                 FeatureGroup.None,
@@ -573,16 +592,18 @@ namespace EldritchArcana
             // Half-elf:
             // - Elven Relexes (+2 initiative)
             // - Failed Apprentice (+1 save arcane spells)
-            choices.Add(Helpers.CreateFeature("ElvenReflexsTrait", "Elven Reflexes (Half-Elf)",
-                "One of your parents was a member of a wild elven tribe, and you’ve inherited a portion of your elven parent’s quick reflexes.\nBenefit: You gain a +2 trait bonus on initiative checks.",
+            choices.Add(Helpers.CreateFeature("ElvenReflexsTrait", Main.lc.GetTranslate("Traits.trRa.ElvenReflexesName"),
+                Main.lc.GetTranslate("Traits.trRa.ElvenReflexesDesc"),
+                //"One of your parents was a member of a wild elven tribe, and you’ve inherited a portion of your elven parent’s quick reflexes.\nBenefit: You gain a +2 trait bonus on initiative checks.",
                 "9975678ce2fc420da9cd6ec4fe8c8b9b",
                 Helpers.GetIcon("797f25d709f559546b29e7bcb181cc74"), // Improved Initiative
                 FeatureGroup.None,
                 halfElfReq,
                 Helpers.CreateAddStatBonus(StatType.Initiative, 2, ModifierDescriptor.Trait)));
 
-            choices.Add(Helpers.CreateFeature("FailedAprenticeTrait", "Failed Apprentice (Half-Elf)",
-                "You have a healthy fear of sorcerers’ speech and wizards’ words that has helped you to survivAs a child, your parents sent you to a distant wizard’s tower as an apprentice so that you could learn the arcane arts. Unfortunately, you had no arcane talent whatsoever, though you did learn a great deal about the workings of spells and how to resist them.\nBenefit: You gain a +1 trait bonus on saves against arcane spells.",
+            choices.Add(Helpers.CreateFeature("FailedAprenticeTrait", Main.lc.GetTranslate("Traits.trRa.FailedApprenticeName"),
+                Main.lc.GetTranslate("Traits.trRa.FailedApprenticeDesc"),
+                //"You have a healthy fear of sorcerers’ speech and wizards’ words that has helped you to survivAs a child, your parents sent you to a distant wizard’s tower as an apprentice so that you could learn the arcane arts. Unfortunately, you had no arcane talent whatsoever, though you did learn a great deal about the workings of spells and how to resist them.\nBenefit: You gain a +1 trait bonus on saves against arcane spells.",
                 "8ed66066751f43c2920055dd6358adc8",
                 Helpers.GetIcon("2483a523984f44944a7cf157b21bf79c"), // Elven Immunities
                 FeatureGroup.None,
@@ -593,14 +614,17 @@ namespace EldritchArcana
             // - Freed Slave (world)
             // - Freedom Fighter (mobility)
             // - Well-Informed (persuasion)
-            choices.Add(CreateSkillFeat("FreedSlaveTrait", "Freed Slave (Halfling)",
-                "You grew up as a slave and know the ins and outs of nobility better than most.",
+            choices.Add(CreateSkillFeat("FreedSlaveTrait", Main.lc.GetTranslate("Traits.trRa.FreedSlaveName"),
+                Main.lc.GetTranslate("Traits.trRa.FreedSlaveDesc"),
+                //"You grew up as a slave and know the ins and outs of nobility better than most.",
                 "d2fc5fe0c64142a79e0ebee18f14b0be", StatType.SkillKnowledgeWorld, halflingReq));
-            choices.Add(CreateSkillFeat("FreedomFighterTrait", "Freedom Fighter (Halfling)",
-                "Your parents allowed escaping slaves to hide in your home, and the stories you’ve heard from them instilled into you a deep loathing of slavery, and a desire to help slaves evade capture and escape.",
+            choices.Add(CreateSkillFeat("FreedomFighterTrait", Main.lc.GetTranslate("Traits.trRa.FreedomFighterName"),
+                Main.lc.GetTranslate("Traits.trRa.FreedomFighterDesc"),
+                //"Your parents allowed escaping slaves to hide in your home, and the stories you’ve heard from them instilled into you a deep loathing of slavery, and a desire to help slaves evade capture and escape.",
                 "3a4d2cd14dc446319085c865570ccc3d", StatType.SkillMobility, halflingReq));
-            choices.Add(CreateSkillFeat("WellInformedTrait", "Well-Informed (Halfling)",
-                "You make it a point to know everyone and to be connected to everything around you. You frequent the best taverns, attend all of the right events, and graciously help anyone who needs it.",
+            choices.Add(CreateSkillFeat("WellInformedTrait", Main.lc.GetTranslate("Traits.trRa.WellInformedName"),
+                Main.lc.GetTranslate("Traits.trRa.WellInformedDesc"),
+                //"You make it a point to know everyone and to be connected to everything around you. You frequent the best taverns, attend all of the right events, and graciously help anyone who needs it.",
                 "940ced5d41594b9aa22ee22217fbd46f", StatType.SkillPersuasion, halflingReq));
 
             // Dwarf:
@@ -1273,8 +1297,8 @@ namespace EldritchArcana
     public class UndoSelection : ComponentAppliedOnceOnLevelUp
     {
         public static Lazy<BlueprintFeature> Feature = new Lazy<BlueprintFeature>(() =>
-            Helpers.CreateFeature("UndoSelectionChoice", "(Go back)",
-                "Select this to go back to the previous selection, allowing you to pick something else.",
+            Helpers.CreateFeature("UndoSelectionChoice", Main.lc.GetTranslate("Traits.st.UndoSelectionName"),
+                Main.lc.GetTranslate("Traits.st.UndoSelectionDesc"),
                 "48963ed6422b41e5ba23d1f3f0fbe7c7", null, FeatureGroup.None,
                 Helpers.Create<UndoSelection>()));
 
